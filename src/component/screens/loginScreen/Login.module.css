@@ -1,0 +1,58 @@
+
+  .loginbg{
+    font-family: Arial, sans-serif;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 160vh;
+    width: 100vw;
+    margin: 0;
+    background-image: url('../../assests/3334896.jpg');
+  }
+
+  .container { 
+    background: #fff;
+    padding: 10px;
+    border: 1px solid skyblue;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 75vh;
+    width:120vh;
+ 
+  }
+  .container2 {
+    width: 50%;
+    height: 50%;
+  }
+  
+  @media (max-width: 1200px) {
+    .container2 img {
+      display: none; 
+     
+    }
+    .container{
+      height:125vh;
+      width:80vh;
+    }
+    .container3{
+      height:60vh;
+      width:70vh;
+    }
+  }
+ 
+  .input-container {
+    margin-bottom: 2rem; /* Space below the input field */
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 0.875rem; /* Adjust font size as needed */
+    margin-top: 0.25rem; /* Space above the error message */
+    display: block; /* Ensure it occupies a full line */
+  }
+  .container3{
+    height:95%;
+    margin-bottom: 20px;
+ 
+  }

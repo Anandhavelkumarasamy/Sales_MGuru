@@ -1,0 +1,29 @@
+.inputboxcontainer1{
+border: 1px solid rgba(0,0,0,0.1);
+display:flex;
+justify-content: space-between;
+align-items: center;
+padding: 8px;
+border-radius: 3px;
+background-color: white;
+  
+
+}
+
+
+
+.inputboxcontainer3{
+  border-width:0;
+  border:1px solid transparent;
+  outline:none;
+  background-color: rgba(0,0,0,0);
+  width:100%;
+  height:15px;
+  padding:10px;
+}
+
+.inputboxcontainer4{
+width:'13%';
+display: flex;
+justify-content: flex-end;
+}
