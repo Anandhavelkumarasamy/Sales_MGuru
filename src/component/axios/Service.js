@@ -40,6 +40,9 @@ export const forgotpassword=(email)=>{
 export const verifyotp=(data)=>{
     return instance.post('/verify_otp',data);
 }
+export const resendotp=(resetkey)=>{
+    return instance.post('/resend_otp',resetkey)
+}
 export const changepassword=(data)=>{
     return instance.post('/reset_password',data);
 }
@@ -77,4 +80,13 @@ export const leaddropdown=(token)=>{
 }
 export const changeleadstatus=(data)=>{
     return instance.post('/lead/changeLeadStatus',data);
+}
+export const employdropdown=(token)=>{
+    return instance.post('/dropdown/employeeDropDown',token);
+}
+export const dealerdropdown=(token)=>{
+    return instance.post('/dropdown/userDropdown',token)
+}
+export const leadressign=(data)=>{
+    return instance.post('/lead/lead_reassign',data);
 }

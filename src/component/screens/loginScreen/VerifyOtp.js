@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Input, Typography } from 'antd';
 import { Button } from 'react-bootstrap';
-import { verifyotp } from '../../axios/Service';
+import { resendotp, verifyotp } from '../../axios/Service';
 import { handleresetkey } from '../../redux/reducers/Logintoken';
 import { useNavigate } from 'react-router-dom';
 import loginimage from '../../assests/4957136.jpg'; // Reuse the background image
@@ -10,12 +10,13 @@ import classes from './Login.module.css'; // Reuse the CSS from the Login compon
 
 const { Title } = Typography;
 
-export default function VerifyOtp() {
-  const dispatch = useDispatch();
+export default function VerifyOtp() { 
+  const selector = useSelector((state) => state.authLogin);
+  
   const navigate = useNavigate();
   const [texts, settexts] = useState('');
   const [timeLeft, setTimeLeft] = useState(60);
-  
+  const resetKey=sessionStorage.getItem("reset_key"); 
   const onChange = (text) => {
     console.log('onChange:', text);
     settexts(text);
@@ -25,12 +26,19 @@ export default function VerifyOtp() {
     onChange,
   };
 
-  const selector = useSelector((state) => state.authLogin);
+  const handleresendotp=()=>{
+    let formdata= new FormData();
+    formdata.append("resetKey",resetKey);
+    resendotp(formdata).then((response)=>{
+      console.log(response);
+    })
+  }
+ 
   console.log(selector.resetkey); 
 
   const handleValue = () => {
     let formdata = new FormData();
-    const resetKey=sessionStorage.getItem("resetkey")
+   
     console.log(resetKey,"sessionstorage");
     formdata.append("resetKey", resetKey);
     formdata.append("otp", texts);
@@ -40,13 +48,12 @@ export default function VerifyOtp() {
       
       sessionStorage.setItem('resetkey', response.data.reset_key);
 
-      navigate('/changepassword');
-    });
+      navigate('/changepassword'); });
   };
   if (timeLeft === 0) {
-   
-    alert("Time's up! Please request a new OTP.");
-    navigate('/forgotpassword'); 
+    handleresendotp();
+    // window.alert("Time's up! Please request a new OTP.");
+    // navigate('/forgotpassword'); 
     
   }
 
@@ -81,13 +88,13 @@ export default function VerifyOtp() {
                   formatter={(str) => str.replace(/\D/g, '')}  
                   {...sharedProps}
                 />
-                <Button
+              <Button
                   variant="primary"
                   onClick={handleValue}
                   className="float-end me-5 mt-2"
                 >
                   Submit
-                </Button>
+               </Button>
                 <p>Time remaining: {formatTime(timeLeft)}</p>
               </Flex>
             </div>

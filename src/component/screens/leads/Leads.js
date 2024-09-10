@@ -10,6 +10,7 @@ import { handleleadsdata } from '../../redux/reducers/Logintoken';
 import Leaddropdown from '../../../Components/leadModal.js/Leaddropdown';
 import bookmarkimage1 from '../../assests/bookmark-white.png';
 import bookmarkimage2 from '../../assests/bookmark.png';
+import EmployeeDropdown from '../../../Components/leadModal.js/EmployeeDropdown';
 
 export default function Leads() {
   const leadsSelector = useSelector((state) => state.authLogin);
@@ -28,6 +29,7 @@ export default function Leads() {
  
   const [leaddropdowns,setleaddropdowns]=useState(false);
   const [leadid,setleadid]=useState(null);
+  const [employeedropdown,setemployyedropdown]=useState(false);
 
 
   const handleDeleteClose = () => settoDelete(false);
@@ -80,12 +82,23 @@ console.log("leaduserlist",leaduserlist)
     setleadid(id);
     setleaddropdowns(true);
   }
+  
   const handledropdownclose=(id)=>{
     setleaddropdowns(false);
+  }
+  const handleemployeedropdownshow=(id)=>{
+    setleadid(id);
+    setemployyedropdown(true);
+
+  }
+  const handleemployeedropdownclose=()=>{
+    setemployyedropdown(false);
   }
   const handleDropdownChange=(event)=>{
     setleadid(event.target.value)
   }
+
+  
   const isActive=(item)=>{
     let formdata= new FormData();
     formdata.append('token',leadsSelector.token);
@@ -113,7 +126,7 @@ console.log("leaduserlist",leaduserlist)
             }}
             className="float-end"
           >
-            Add New Admin
+            Add Lead
           </Button>
           <Button variant="primary" className="float-end me-3">
             <SearchOutlined />
@@ -141,7 +154,7 @@ console.log("leaduserlist",leaduserlist)
                 <td className="text-center">{item.mobile}</td>
                 <td className="text-center">{item.receivedAt}</td>
                 <td className="text-center">{item.leadId}</td>
-                <td className="text-center">{item.isActive === 0 ? {bookmarkimage1} : {bookmarkimage2}}</td>
+                <td className="text-center"   onClick={() =>isActive(item) } >{item.isActive === 0 ?<img src={bookmarkimage1} style={{width:'15px',height:'15px'}}  alt='dkd' />  : <img src={bookmarkimage2} style={{width:'15px',height:'15px'}}  alt='dkd' /> }</td>
                 <td>
                   <Button
                     variant="danger"
@@ -160,13 +173,7 @@ console.log("leaduserlist",leaduserlist)
                   >
                     Edit
                   </Button>
-                  <Button
-                    variant="success"
-                    className="ms-5"
-                    onClick={() =>isActive(item) }
-                  >
-                    isActive
-                  </Button>
+                 
                   <Button
                     variant="success"
                     className="ms-5"
@@ -177,7 +184,7 @@ console.log("leaduserlist",leaduserlist)
                   <Button
                     variant="success"
                     className="ms-5"
-                 
+                  onClick={() =>handleemployeedropdownshow(item.leadId)}
                   >
                     ReAssign
                   </Button>
@@ -208,6 +215,12 @@ console.log("leaduserlist",leaduserlist)
                 leadid={leadid}
                 onChange={handleDropdownChange}
             
+            />
+            <EmployeeDropdown
+              employeedropdown={employeedropdown}
+              leadid={leadid}
+              handleemployeedropdownclose={handleemployeedropdownclose}
+              onChange={handleDropdownChange}
             />
       </div>
     </>

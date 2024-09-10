@@ -100,7 +100,7 @@ export default function Employee() {
             onClick={() => setisShowModal({ data: null, isShow: true })}
             className="float-end  me-5"
           >
-            Add New Admin
+            Add Employee
           </Button>
           <Button variant="primary" onClick={toggleInputs} className="float-end me-3">
             <SearchOutlined />

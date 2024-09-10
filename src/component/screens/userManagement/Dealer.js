@@ -107,7 +107,7 @@ const handleUpdateShow=(value)=>{
             onClick={() =>setisShowModal({data:null,isShow:true})}
             className="float-end  me-5"
           >
-            Add New Admin
+            Add Dealer
           </Button>
           <Button variant="primary" onClick={toggleInputs} className="float-end me-3">
             <SearchOutlined />

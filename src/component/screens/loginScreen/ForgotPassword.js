@@ -19,7 +19,7 @@ export default function ForgotPassword() {
   const formik = useFormik({
     initialValues: { email: '' },
     validationSchema,
-    onSubmit: (values) => { handleForgotpassword(values); }
+    onSubmit: (values) => {handleForgotpassword(values); }
   });
 
   const handleForgotpassword = (values) => {
@@ -28,7 +28,7 @@ export default function ForgotPassword() {
     forgotpassword(formdata).then((response) => {
       let resetkey = response.data.reset_key;
       console.log(response.data.reset_key, "forgotpassword");
-      sessionStorage.setItem("resetkey",resetkey);
+      sessionStorage.setItem("reset_key",resetkey);
       navigate('/verifyotp');
     });
   };

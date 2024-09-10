@@ -75,7 +75,7 @@ export default function ChangePassword() {
 
   return (
     <div className={classes.loginbg}> 
-      {contextHolder} {/* Ensure message context is rendered */}
+      {contextHolder}
       <div className={`container bg-white rounded-5 p-5 ${classes.container}`}>
         <div className="row">
           <div className="col-12 text-center">

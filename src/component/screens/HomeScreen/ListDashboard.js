@@ -31,7 +31,7 @@ useEffect(()=>{
     <h1>Welcome</h1>
     <div className="row">
       {people.map((item, index) => (
-        <div className="col-lg-3  g-3" key={index}>
+        <div className="col-lg-3 col-md-6  g-3" key={index}>
           <div className="card  p-3" style={{backgroundColor: '#318CE7',color:'white'}}>
         <div>   <strong> <p style={{fontSize:'18px'}}>{item.displayName}</p></strong></div>
             <p style={{fontSize:'14px'}}>{item.type}</p>
