@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Flex, Input, Typography } from 'antd';
 import { Button } from 'react-bootstrap';
 import { resendotp, verifyotp } from '../../axios/Service';
-import { handleresetkey } from '../../redux/reducers/Logintoken';
 import { useNavigate } from 'react-router-dom';
-import loginimage from '../../assests/4957136.jpg'; // Reuse the background image
-import classes from './Login.module.css'; // Reuse the CSS from the Login component
+import loginimage from '../../assests/4957136.jpg'; 
+import classes from './Login.module.css'; 
 
 const { Title } = Typography;
 
 export default function VerifyOtp() { 
   const selector = useSelector((state) => state.authLogin);
-  
   const navigate = useNavigate();
+  
   const [texts, settexts] = useState('');
-  const [timeLeft, setTimeLeft] = useState(60);
-  const resetKey=sessionStorage.getItem("reset_key"); 
+  const [timeLeft, setTimeLeft] = useState(20); // Initialize with 20 seconds
+  const resetKey = sessionStorage.getItem("reset_key"); 
+
   const onChange = (text) => {
     console.log('onChange:', text);
     settexts(text);
@@ -25,42 +25,41 @@ export default function VerifyOtp() {
   const sharedProps = {
     onChange,
   };
-
-  const handleresendotp=()=>{
-    let formdata= new FormData();
-    formdata.append("resetKey",resetKey);
-    resendotp(formdata).then((response)=>{
+  
+  const handleresendotp = () => {
+    let formdata = new FormData();
+    formdata.append("resetKey", resetKey);
+    
+    resendotp(formdata).then((response) => {
       console.log(response);
-    })
-  }
- 
-  console.log(selector.resetkey); 
+    
+      setTimeLeft(20);
+    });
+  };
 
   const handleValue = () => {
     let formdata = new FormData();
-   
-    console.log(resetKey,"sessionstorage");
     formdata.append("resetKey", resetKey);
     formdata.append("otp", texts);
     
     verifyotp(formdata).then((response) => {
       console.log("successfully logged in", response.data);
-      
       sessionStorage.setItem('resetkey', response.data.reset_key);
-
-      navigate('/changepassword'); });
+      navigate('/changepassword');
+    });
   };
-  if (timeLeft === 0) {
-    handleresendotp();
-    // window.alert("Time's up! Please request a new OTP.");
-    // navigate('/forgotpassword'); 
-    
-  }
 
-  
-   setTimeout(() => {
-    setTimeLeft(timeLeft - 1);
-  }, 1000);
+  useEffect(() => {
+    handleresendotp(); 
+  }, [selector.token]);
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer); 
+    }
+  }, [timeLeft]);
+
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -88,13 +87,21 @@ export default function VerifyOtp() {
                   formatter={(str) => str.replace(/\D/g, '')}  
                   {...sharedProps}
                 />
-              <Button
-                  variant="primary"
-                  onClick={handleValue}
-                  className="float-end me-5 mt-2"
-                >
-                  Submit
-               </Button>
+                <p>
+                  <Button
+                    variant="primary"
+                    onClick={handleValue}
+                    className="float-end me-5 mt-2"
+                  >
+                    Submit
+                  </Button>   
+                  <Button 
+                    disabled={timeLeft > 0} // Disable button if timer is running
+                    onClick={handleresendotp}
+                  >
+                    Resend OTP
+                  </Button>
+                </p>
                 <p>Time remaining: {formatTime(timeLeft)}</p>
               </Flex>
             </div>

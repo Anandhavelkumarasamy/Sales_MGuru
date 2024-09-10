@@ -22,14 +22,19 @@ export default function EmployeeDropdown({ employeedropdown, leadid, handleemplo
     
     leadressign(formdata).then((response) => {
       console.log("leadreassign", response.data.data);
+      setselectedemployeeid('');  
+      setselecteddealerid('');  
       handleemployeedropdownclose();
+    
+
     }).catch((error) => {
       console.log(error, "leadreassignerror");
     });
   };
 
   const handleemployeestatus = () => {
-    if (selector.token) {
+    
+    if (selector.token ) {
       let formdata = new FormData();
       formdata.append('token', selector.token);
       employdropdown(formdata).then((response) => {
@@ -56,8 +61,9 @@ export default function EmployeeDropdown({ employeedropdown, leadid, handleemplo
   };
 
   useEffect(() => {
-    handleemployeestatus();
     handledealerstatus();
+    handleemployeestatus();
+   
   }, [selector.token]);
 
   return (
@@ -91,11 +97,11 @@ export default function EmployeeDropdown({ employeedropdown, leadid, handleemplo
               onChange={(e) => setselectedemployeeid(e.target.value)}
             >
               <option value="">Select an employee</option>
-              {employeedata?.map((item) => (
+              {selecteddealerid ? employeedata?.map((item) => (
                 <option key={item.userId} value={item.userId}>
                   {item.userName.split('(')[0]}
                 </option>
-              ))}
+              )): null}
             </Form.Control>
           </Form.Group>
 

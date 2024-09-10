@@ -11,6 +11,7 @@ import Leaddropdown from '../../../Components/leadModal.js/Leaddropdown';
 import bookmarkimage1 from '../../assests/bookmark-white.png';
 import bookmarkimage2 from '../../assests/bookmark.png';
 import EmployeeDropdown from '../../../Components/leadModal.js/EmployeeDropdown';
+import { message } from 'antd';
 
 export default function Leads() {
   const leadsSelector = useSelector((state) => state.authLogin);
@@ -109,6 +110,12 @@ console.log("leaduserlist",leaduserlist)
     isactive(formdata).then((response)=>{
       console.log("active status",response);
       handleleadsuserList();
+       const messageText = newIsActiveValue === 1 
+        ? `${item.leadName} has been bookmarked successfully!` 
+        : `${item.leadName} has been unbookmarked successfully!`;
+
+      message.success(messageText);  // Display the success message
+    
     })
   }
   return (
@@ -221,6 +228,7 @@ console.log("leaduserlist",leaduserlist)
               leadid={leadid}
               handleemployeedropdownclose={handleemployeedropdownclose}
               onChange={handleDropdownChange}
+             
             />
       </div>
     </>
