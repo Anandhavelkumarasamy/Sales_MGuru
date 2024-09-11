@@ -90,3 +90,6 @@ export const dealerdropdown=(token)=>{
 export const leadressign=(data)=>{
     return instance.post('/lead/lead_reassign',data);
 }
+export const competitordropdown=(token)=>{
+    return instance.post('/dropdown/dropdownCompetitor',token)
+}

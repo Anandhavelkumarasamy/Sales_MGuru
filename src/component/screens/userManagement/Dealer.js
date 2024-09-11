@@ -59,6 +59,7 @@ const handleUpdateShow=(value)=>{
   console.log(userList, "KKKKKKKKKKKKKKK");
 
   const handleGetListUseres = (page = 1, size = 5, data = {}) => {
+    console.log(data,"dealerdata")
     let formData = new FormData();
     formData.append("type", "3");
     formData.append("token", objectToken?.token);

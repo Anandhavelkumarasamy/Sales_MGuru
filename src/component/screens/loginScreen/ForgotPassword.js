@@ -28,7 +28,8 @@ export default function ForgotPassword() {
     forgotpassword(formdata).then((response) => {
       let resetkey = response.data.reset_key;
       console.log(response.data.reset_key, "forgotpassword");
-      sessionStorage.setItem("reset_key",resetkey);
+   let b= sessionStorage.setItem("reset_key",resetkey);
+   console.log(b,"forgotpassowrdsession");
       navigate('/verifyotp');
     });
   };

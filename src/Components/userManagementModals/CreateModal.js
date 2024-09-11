@@ -142,7 +142,7 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
         style={{ maxwidth: "100%", height: "100%" }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{editData ?  "Edit ":"Add"}Admin</Modal.Title>
+          <Modal.Title>{editData ?  "Edit ":"Add"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>

@@ -40,12 +40,12 @@ export default function DealerIdDropdown({
 
   return (
     <Form.Group controlId="dealerIdDropdown">
-      <Form.Label>Select Dealer ID</Form.Label>
+      <Form.Label>Select Dealer</Form.Label>
       <Form.Control as="select" value={value} onChange={onChange}>
-        <option value="">Select a Dealer ID</option>
+        <option value="">Select a Dealer</option>
         {storedealerList.items?.map((item, index) => (
           <option key={item.userId} value={item.userId}>
-            {item.userId}
+            {item.userName}
           </option>
         ))}
       </Form.Control>

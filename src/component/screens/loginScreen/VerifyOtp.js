@@ -15,7 +15,7 @@ export default function VerifyOtp() {
   
   const [texts, settexts] = useState('');
   const [timeLeft, setTimeLeft] = useState(20); // Initialize with 20 seconds
-  const resetKey = sessionStorage.getItem("reset_key"); 
+   
 
   const onChange = (text) => {
     console.log('onChange:', text);
@@ -27,31 +27,30 @@ export default function VerifyOtp() {
   };
   
   const handleresendotp = () => {
+    let resetKey = sessionStorage.getItem("reset_key");
     let formdata = new FormData();
     formdata.append("resetKey", resetKey);
-    
     resendotp(formdata).then((response) => {
       console.log(response);
-    
-      setTimeLeft(20);
+     sessionStorage.setItem("reset_key",response.data.reset_key);
+     setTimeLeft(20);
     });
-  };
 
+  };
+  
   const handleValue = () => {
     let formdata = new FormData();
+    let resetKey = sessionStorage.getItem("reset_key"); 
     formdata.append("resetKey", resetKey);
     formdata.append("otp", texts);
-    
     verifyotp(formdata).then((response) => {
       console.log("successfully logged in", response.data);
-      sessionStorage.setItem('resetkey', response.data.reset_key);
+      sessionStorage.setItem('reset_key', response.data.reset_key);
       navigate('/changepassword');
     });
   };
 
-  useEffect(() => {
-    handleresendotp(); 
-  }, [selector.token]);
+ 
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -91,13 +90,14 @@ export default function VerifyOtp() {
                   <Button
                     variant="primary"
                     onClick={handleValue}
-                    className="float-end me-5 mt-2"
+                    className="float-start"
                   >
                     Submit
                   </Button>   
                   <Button 
-                    disabled={timeLeft > 0} // Disable button if timer is running
+                    disabled={timeLeft > 0}
                     onClick={handleresendotp}
+                    className="float-end "
                   >
                     Resend OTP
                   </Button>

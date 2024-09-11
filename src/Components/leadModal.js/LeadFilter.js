@@ -3,30 +3,31 @@
 import React from 'react';
 import { Button, Row, Col } from "react-bootstrap";
 import { useFormik } from "formik";
-import TextInputBox from './TextInputBox';
+import TextInputBox from '../userManagementModals/TextInputBox';
 
-const UserFilter = ({ handleGetListUseres}) => {
+const LeadFilter = ({ handleleadsuserList}) => {
   
   const { values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
     initialValues: {
-      userName: "",
+        leadName: "",
       email: "",
-      phoneNumber: "",
+      mobile: "",
     },
     onSubmit: (values) => {
-      handleGetListUseres(1, 5, values);
+      handleleadsuserList(1, 5, values);
+      console.log(values,"leadvalues")
     },
   });
 
   const handlereset = () => {
     const emptyValues = {
-      userName: "",
+        leadName: "",
       email: "",
-      phoneNumber: "",
+      mobile: "",
     };
-    handleGetListUseres(1, 5, emptyValues);
+    handleleadsuserList(1,5,emptyValues);
     resetForm();
-    // resetFormHandler(); 
+  
   };
 
   return (
@@ -34,19 +35,19 @@ const UserFilter = ({ handleGetListUseres}) => {
       <Row>
         <Col>
           <TextInputBox
-            title={"userName"}
-            value={values.userName}
-            onchange={handleChange("userName")}
-            placeholder="Enter username"
+            title={"leadName"}
+            value={values.leadName}
+            onchange={handleChange("leadName")}
+            placeholder="Enter leadName"
             onBlurs={handleBlur}
           />
         </Col>
         <Col>
           <TextInputBox
-            title={"Phone Number"}
-            value={values.phoneNumber}
-            onchange={handleChange("phoneNumber")}
-            placeholder="Enter phone Number"
+            title={"Mobile Number"}
+            value={values.mobile}
+            onchange={handleChange("mobile")}
+            placeholder="Enter Mobile Number"
           />
         </Col>
         <Col>
@@ -69,4 +70,4 @@ const UserFilter = ({ handleGetListUseres}) => {
   );
 };
 
-export default UserFilter;
+export default LeadFilter;

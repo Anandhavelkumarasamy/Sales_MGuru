@@ -12,6 +12,7 @@ import bookmarkimage1 from '../../assests/bookmark-white.png';
 import bookmarkimage2 from '../../assests/bookmark.png';
 import EmployeeDropdown from '../../../Components/leadModal.js/EmployeeDropdown';
 import { message } from 'antd';
+import LeadFilter from '../../../Components/leadModal.js/LeadFilter';
 
 export default function Leads() {
   const leadsSelector = useSelector((state) => state.authLogin);
@@ -21,6 +22,14 @@ export default function Leads() {
   const [todelete, settoDelete] = useState(false);
   const [Value, setValue] = useState(null);
   const [deleteusername, setdeleteusername] = useState(null);
+  const [leaddropdowns,setleaddropdowns]=useState(false);
+  const [leadid,setleadid]=useState(null);
+  const [employeedropdown,setemployyedropdown]=useState(false);
+  const [showinputsfilter,setshowinputsfilter]=useState(false);
+  const handleDeleteClose = () => settoDelete(false);
+  const toggleInputs=()=>{
+    setshowinputsfilter(pre=>!pre);
+  }
   const [isShowModal, setisShowModal] = useState({
     isShow: false,
     data: null,
@@ -28,12 +37,7 @@ export default function Leads() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
  
-  const [leaddropdowns,setleaddropdowns]=useState(false);
-  const [leadid,setleadid]=useState(null);
-  const [employeedropdown,setemployyedropdown]=useState(false);
-
-
-  const handleDeleteClose = () => settoDelete(false);
+  
   const handleDeleteShow = (id, deleteusername) => {
     setValue(id);
     setdeleteusername(deleteusername);
@@ -44,9 +48,14 @@ export default function Leads() {
     dispatch(handleleadsdata(isShowModal));
   }, [isShowModal]);
 
-  const handleleadsuserList = (page = 1, size = 6) => {
+  const handleleadsuserList = (page = 1, size = 6,data={}) => {
     let formdata = new FormData();
+    console.log(data,"dataleads")
     formdata.append("token", leadsSelector.token);
+
+    formdata.append("name", data.leadName ?data.leadName: ""  );
+    // formdata.append("email", data.email || "");
+    // formdata.append("mobile", data.mobile || "");
     leadlistuser(page, size, formdata)
       .then((response) => {
         setLeaduserlist(response?.data?.data);
@@ -56,7 +65,7 @@ export default function Leads() {
 
   useEffect(() => {
     if (leadsSelector?.token) {
-      handleleadsuserList(1, itemsPerPage);
+      handleleadsuserList(1, itemsPerPage, {});
     }
   }, [leadsSelector?.token]);
 
@@ -114,7 +123,7 @@ console.log("leaduserlist",leaduserlist)
         ? `${item.leadName} has been bookmarked successfully!` 
         : `${item.leadName} has been unbookmarked successfully!`;
 
-      message.success(messageText);  // Display the success message
+      message.success(messageText); 
     
     })
   }
@@ -135,10 +144,14 @@ console.log("leaduserlist",leaduserlist)
           >
             Add Lead
           </Button>
-          <Button variant="primary" className="float-end me-3">
+          <Button variant="primary" onClick={toggleInputs} className="float-end me-3">
             <SearchOutlined />
           </Button>
         </div>
+
+        <br></br>
+        {showinputsfilter && (<LeadFilter handleleadsuserList={handleleadsuserList}/>)}
+
       </div>
       <div className="border border-black rounded">
         <table className="table table-striped">
@@ -147,7 +160,7 @@ console.log("leaduserlist",leaduserlist)
               <th className="p-2 text-center">Serial No</th>
               <th className="p-2 text-center">Name</th>
               <th className="p-2 text-center">Phone</th>
-              <th className="p-2 text-center">ReceivedDate</th>
+              
               <th className="p-2 text-center">Address</th>
               <th className="p-2 text-center">IsActive</th>
               <th className="p-2 text-center">Actions</th>
@@ -159,7 +172,7 @@ console.log("leaduserlist",leaduserlist)
                 <td className="text-center">{handleSerialNo(index)}</td>
                 <td className="text-center">{item.leadName}</td>
                 <td className="text-center">{item.mobile}</td>
-                <td className="text-center">{item.receivedAt}</td>
+             
                 <td className="text-center">{item.leadId}</td>
                 <td className="text-center"   onClick={() =>isActive(item) } >{item.isActive === 0 ?<img src={bookmarkimage1} style={{width:'15px',height:'15px'}}  alt='dkd' />  : <img src={bookmarkimage2} style={{width:'15px',height:'15px'}}  alt='dkd' /> }</td>
                 <td>
