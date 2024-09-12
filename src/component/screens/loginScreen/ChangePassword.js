@@ -76,18 +76,20 @@ export default function ChangePassword() {
   return (
     <div className={classes.loginbg}> 
       {contextHolder}
-      <div className={`container bg-white rounded-5 p-5 ${classes.container}`}>
-        <div className="row">
-          <div className="col-12 text-center">
-            <h3><strong>Update Password</strong><hr /></h3>
-          </div>
+      <div className={`row d-flex bg-light justify-content-center rounded-5 p-3 ${classes.container}`}>
+       
+            <h3 className='text-center'>Update Password<hr /></h3>
+     
+            <div className={`col p-3 ${classes.container2}`}>
+              <img style={{width:'100vh',height:'70vh'}}
+                src={loginimage}
+                alt="YourImage"
+                className="img-fluid  "
+              />
+            </div>
 
-          <div className={`col-lg-6 col-md-12 d-flex align-items-center justify-content-center ${classes.container2}`}>
-            <img src={loginimage} alt="Change Password" className="img-fluid rounded-5" />
-          </div>
-
-          <div className="col-lg-6 col-md-12 d-flex align-items-center justify-content-center">
-            <div className="bg-light p-4 w-100 rounded-5">
+            <div   className={` col bg-white  mt-5  rounded-3 p-4 ${classes.container3}`}>
+           
               <h2 className="text-center "> New Password<hr /></h2>
               
               <TextInputBox
@@ -119,7 +121,5 @@ export default function ChangePassword() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 }

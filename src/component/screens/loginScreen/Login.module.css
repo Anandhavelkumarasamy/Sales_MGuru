@@ -18,7 +18,7 @@
     background-image: url('../../assests/3334896.jpg');
   }
 
-  .container { 
+  /* .container { 
     background: #fff;
     padding: 10px;
     border: 1px solid skyblue;
@@ -27,13 +27,13 @@
     height: 75vh;
     width:120vh;
  
-  }
-  .container2 {
-    width: 50%;
-    height: 50%;
-  }
+  } */
+  /* .container2 {
+    width: 20%;
+    height: 20%;
+  } */
   
-  @media (max-width: 1200px) {
+  /* @media (max-width: 1200px) {
     .container2 img {
       display: none; 
      
@@ -46,7 +46,12 @@
       height:60vh;
       width:70vh;
     }
-  }
+  } */
+   @media(max-width:1000px){
+    .container2{
+      display:none;
+    }
+   }
  
   .input-container {
     margin-bottom: 2rem; /* Space below the input field */

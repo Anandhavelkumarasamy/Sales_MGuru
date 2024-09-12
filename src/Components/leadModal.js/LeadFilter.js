@@ -1,4 +1,4 @@
-// src/Components/UserFilter.js
+
 
 import React from 'react';
 import { Button, Row, Col } from "react-bootstrap";
@@ -10,7 +10,7 @@ const LeadFilter = ({ handleleadsuserList}) => {
   const { values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
     initialValues: {
         leadName: "",
-      email: "",
+        state: "",
       mobile: "",
     },
     onSubmit: (values) => {
@@ -22,7 +22,7 @@ const LeadFilter = ({ handleleadsuserList}) => {
   const handlereset = () => {
     const emptyValues = {
         leadName: "",
-      email: "",
+        state: "",
       mobile: "",
     };
     handleleadsuserList(1,5,emptyValues);
@@ -52,10 +52,10 @@ const LeadFilter = ({ handleleadsuserList}) => {
         </Col>
         <Col>
           <TextInputBox
-            title={"Email"}
-            value={values.email}
-            onchange={handleChange("email")}
-            placeholder="Enter email"
+            title={"state"}
+            value={values.state}
+            onchange={handleChange("state")}
+            placeholder="Enter state"
           />
         </Col>
       </Row>

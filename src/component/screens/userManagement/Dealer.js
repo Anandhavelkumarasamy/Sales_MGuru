@@ -14,6 +14,10 @@ import DeleteModal from '../../../Components/userManagementModals/DeleteModal'
 import { SearchOutlined } from '@ant-design/icons';
 import { handleDealeruserlist } from "../../redux/reducers/Logintoken";
 import UserFilter from "../../../Components/userManagementModals/UserFilter";
+import { message,Tooltip } from "antd";
+import trash from '../../assests/trash.png';
+import update from '../../assests/data-processing.png'
+
 
 
 export default function Admin() {
@@ -85,11 +89,14 @@ const handleUpdateShow=(value)=>{
     formdata.append("userId", id);
     console.log(id, "ytghuijo");
     deleteuser(formdata).then((response) => {
+      if(response.data.status===1)
+        message.success(`User ${deleteusername} deleted successfully`);
       console.log(response.data.data, "deleteSuccessfully");
       handleDeleteClose();
       // handleAdmin();
       handleGetListUseres();
     });
+  
   };
   const handleSerialNo = (index) => {
     return (userList.page - 1) * itemsPerPage + index + 1;
@@ -133,7 +140,7 @@ const handleUpdateShow=(value)=>{
               <th className="p-2 text-center">Phone Number</th>
               <th className="p-2 text-center">Type</th>
               <th className="p-2 text-center">Email</th>
-              <th className="p-2 text-center">Actions</th>
+              <th className="p-2 text-center ms-3">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -147,15 +154,24 @@ const handleUpdateShow=(value)=>{
                 <td className="text-center">{item.userTypeName}</td>
                 <td className="text-center">{item.email}</td>
                 <td className="text-center ">
-                  <Button
-                    variant="danger"
-                    className="ms-5"
+                
+                  <Tooltip placement="bottom" title="Delete">
+                    <img src={trash}
+                    alt="trash"
+                    className="mx-3"
                     onClick={() => handleDeleteShow(item.userId,item.userName)}
-                  >
-                    Delete
-                  </Button>
-                  <Button variant="success" className="ms-5"  onClick={()=> setisShowModal({data:item,isShow:true})}>
-                       Edit   </Button>
+                    style={{ cursor: "pointer", width: "20px", height: "20px" }}
+                    />
+                  </Tooltip>
+                  <Tooltip placement="bottom" title='update'>
+                  <img src={update}
+                  alt="update"
+                  className="mx-3"
+                  onClick={()=> setisShowModal({data:item,isShow:true})}
+                  style={{ cursor: "pointer", width: "20px", height: "20px" }}/>
+                  </Tooltip>
+            
+             
                 </td>
               </tr>
             ))}

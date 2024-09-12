@@ -9,10 +9,17 @@ import DeleteModalLead from '../../../Components/leadModal.js/DeleteModalLead';
 import { handleleadsdata } from '../../redux/reducers/Logintoken';
 import Leaddropdown from '../../../Components/leadModal.js/Leaddropdown';
 import bookmarkimage1 from '../../assests/bookmark-white.png';
-import bookmarkimage2 from '../../assests/bookmark.png';
+import bookmarkimage2 from '../../assests/bookmark.png'
+
 import EmployeeDropdown from '../../../Components/leadModal.js/EmployeeDropdown';
-import { message } from 'antd';
+import { message,Tooltip } from 'antd';
 import LeadFilter from '../../../Components/leadModal.js/LeadFilter';
+import IsactiveModal from '../../../Components/leadModal.js/IsactiveModal';
+import trash from '../../assests/trash.png';
+import update from '../../assests/data-processing.png';
+import updatestatus from '../../assests/search.png';
+import reassign from '../../assests/shift.png'
+
 
 export default function Leads() {
   const leadsSelector = useSelector((state) => state.authLogin);
@@ -26,6 +33,9 @@ export default function Leads() {
   const [leadid,setleadid]=useState(null);
   const [employeedropdown,setemployyedropdown]=useState(false);
   const [showinputsfilter,setshowinputsfilter]=useState(false);
+  const [showisactive,setshowisactive]=useState(false);
+  const [isactiveitem,setisactiveitem]=useState(null);
+  const [isactivename,setisactivename]=useState(null);
   const handleDeleteClose = () => settoDelete(false);
   const toggleInputs=()=>{
     setshowinputsfilter(pre=>!pre);
@@ -37,7 +47,16 @@ export default function Leads() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
  
+  const handleshowisactive = (item) => {
+    setshowisactive(true);
+    setisactiveitem(item);
+    // setisactivename(item.leadName);
+  };
+  console.log(isactiveitem,"isactiveitemsdsdsfdfd")
   
+  const handlecloseisactive = () => {
+    setshowisactive(false);
+  };
   const handleDeleteShow = (id, deleteusername) => {
     setValue(id);
     setdeleteusername(deleteusername);
@@ -54,8 +73,8 @@ export default function Leads() {
     formdata.append("token", leadsSelector.token);
 
     formdata.append("name", data.leadName ?data.leadName: ""  );
-    // formdata.append("email", data.email || "");
-    // formdata.append("mobile", data.mobile || "");
+     formdata.append("state", data.state || "");
+     formdata.append("phone", data.mobile ? data.mobile: "");
     leadlistuser(page, size, formdata)
       .then((response) => {
         setLeaduserlist(response?.data?.data);
@@ -74,6 +93,8 @@ export default function Leads() {
     formdata.append("token", leadsSelector.token);
     formdata.append("leadId", id);
     deleteleaduser(formdata).then((response) => {
+      if(response.data.status===1)
+        message.success(`User ${deleteusername} deleted successfully`);
       handleDeleteClose();
       handleleadsuserList(currentPage, itemsPerPage);
     });
@@ -108,25 +129,15 @@ console.log("leaduserlist",leaduserlist)
     setleadid(event.target.value)
   }
 
-  
-  const isActive=(item)=>{
-    let formdata= new FormData();
-    formdata.append('token',leadsSelector.token);
-    formdata.append('leadId',item.leadId);
-    const newIsActiveValue = item.isActive === 0 ? 1 : 0;
-    formdata.append('isActive',newIsActiveValue);
-   
-    isactive(formdata).then((response)=>{
-      console.log("active status",response);
-      handleleadsuserList();
-       const messageText = newIsActiveValue === 1 
-        ? `${item.leadName} has been bookmarked successfully!` 
-        : `${item.leadName} has been unbookmarked successfully!`;
+      //  const messageText = newIsActiveValue === 1 
+      //   ? `${item.leadName} has been bookmarked successfully!` 
+      //   : `${item.leadName} has been unbookmarked successfully!`;
 
-      message.success(messageText); 
-    
-    })
-  }
+      // message.success(messageText); 
+  
+
+  
+  
   return (
     <>
       <div className="row">
@@ -168,15 +179,26 @@ console.log("leaduserlist",leaduserlist)
           </thead>
           <tbody>
             {leaduserlist?.items.map((item, index) => (
+              
               <tr key={item.id} style={{ textAlign: "center", verticalAlign: "middle" }}>
                 <td className="text-center">{handleSerialNo(index)}</td>
                 <td className="text-center">{item.leadName}</td>
                 <td className="text-center">{item.mobile}</td>
              
-                <td className="text-center">{item.leadId}</td>
-                <td className="text-center"   onClick={() =>isActive(item) } >{item.isActive === 0 ?<img src={bookmarkimage1} style={{width:'15px',height:'15px'}}  alt='dkd' />  : <img src={bookmarkimage2} style={{width:'15px',height:'15px'}}  alt='dkd' /> }</td>
+                <td className="text-center">{item.address}</td>
+                <td className="text-center" onClick={() => handleshowisactive(item)}>
+                       <img
+                       src={item.isActive === 0  ? bookmarkimage1   :  bookmarkimage2 }
+                       style={{ width: '15px', height: '15px' }}
+                       alt={item.isActive === 0   ? "Not bookmarked"    : "Bookmarked"}
+                     />
+  </td>
+
                 <td>
-                  <Button
+
+
+
+                  {/* <Button
                     variant="danger"
                     className="ms-5"
                     onClick={() => handleDeleteShow(item.leadId, item.leadName)}
@@ -192,9 +214,44 @@ console.log("leaduserlist",leaduserlist)
                     }}
                   >
                     Edit
-                  </Button>
+                  </Button> */}
+
+
+                  <Tooltip placement="bottom" title="Delete">
+                    <img src={trash}
+                    alt="trash"
+                    className="mx-3"
+                    onClick={() => handleDeleteShow(item.leadId, item.leadName)}
+                    style={{ cursor: "pointer", width: "20px", height: "20px" }}
+                    />
+                  </Tooltip>
+                  <Tooltip placement="bottom" title='update'>
+                  <img src={update}
+                  alt="update"
+                  className="mx-3"
+                  onClick={() => {
+                    setisShowModal({ isShow: true, data: item });
+                    navigate('/dashboard/leadsdata', { state: { isShow: true, data: item } });
+                  }}
+                  style={{ cursor: "pointer", width: "20px", height: "20px" }}/>
+                  </Tooltip>
+                  <Tooltip placement="bottom" title="updatestatus">
+                    <img src={updatestatus}
+                    alt="trash"
+                    className="mx-3"
+                    onClick={() =>handleleaddropdownshow(item.leadId) }
+                    style={{ cursor: "pointer", width: "20px", height: "20px" }}
+                    />
+                  </Tooltip>
+                  <Tooltip placement="bottom" title='reassign'>
+                  <img src={reassign}
+                  alt="reassign"
+                  className="mx-3"
+                  onClick={() =>handleemployeedropdownshow(item.leadId)}
+                  style={{ cursor: "pointer", width: "20px", height: "20px" }}/>
+                  </Tooltip>
                  
-                  <Button
+                  {/* <Button
                     variant="success"
                     className="ms-5"
                     onClick={() =>handleleaddropdownshow(item.leadId) }
@@ -207,13 +264,19 @@ console.log("leaduserlist",leaduserlist)
                   onClick={() =>handleemployeedropdownshow(item.leadId)}
                   >
                     ReAssign
-                  </Button>
+                  </Button> */}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-
+<IsactiveModal
+ showisactive={showisactive}
+ handlecloseisactive={handlecloseisactive}
+//  username={isactivename}
+handleleadsuserList={handleleadsuserList}
+ isactiveitem={isactiveitem}
+/>
         <DeleteModalLead
           todelete={todelete}
           handleDeleteClose={handleDeleteClose}
@@ -228,7 +291,7 @@ console.log("leaduserlist",leaduserlist)
           onChange={handlePageChange}
           total={leaduserlist?.total_count || 0}
         />
-
+<br></br>
            <Leaddropdown
                 leaddropdowns={leaddropdowns}
                 handledropdownclose={handledropdownclose}

@@ -10,8 +10,9 @@ import UserFilter from "../../../Components/userManagementModals/UserFilter";
 import TextInputBox from '../../../Components/userManagementModals/TextInputBox';
 import CreateModal from '../../../Components/userManagementModals/CreateModal'
 import DeleteModal from '../../../Components/userManagementModals/DeleteModal'
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { message, Tooltip} from "antd";
+import trash from '../../assests/trash.png';
+import update from '../../assests/data-processing.png';
 
 export default function Employee() {
   const objectToken = useSelector((state) => state.authLogin);
@@ -74,12 +75,13 @@ export default function Employee() {
     formdata.append("userId", id);
     console.log(id, "ytghuijo");
     deleteuser(formdata).then((response) => {
-      toast.success("User deleted successfully!");
+      if(response.data.status===1)
+        message.success(`User ${deleteusername} deleted successfully`);
       console.log(response.data.data, "deleteSuccessfully");
       handleDeleteClose();
       // handleAdmin();
       handleGetListUseres();
-    }).catch((error)=> toast.error( error,"Failed to delete user. Please try again."));
+    }).catch((error)=> error);
   };
   const handleSerialNo = (index) => {
     return (userList.page - 1) * itemsPerPage + index + 1;
@@ -139,20 +141,28 @@ export default function Employee() {
                 <td className="text-center">{item.userTypeName}</td>
                 <td className="text-center">{item.email}</td>
                 <td className="text-center">
-                  <Button
-
-                    variant="danger"
-                  
+                
+                  <Tooltip placement="bottom" title="Delete">
+                    <img src={trash}
+                    alt="trash"
+                    className="mx-4 "
                     onClick={() => handleDeleteShow(item.userId,item.userName)}
-                  >
-                    Delete
-                  </Button>
-                  <Button
-                    variant="success"
-                    className="ms-5"
-                    onClick={() => setisShowModal({ data: item, isShow: true })}
-                  > Edit
-                  </Button>
+                    style={{ cursor: "pointer", width: "20px", height: "20px" }}
+                    />
+                  </Tooltip>
+                  <Tooltip placement="bottom" title='update'>
+                  <img src={update}
+                   className="mx-4 "
+                  alt="update"
+                  onClick={() => setisShowModal({ data: item, isShow: true })}
+                  style={{ cursor: "pointer", width: "20px", height: "20px" }}/>
+                  </Tooltip>
+
+
+
+
+
+
                 </td>
               </tr>
             ))}
@@ -187,7 +197,7 @@ export default function Employee() {
          editid={editid}
          toupdate={toupdate}
          handleUpdateClose={handleUpdateClose}
-        /> */}
+        /> */} <br></br>
       </div>
     </>
   );

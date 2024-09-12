@@ -7,6 +7,7 @@ import { forgotpassword } from '../../axios/Service';
 import { useNavigate } from 'react-router-dom';
 import loginimage from '../../assests/4957136.jpg';
 import classes from './Login.module.css'; 
+import { message } from 'antd';
 
 export default function ForgotPassword() {
 
@@ -28,30 +29,35 @@ export default function ForgotPassword() {
     forgotpassword(formdata).then((response) => {
       let resetkey = response.data.reset_key;
       console.log(response.data.reset_key, "forgotpassword");
-   let b= sessionStorage.setItem("reset_key",resetkey);
-   console.log(b,"forgotpassowrdsession");
+   sessionStorage.setItem("reset_key",resetkey);
+   message.success('OTP has been resent successfully!');
+  if(response.data.status===1){
+  
       navigate('/verifyotp');
+  }
     });
   };
   return (
     <div className={classes.loginbg}> 
-      <div className={`container bg-white rounded-5 p-5 ${classes.container}`}>
-        <div className="row">
-          <div className="col-12 text-center">
-            <h3><strong>Forgot Password</strong><hr /></h3>
-          </div>
+     <div className={`row d-flex bg-light justify-content-center rounded-5 p-3 ${classes.container}`}>
+   
+            <h3 className='text-center'>Forgot Password<hr /></h3>
+         
+            <div className={`col p-3 ${classes.container2}`}>
+              <img style={{width:'100vh',height:'70vh'}}
+                src={loginimage}
+                alt="YourImage"
+                className="img-fluid  "
+              />
+            </div>
 
-          <div className={`col-lg-6 col-md-12 d-flex align-items-center justify-content-center ${classes.container2}`}>
-            <img src={loginimage} alt='img' className="img-fluid rounded-5" />
-          </div>
-
-          <div className="col-lg-6 col-md-12 d-flex align-items-center justify-content-center">
-            <div className="bg-light p-5 w-100 rounded-5">
+            <div   className={` col bg-light  mt-5  rounded-3 p-4 ${classes.container3}`}>
+           
               <h2 className="text-center">Email<hr /></h2>
-              <br></br>
-              <form className="text-center" onSubmit={formik.handleSubmit}>
+           
+              <form  onSubmit={formik.handleSubmit}>
                 <TextInputBox
-                  
+                title={"Enter Registered Email"}
                   value={formik.values.email}
                   onchange={formik.handleChange("email")}
                   placeholder="Enter email"
@@ -65,10 +71,10 @@ export default function ForgotPassword() {
                   Submit
                 </Button>
               </form>
-            </div>
+           
           </div>
         </div>
       </div>
-    </div>
+
   );
 }

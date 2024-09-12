@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import RequirementsDropdown from "./RequirementsDropdown";
 import CustomerDropdown from "./CustomerDropdown";
 import EnquiryDropdown from "./EnquiryDropdown";
+import { message } from "antd";
 
 
 
@@ -83,8 +84,10 @@ export default function CreateModelLead() {
        formdata.append("requirements_id", values.requirements_id);
        console.log(formdata)
       updateleaduser(formdata).then((response)=>{
+        if(response.data.status===1)
+          message.success(`User ${values.name} created successfully`);
         navigate('/dashboard/leads')
-    
+
   })
     }
     
@@ -134,7 +137,8 @@ export default function CreateModelLead() {
     console.log(formdata,"addformdta")
     addleaduser(formdata)
       .then((response) => {
-        window.alert(response?.data?.msg);
+      if(response.data.status===1)
+        message.success(`User ${values.name} created successfully`);
         navigate('/dashboard/leads')
 
     
@@ -424,15 +428,7 @@ export default function CreateModelLead() {
                   />
                 </Col>
                 <Col>
-                  {/* <TextInputBox
-                    title={"customer_category_id"}
-                    value={values.customer_category_id}
-                    onchange={handleChange("customer_category_id")}
-                    placeholder="Enter customer_category_id"
-                    errorText={
-                      touched.customer_category_id && errors.customer_category_id ? errors.customer_category_id : null
-                    }
-                  /> */}
+                
                   <CustomerDropdown 
                 
                   value={values.customer_category_id}
@@ -447,19 +443,7 @@ export default function CreateModelLead() {
             <div className="mb-3">
               <Row>
                 <Col>
-                  {/* <TextInputBox
-                    title={"enquiry_type_id"}
-                    value={values.enquiry_type_id}
-                    onchange={handleChange("enquiry_type_id")}
-                    placeholder="Enter enquiry_type_id"
-                   
-                    errorText={
-                      touched.enquiry_type_id && errors.enquiry_type_id
-                        ? errors.enquiry_type_id
-                        : null
-                    }
-                   
-                  /> */}
+               
                   <EnquiryDropdown
                   value={values.enquiry_type_id}
                   onChange={handleChange("enquiry_type_id")}
@@ -467,15 +451,7 @@ export default function CreateModelLead() {
                   />
                 </Col>
                 <Col>
-                  {/* <TextInputBox
-                    title={"requirements_id"}
-                    value={values.requirements_id}
-                    onchange={handleChange("requirements_id")}
-                    placeholder="Enter requirements_id"
-                    errorText={
-                      touched.requirements_id && errors.requirements_id ? errors.requirements_id : null
-                    }
-                  /> */}
+                
                   <RequirementsDropdown
                   value={values.requirements_id}
                   onChange={handleChange("requirements_id")}

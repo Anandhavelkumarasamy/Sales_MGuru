@@ -9,6 +9,7 @@ import { admindetails } from "../../component/axios/Service";
 import { updateuser } from "../../component/axios/Service";
 import CountryDropdown from "./CountryDropdown";
 import DealerIdDropdown from "./DealerIdDropdown";
+import { message } from "antd";
 
 export default function CreateModel({ show, handleClose,apical,usertype,editData ,dealeruserList}) {
   const objectToken = useSelector((state) => state.authLogin);
@@ -60,8 +61,11 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
       formdata.append("userId",editData.userId);
       console.log(formdata);
       updateuser(formdata).then((response)=>{
+        if(response.data.status===1){
+          message.success(`User ${values.userName} created successfully`);
       console.log('UserUpdated Successfully',response.data.data);
       apical();
+        }
       handleClose();
   })
     }
@@ -85,9 +89,12 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
     console.log(formdata);
      adduser(formdata)
       .then((response) => {
-        window.alert(response?.data?.msg);
+        // window.alert(response?.data?.msg);
+        if(response?.data?.status===1){
+        message.success(`User ${values.userName} created successfully`);
         console.log(response.data.data, "created successfully");
         apical();
+        }
 
         handleClose();
       })
@@ -277,8 +284,24 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
 
             <div className="mb-3">
               <Row>
-                <Col>
-                  <TextInputBox
+              <Col>
+              {  editData ? 
+              null:
+        //       ( <div className="mb-3">
+        //       {usertype==="4"?  <DealerIdDropdown
+        //   value={values.dealer_id}
+        //   onChange={handleChange("dealer_id")}
+        //   errorText={
+        //     touched.dealer_id && errors.dealer_id ? errors.dealer_id : null
+        //   }
+         
+        // /> :
+        
+        // null
+              
+        //    }
+        //     </div>) : 
+        <TextInputBox
                     title={"Password"}
                     value={values.password}
                     onchange={handleChange("password")}
@@ -290,8 +313,9 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                         : null
                     }
                    
-                  />
+                  /> }
                 </Col>
+
                 <Col>
                   <TextInputBox
                     title={"Pincode"}
@@ -314,38 +338,11 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
             touched.dealer_id && errors.dealer_id ? errors.dealer_id : null
           }
          
-        /> : <TextInputBox
-                title={"Dealer ID"}
-                value={values.dealer_id}
-                onchange={handleChange("dealer_id")}
-                placeholder="Enter dealer ID"
-                errorText={
-                  touched.dealer_id && errors.dealer_id
-                    ? errors.dealer_id
-                    : null
-                }
-                    
-              />}
-              {/* <TextInputBox
-                title={"Dealer ID"}
-                value={values.dealer_id}
-                onchange={handleChange("dealer_id")}
-                placeholder="Enter dealer ID"
-                errorText={
-                  touched.dealer_id && errors.dealer_id
-                    ? errors.dealer_id
-                    : null
-                }
-                    
-              /> */}
-               {/* <DealerIdDropdown
-          value={values.dealer_id}
-          onChange={handleChange("dealer_id")}
-          errorText={
-            touched.dealer_id && errors.dealer_id ? errors.dealer_id : null
-          }
-         
-        /> */}
+        /> :
+        
+        null
+              
+           }
             </div>
 
             <Button

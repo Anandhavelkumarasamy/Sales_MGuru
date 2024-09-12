@@ -9,13 +9,15 @@ import {
   TeamOutlined,
 } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
-import SalesMGuruLogo from '../../assests/WhatsApp Image 2024-09-06 at 2.13.53 PM.jpeg';
+import SalesMGuruLogo from '../../assests/[removal.ai]_cb3f4ea9-6a22-43b6-858c-1c9a96b5d72a-whatsapp-image-2024-09-06-at-2-13-53-pm.png';
 import 'antd/dist/reset.css';
+import { useToken } from '../../../utility/hooks';
 
 const { Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
 const Dashboard = () => {
+  const token = useToken()
   const [collapsed, setCollapsed] = useState(false); 
   const user = useSelector((state) => state.authLogin);
   const navigate = useNavigate();
@@ -29,6 +31,12 @@ const Dashboard = () => {
     navigate('/login');
   };
 
+  const CustomComponent =()=>{
+    return <div>
+      kjghkgkg
+    </div>
+  }
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
@@ -38,21 +46,21 @@ const Dashboard = () => {
         width={250}
         style={{ position: 'fixed', height: '100vh' }}
       >
-      
+      <CustomComponent />
         <div style={{ padding: '20px', textAlign: 'center' }}>
           <img
             src={SalesMGuruLogo}
             alt="SalesMGuru Logo"
-            style={{ width: collapsed ? '70%' : '100%', marginBottom: '10px' }}
+            style={{ width: collapsed ? '70%' : '70%', marginBottom: '5px' }}
           />
           <h6
             style={{
-              width: collapsed ? '50%' : '80%',
+              width: collapsed ? '50%' : '70%',
               color: 'white',
               textAlign: 'center',
               position: 'relative',
               left: collapsed ? '' : '10px',
-              fontSize: collapsed ? '15px' : '30px',
+              fontSize: collapsed ? '15px' : '20px',
             }}
           >
             MGuru
@@ -76,27 +84,32 @@ const Dashboard = () => {
               Leads
             </Link>
           </Menu.Item>
+          <Menu.Item key="3" icon={<DesktopOutlined />}>
+            <Link to="/dashboard/leads" style={{ textDecoration: 'none' }}>
+              Masters
+            </Link>
+          </Menu.Item>
 
-          {/* User Management as a SubMenu */}
+       
           <SubMenu key="sub1" icon={<UserOutlined />} title="User Management">
-            <Menu.Item key="3">
+            <Menu.Item key="34">
               <Link to="/dashboard/admin" style={{ textDecoration: 'none' }}>
                 Admin
               </Link>
             </Menu.Item>
-            <Menu.Item key="4">
+            <Menu.Item key="5">
               <Link to="/dashboard/employee" style={{ textDecoration: 'none' }}>
                 Employee
               </Link>
             </Menu.Item>
-            <Menu.Item key="5">
+            <Menu.Item key="6">
               <Link to="/dashboard/dealer" style={{ textDecoration: 'none' }}>
                 Dealer
               </Link>
             </Menu.Item>
           </SubMenu>
 
-          <Menu.Item key="6" icon={<LogoutOutlined />}>
+          <Menu.Item key="7" icon={<LogoutOutlined />}>
             <Button type="link" onClick={handleLogout} style={{ color: 'white', padding: 0, textDecoration: 'none' }}>
               Logout
             </Button>

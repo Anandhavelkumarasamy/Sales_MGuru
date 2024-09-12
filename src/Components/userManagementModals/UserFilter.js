@@ -34,7 +34,7 @@ const UserFilter = ({ handleGetListUseres}) => {
       <Row>
         <Col>
           <TextInputBox
-            title={"userName"}
+            title={"User Name"}
             value={values.userName}
             onchange={handleChange("userName")}
             placeholder="Enter username"
@@ -62,10 +62,13 @@ const UserFilter = ({ handleGetListUseres}) => {
       <Button variant="primary" onClick={handleSubmit} className="float-end mt-2 ">
         Search
       </Button>
-      <Button variant="primary" onClick={handlereset} className="float-end me-3 mt-2">
+      <Button variant="primary" onClick={handlereset} className="float-end me-3 mt-2 mb-3">
         Reset
+        
       </Button>
+      
     </form>
+    
   );
 };
 
