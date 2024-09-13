@@ -20,6 +20,9 @@ import ForgotPassword from './component/screens/loginScreen/ForgotPassword';
 import VerifyOtp from './component/screens/loginScreen/VerifyOtp';
 import ChangePassword from './component/screens/loginScreen/ChangePassword';
 import CreateModelLead from './Components/leadModal.js/CreateModalLead';
+import MasterCategory from './component/screens/masters/MasterCategory';
+import MasterEnquiry from './component/screens/masters/MasterEnquiry';
+import MasterRequirements from './component/screens/masters/MasterRequirements';
 
 
 
@@ -73,6 +76,18 @@ element:<VerifyOtp/>
       {
         path:'leadsdata',
         element:<CreateModelLead/>
+      },
+      {
+        path:'mastercategory',
+        element:<MasterCategory/>
+      },
+      {
+        path:'masterenquiry',
+        element:<MasterEnquiry/>
+      },
+      {
+        path:'masterrequirements',
+        element:<MasterRequirements/>
       }
     ]
     }

@@ -93,3 +93,7 @@ export const leadressign=(data)=>{
 export const competitordropdown=(token)=>{
     return instance.post('/dropdown/dropdownCompetitor',token)
 }
+//  master
+export const categorylist=(token)=>{
+    return instance.post('/masters/list_category',token)
+}

@@ -10,6 +10,8 @@ import RequirementsDropdown from "./RequirementsDropdown";
 import CustomerDropdown from "./CustomerDropdown";
 import EnquiryDropdown from "./EnquiryDropdown";
 import { message } from "antd";
+import AssignedEmployeedropdown from "./AssignedEmployeedropdown";
+import AssignedDealerdropdown from "./AssignedDealerdropdown";
 
 
 
@@ -116,7 +118,8 @@ export default function CreateModelLead() {
     formdata.append("state", values.state);
     formdata.append("country", values.country);
     formdata.append("city", values.city);
-    formdata.append("dealer_id", values.dealer_id);
+    formdata.append("dealer_id",values.dealer_id);
+    console.log(values.dealer_id,"divya");
     formdata.append("assignedTo", values.assignedTo);
     formdata.append("receivedDate", values.receivedDate);
     formdata.append("referedBy", values.referedBy);
@@ -510,7 +513,7 @@ export default function CreateModelLead() {
                   />
                 </Col>
                 <Col>
-                  <TextInputBox
+                  {/* <TextInputBox
                     title={"assignedTo"}
                     value={values.assignedTo}
                     onchange={handleChange("assignedTo")}
@@ -518,8 +521,14 @@ export default function CreateModelLead() {
                     errorText={
                       touched.assignedTo && errors.assignedTo ? errors.assignedTo : null
                     }
+                  /> */}
+               <AssignedEmployeedropdown
+                  value={values.assignedTo}
+                  onChange={handleChange("assignedTo")}
+                   errorText={touched.assignedTo && errors.assignedTo ? errors.assignedTo : null}
                   />
                 </Col>
+             
               </Row>
             </div>
 
@@ -741,7 +750,7 @@ export default function CreateModelLead() {
             </div>
 
             <div className="mb-3">
-         <TextInputBox
+         {/* <TextInputBox
                 title={"Dealer ID"}
                 value={values.dealer_id}
                 onchange={handleChange("dealer_id")}
@@ -752,7 +761,13 @@ export default function CreateModelLead() {
                     : null
                 }
                     
-              />
+              /> */}
+                <AssignedDealerdropdown
+                  value={values.dealer_id}
+                  onChange={handleChange("dealer_id")}
+                   errorText={touched.dealer_id && errors.dealer_id ? errors.dealer_id : null}
+                  />
+                
               
              
             </div>

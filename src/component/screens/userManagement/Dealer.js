@@ -17,13 +17,13 @@ import UserFilter from "../../../Components/userManagementModals/UserFilter";
 import { message,Tooltip } from "antd";
 import trash from '../../assests/trash.png';
 import update from '../../assests/data-processing.png'
+import { useToken } from "../../../utility/hooks";
 
 
 
 export default function Admin() {
   
-  const objectToken = useSelector((state) => state.authLogin);
-  const dispatch=useDispatch();
+  const token=useToken();
   const [show, setShow] = useState(false);
   const [userList, setuserList] = useState({});
 // const dealeruserList=userList.items;
@@ -66,7 +66,7 @@ const handleUpdateShow=(value)=>{
     console.log(data,"dealerdata")
     let formData = new FormData();
     formData.append("type", "3");
-    formData.append("token", objectToken?.token);
+    formData.append("token", token);
     formData.append("username", data.userName || "");
     formData.append("email", data.email || "");
     formData.append("phoneNumber", data.phoneNumber || "");
@@ -77,15 +77,15 @@ const handleUpdateShow=(value)=>{
   };
 
   useEffect(() => {
-    if (objectToken?.token) {
+    if (token) {
       handleGetListUseres(1, 5, {});
     }
-  }, [objectToken?.token]);
+  }, [token]);
 
 
   const handleDeleteUser = (id) => {
     let formdata = new FormData();
-    formdata.append("token", objectToken.token);
+    formdata.append("token",token);
     formdata.append("userId", id);
     console.log(id, "ytghuijo");
     deleteuser(formdata).then((response) => {

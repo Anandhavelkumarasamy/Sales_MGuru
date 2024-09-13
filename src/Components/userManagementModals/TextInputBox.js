@@ -10,7 +10,7 @@ export default function TextInputBox({title,value,onchange,placeholder,errorText
     setIsPasswordVisible((prev) => !prev);
   };
   return (
-    <div>
+    <div >
 
 
  {title  && <p className="form-label" >{title} {isRequired && <span className='text-danger'>*</span>}</p>}

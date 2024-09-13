@@ -11,7 +11,7 @@ import { message } from 'antd';
 const { Title } = Typography;
 
 export default function VerifyOtp() { 
-  const selector = useSelector((state) => state.authLogin);
+  
   const navigate = useNavigate();
   
   const [texts, settexts] = useState('');

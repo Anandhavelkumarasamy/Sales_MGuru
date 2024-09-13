@@ -13,9 +13,10 @@ import DeleteModal from '../../../Components/userManagementModals/DeleteModal'
 import { message, Tooltip} from "antd";
 import trash from '../../assests/trash.png';
 import update from '../../assests/data-processing.png';
+import { useToken } from "../../../utility/hooks";
 
 export default function Employee() {
-  const objectToken = useSelector((state) => state.authLogin);
+  const token=useToken();
   const [show, setShow] = useState(false);
   const [userList, setuserList] = useState({});
 
@@ -53,7 +54,7 @@ export default function Employee() {
   const handleGetListUseres = (page = 1, size = 5, data = {}) => {
     let formData = new FormData();
     formData.append("type", "4");
-    formData.append("token", objectToken?.token);
+    formData.append("token",token);
     formData.append("username", data.userName || "");
     formData.append("email", data.email || "");
     formData.append("phoneNumber", data.phoneNumber || "");
@@ -64,14 +65,14 @@ export default function Employee() {
   };
 
   useEffect(() => {
-    if (objectToken?.token) {
+    if (token) {
       handleGetListUseres(1, 5, {});
     }
-  }, [objectToken?.token]);
+  }, [token]);
 
   const handleDeleteUser = (id) => {
     let formdata = new FormData();
-    formdata.append("token", objectToken.token);
+    formdata.append("token", token);
     formdata.append("userId", id);
     console.log(id, "ytghuijo");
     deleteuser(formdata).then((response) => {

@@ -6,6 +6,7 @@ const initialState={
     dealeruserList:null,
     resetkey:null,
     leadsdata:[],
+    assignedselecteddealerid:'',
 }
 // const logintoken=createSlice({
 //     name:'authtoken',
@@ -35,10 +36,13 @@ const {actions,reducer} = createSlice({
         },
         handleleadsdata:(state,action)=>{
             state.leadsdata=action.payload;
+        },
+        handleassignedselecteddealerid:(state,action)=>{
+            state.assignedselecteddealerid=action.payload;
         }
     }
 })
 
-export const {handleStorage,handleDealeruserlist,handleresetkey,handleleadsdata} = actions
+export const {handleStorage,handleDealeruserlist,handleresetkey,handleleadsdata,handleassignedselecteddealerid} = actions
 
 export default reducer

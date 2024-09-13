@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { deleteuser, listuser } from "../../axios/Service";
 import { Button, Row, Col } from "react-bootstrap";
 import { Table, Tooltip, Pagination, message } from "antd";
@@ -7,9 +6,10 @@ import { PlusOutlined, SearchOutlined, DeleteOutlined } from "@ant-design/icons"
 import CreateModal from '../../../Components/userManagementModals/CreateModal';
 import DeleteModal from '../../../Components/userManagementModals/DeleteModal';
 import UserFilter from "../../../Components/userManagementModals/UserFilter";
+import { useToken } from "../../../utility/hooks";
 
 export default function Admin() {
-  const objectToken = useSelector((state) => state.authLogin);
+  const token=useToken();
   const [show, setShow] = useState(false);
   const [userList, setuserList] = useState({});
   const [displayusername, setdisplayusername] = useState('');
@@ -32,7 +32,7 @@ export default function Admin() {
   const handleGetListUseres = (page = 1, size = 5, data = {}) => {
     let formData = new FormData();
     formData.append("type", "2");
-    formData.append("token", objectToken?.token);
+    formData.append("token", token);
     formData.append("username", data.userName || "");
     formData.append("email", data.email || "");
     formData.append("phoneNumber", data.phoneNumber || "");
@@ -43,14 +43,14 @@ export default function Admin() {
   };
 
   useEffect(() => {
-    if (objectToken?.token) {
+    if (token) {
       handleGetListUseres(1, itemsPerPage, {});
     }
-  }, [objectToken?.token]);
+  }, [token]);
 
   const handleDeleteUser = (deleteuserid) => {
     let formdata = new FormData();
-    formdata.append("token", objectToken.token);
+    formdata.append("token", token);
     formdata.append("userId", deleteuserid);
     deleteuser(formdata).then((response) => {
       if(response.data.status === 1){

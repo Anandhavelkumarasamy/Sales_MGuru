@@ -67,19 +67,19 @@ function Login() {
   return (
     <div className={classes.loginbg}>
       <div className={`row d-flex  bg-light justify-content-center rounded-5 p-3 ${classes.container}`}>
-      <h3 className="text-center">  
+      <h2 className="text-center">  
             Welcome!!
             <hr />
-          </h3>
+          </h2>
             <div className={`col p-3 ${classes.container2}`}>
-              <img style={{width:'100vh',height:'70vh'}}
+              <img style={{width:'80vh',height:'50vh'}}
                 src={loginimage}
                 alt="YourImage"
                 className="img-fluid  "
               />
             </div>
 
-            <div   className={` col bg-light mt-5    rounded-3 p-4 ${classes.container3}`}>
+            <div   className={` col  mt-3 bg-primary    rounded-3 p-3 ${classes.container3}`}>
           <h2 className="text-center">
                   Login
                   <hr />
@@ -119,7 +119,7 @@ function Login() {
                       justifyContent: "space-between",
                       alignItems: "center",
                       alignSelf: "center",
-                      marginTop:'10px'
+                      marginTop:'20px'
                     }}
                   >
                     <div>

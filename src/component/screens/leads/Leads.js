@@ -19,10 +19,11 @@ import trash from '../../assests/trash.png';
 import update from '../../assests/data-processing.png';
 import updatestatus from '../../assests/search.png';
 import reassign from '../../assests/shift.png'
+import { useToken } from '../../../utility/hooks';
 
 
 export default function Leads() {
-  const leadsSelector = useSelector((state) => state.authLogin);
+  const token=useToken();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [leaduserlist, setLeaduserlist] = useState(null);
@@ -70,7 +71,7 @@ export default function Leads() {
   const handleleadsuserList = (page = 1, size = 6,data={}) => {
     let formdata = new FormData();
     console.log(data,"dataleads")
-    formdata.append("token", leadsSelector.token);
+    formdata.append("token", token);
 
     formdata.append("name", data.leadName ?data.leadName: ""  );
      formdata.append("state", data.state || "");
@@ -83,14 +84,14 @@ export default function Leads() {
   };
 
   useEffect(() => {
-    if (leadsSelector?.token) {
+    if (token) {
       handleleadsuserList(1, itemsPerPage, {});
     }
-  }, [leadsSelector?.token]);
+  }, [token]);
 
   const handleDeleteUser = (id) => {
     let formdata = new FormData();
-    formdata.append("token", leadsSelector.token);
+    formdata.append("token",token);
     formdata.append("leadId", id);
     deleteleaduser(formdata).then((response) => {
       if(response.data.status===1)

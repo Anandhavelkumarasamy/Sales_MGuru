@@ -6,7 +6,9 @@ import {
   PieChartOutlined,
   DesktopOutlined,
   LogoutOutlined,
-  TeamOutlined,
+
+  FundViewOutlined,
+  
 } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import SalesMGuruLogo from '../../assests/[removal.ai]_cb3f4ea9-6a22-43b6-858c-1c9a96b5d72a-whatsapp-image-2024-09-06-at-2-13-53-pm.png';
@@ -19,23 +21,23 @@ const { SubMenu } = Menu;
 const Dashboard = () => {
   const token = useToken()
   const [collapsed, setCollapsed] = useState(false); 
-  const user = useSelector((state) => state.authLogin);
+  // const user = useSelector((state) => state.authLogin);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
+    console.log(token);
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem('username');
     navigate('/login');
   };
 
-  const CustomComponent =()=>{
-    return <div>
-      kjghkgkg
-    </div>
-  }
+  // const CustomComponent =()=>{
+  //   return <div>
+  //     kjghkgkg
+  //   </div>
+  // }
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -46,14 +48,14 @@ const Dashboard = () => {
         width={250}
         style={{ position: 'fixed', height: '100vh' }}
       >
-      <CustomComponent />
+      {/* <CustomComponent /> */}
         <div style={{ padding: '20px', textAlign: 'center' }}>
           <img
             src={SalesMGuruLogo}
             alt="SalesMGuru Logo"
             style={{ width: collapsed ? '70%' : '70%', marginBottom: '5px' }}
           />
-          <h6
+          {/* <h6
             style={{
               width: collapsed ? '50%' : '70%',
               color: 'white',
@@ -64,7 +66,7 @@ const Dashboard = () => {
             }}
           >
             MGuru
-          </h6>
+          </h6> */}
         </div>
 
         <Menu
@@ -84,32 +86,45 @@ const Dashboard = () => {
               Leads
             </Link>
           </Menu.Item>
-          <Menu.Item key="3" icon={<DesktopOutlined />}>
-            <Link to="/dashboard/leads" style={{ textDecoration: 'none' }}>
-              Masters
-            </Link>
-          </Menu.Item>
+
+          <SubMenu key="sub1" icon={<FundViewOutlined />} title="Masters">
+            <Menu.Item key="3">
+              <Link to="/dashboard/mastercategory" style={{ textDecoration: 'none' }}>
+                Category
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="4">
+              <Link to="/dashboard/masterenquiry" style={{ textDecoration: 'none' }}>
+                Enquiry
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="5">
+              <Link to="/dashboard/masterrequirements" style={{ textDecoration: 'none' }}>
+                Requirements
+              </Link>
+            </Menu.Item>
+          </SubMenu>
 
        
           <SubMenu key="sub1" icon={<UserOutlined />} title="User Management">
-            <Menu.Item key="34">
+            <Menu.Item key="6">
               <Link to="/dashboard/admin" style={{ textDecoration: 'none' }}>
                 Admin
               </Link>
             </Menu.Item>
-            <Menu.Item key="5">
+            <Menu.Item key="7">
               <Link to="/dashboard/employee" style={{ textDecoration: 'none' }}>
                 Employee
               </Link>
             </Menu.Item>
-            <Menu.Item key="6">
+            <Menu.Item key="8">
               <Link to="/dashboard/dealer" style={{ textDecoration: 'none' }}>
                 Dealer
               </Link>
             </Menu.Item>
           </SubMenu>
 
-          <Menu.Item key="7" icon={<LogoutOutlined />}>
+          <Menu.Item key="9" icon={<LogoutOutlined />}>
             <Button type="link" onClick={handleLogout} style={{ color: 'white', padding: 0, textDecoration: 'none' }}>
               Logout
             </Button>
