@@ -16,7 +16,7 @@ export default function Admin() {
   const [todelete, settoDelete] = useState(false);
   const [showInput, setshowInput] = useState(false);
   const [deleteuserid, setdeleteuserid] = useState(null);
-  const itemsPerPage = 5;
+  const itemsPerPage = 2;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -29,7 +29,7 @@ export default function Admin() {
 
   const toggleInputs = () => setshowInput((pre) => !pre);
 
-  const handleGetListUseres = (page = 1, size = 5, data = {}) => {
+  const handleGetListUseres = (page = 1, size, data = {}) => {
     let formData = new FormData();
     formData.append("type", "2");
     formData.append("token", token);
@@ -104,7 +104,7 @@ export default function Admin() {
       align: 'center',
       render: (text, item) => (
         <Tooltip title="Delete" placement="bottom">
-            {<DeleteOutlined   type="text" style={{color:'red'}}   onClick={() => handleDeleteShow(item.userId, item.userName)}/>}
+            {<DeleteOutlined   type="text" style={{color:'red',fontSize:'18px'}}   onClick={() => handleDeleteShow(item.userId, item.userName)}/>}
         </Tooltip>
       ),
     },

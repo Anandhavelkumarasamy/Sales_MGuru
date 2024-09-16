@@ -1,123 +1,139 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteuser,
-  listuser,
-} from "../../axios/Service";
 import { Button } from "react-bootstrap";
-
-import { Pagination } from "antd";
-
-import TextInputBox from '../../../Components/userManagementModals/TextInputBox';
-import CreateModal from '../../../Components/userManagementModals/CreateModal'
-import DeleteModal from '../../../Components/userManagementModals/DeleteModal'
+import { Table, Tooltip, Pagination, message } from "antd";
 import { SearchOutlined } from '@ant-design/icons';
-import { handleDealeruserlist } from "../../redux/reducers/Logintoken";
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+
 import UserFilter from "../../../Components/userManagementModals/UserFilter";
-import { message,Tooltip } from "antd";
-import trash from '../../assests/trash.png';
-import update from '../../assests/data-processing.png'
+import CreateModal from '../../../Components/userManagementModals/CreateModal';
+import DeleteModal from '../../../Components/userManagementModals/DeleteModal';
+import { listuser, deleteuser } from "../../axios/Service";
 import { useToken } from "../../../utility/hooks";
+import styles from './Dealer.module.css'; 
 
 
+export default function Dealer() {
+  const token = useToken();
+  const [userList, setUserList] = useState({});
+  const [showInput, setShowInput] = useState(false);
+  const [todelete, setToDelete] = useState(false);
+  const [deleteUsername, setDeleteUsername] = useState(null);
+  const [value, setValue] = useState("");
+  const [isShowModal, setIsShowModal] = useState({ isShow: false, data: null });
 
-export default function Admin() {
-  
-  const token=useToken();
-  const [show, setShow] = useState(false);
-  const [userList, setuserList] = useState({});
-// const dealeruserList=userList.items;
-   
-  const [Value, setValue] = useState("");
-  const [showInput, setshowInput] = useState(false);
-  const toggleInputs = () => setshowInput((pre) => !pre);
-  const [todelete, settoDelete] = useState(false);
-  const [deleteusername,setdeleteusername]=useState(null);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const handleDeleteClose = () => settoDelete(false);
-  const handleDeleteShow = (id,deleteusername) => {
-    setValue(id);
-    setdeleteusername(deleteusername)
-    settoDelete(true);
-  };
-
-  const [isShowModal,setisShowModal] = useState({
-    isShow:false,
-    data:null
-  })
-  const [toupdate,settoUpdate]=useState(false);
-  const handleUpdateClose=()=>settoUpdate(false);
-  
-   const [editid,seteditid]=useState(null)
-  
-const handleUpdateShow=(value)=>{
-  console.log(value,"updatedid");
-    seteditid(value);
-    settoUpdate(true);
-}
   const itemsPerPage = 5;
 
-  
-  // dispatch(handleDealeruserlist(dealeruserList));
-  console.log(userList, "KKKKKKKKKKKKKKK");
+  useEffect(() => {
+    if (token) {
+      handleGetListUsers(1, 5, {});
+    }
+  }, [token]);
 
-  const handleGetListUseres = (page = 1, size = 5, data = {}) => {
-    console.log(data,"dealerdata")
+
+  const handleGetListUsers = (page = 1, size = 5, data = {}) => {
     let formData = new FormData();
     formData.append("type", "3");
     formData.append("token", token);
     formData.append("username", data.userName || "");
     formData.append("email", data.email || "");
     formData.append("phoneNumber", data.phoneNumber || "");
-    
+
     listuser(page, size, formData)
-      .then((response) => setuserList(response?.data?.data))
+      .then((response) => setUserList(response?.data?.data))
       .catch((err) => console.error(err));
   };
 
-  useEffect(() => {
-    if (token) {
-      handleGetListUseres(1, 5, {});
-    }
-  }, [token]);
-
 
   const handleDeleteUser = (id) => {
-    let formdata = new FormData();
-    formdata.append("token",token);
-    formdata.append("userId", id);
-    console.log(id, "ytghuijo");
-    deleteuser(formdata).then((response) => {
-      if(response.data.status===1)
-        message.success(`User ${deleteusername} deleted successfully`);
-      console.log(response.data.data, "deleteSuccessfully");
-      handleDeleteClose();
-      // handleAdmin();
-      handleGetListUseres();
+    let formData = new FormData();
+    formData.append("token", token);
+    formData.append("userId", id);
+
+    deleteuser(formData).then((response) => {
+      if (response.data.status === 1) {
+        message.success(`User ${deleteUsername} deleted successfully`);
+      }
+      handleGetListUsers();
+      setToDelete(false);
     });
-  
   };
-  const handleSerialNo = (index) => {
-    return (userList.page - 1) * itemsPerPage + index + 1;
-  };
- console.log(userList,"dealerpage");
+
+  const columns = [
+    {
+      title: 'Serial No',
+      key: 'serialNo',
+      render: (text, record, index) => (userList.page - 1) * itemsPerPage + index + 1,
+      align: 'center'
+    },
+    {
+      title: 'ID',
+      dataIndex: 'userId',
+      key: 'userId',
+      align: 'center'
+ 
+    },
+    {
+      title: 'Name',
+      dataIndex: 'userName',
+      key: 'userName',
+      align: 'center'
+    },
+    {
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
+      align: 'center'
+    },
+    {
+      title: 'Type',
+      dataIndex: 'userTypeName',
+      key: 'userTypeName',
+      align: 'center'
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+      align: 'center'
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      align: 'center',
+      render: (text, record) => (
+        <>
+          <Tooltip title="Delete" placement="bottom">
+            <DeleteOutlined
+              style={{ color: "red", margin: "0 10px", fontSize: '18px' }}
+              onClick={() => { setValue(record.userId); setDeleteUsername(record.userName); setToDelete(true); }}
+            />
+          </Tooltip>
+          <Tooltip title="Update" placement="bottom">
+            <EditOutlined
+              style={{ color: "blue", fontSize: "18px", margin: "0 10px" }}
+              onClick={() => setIsShowModal({ data: record, isShow: true })}
+            />
+          </Tooltip>
+        </>
+      )
+    }
+  ];
 
   return (
     <>
       <div className="row mb-2">
-        <div className="col-2 ">
-          <h3> Dealer Page</h3>
+        <div className="col-2">
+          <h3>Dealer Page</h3>
         </div>
-        <div className="col-10 ">
+        <div className="col-10">
           <Button
             variant="primary"
-            onClick={() =>setisShowModal({data:null,isShow:true})}
-            className="float-end  me-5"
+            onClick={() => setIsShowModal({ data: null, isShow: true })}
+            className="float-end me-5"
           >
             Add Dealer
           </Button>
-          <Button variant="primary" onClick={toggleInputs} className="float-end me-3">
+          <Button variant="primary" onClick={() => setShowInput((prev) => !prev)} className="float-end me-3">
             <SearchOutlined />
           </Button>
         </div>
@@ -126,88 +142,44 @@ const handleUpdateShow=(value)=>{
       <br />
       {showInput && (
         <div className="mb-5">
-          <UserFilter handleGetListUseres={handleGetListUseres}  />
+          <UserFilter handleGetListUsers={handleGetListUsers} />
         </div>
       )}
 
-      <div className="border border-black">
-        <table className="table table-striped ">
-          <thead className="thead-light">
-            <tr>
-              <th className="p-2 text-center">Serial No</th>
-              <th className="p-2 text-center">ID</th>
-              <th className="p-2 text-center">Name</th>
-              <th className="p-2 text-center">Phone Number</th>
-              <th className="p-2 text-center">Type</th>
-              <th className="p-2 text-center">Email</th>
-              <th className="p-2 text-center ms-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {userList.items?.map((item, index) => (
-              <tr key={item.id} style={{ textAlign: "center", verticalAlign: "middle" }}>
-                <td className="text-center">{handleSerialNo(index)}</td>
+      <div>
+        <Table
+          columns={columns}
+          dataSource={userList.items}
+          pagination={false}
+          rowKey="userId"
+           bordered
+          className={styles.customTable}
+        />
 
-                <td className="text-center">{item.userId}</td>
-                <td className="text-center">{item.userName}</td>
-                <td className="text-center">{item.phoneNumber}</td>
-                <td className="text-center">{item.userTypeName}</td>
-                <td className="text-center">{item.email}</td>
-                <td className="text-center ">
-                
-                  <Tooltip placement="bottom" title="Delete">
-                    <img src={trash}
-                    alt="trash"
-                    className="mx-3"
-                    onClick={() => handleDeleteShow(item.userId,item.userName)}
-                    style={{ cursor: "pointer", width: "20px", height: "20px" }}
-                    />
-                  </Tooltip>
-                  <Tooltip placement="bottom" title='update'>
-                  <img src={update}
-                  alt="update"
-                  className="mx-3"
-                  onClick={()=> setisShowModal({data:item,isShow:true})}
-                  style={{ cursor: "pointer", width: "20px", height: "20px" }}/>
-                  </Tooltip>
-            
-             
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
         <Pagination
-          pageSize={userList?.size}
+          className="mt-4"
+          pageSize={itemsPerPage}
           align="end"
-          onChange={(val, size) => {
-            handleGetListUseres(val, size);
-          }}
-           total={userList.total_count}
+          onChange={(val, size) => handleGetListUsers(val, size)}
+          total={userList.total_count}
         />
 
         <DeleteModal
           todelete={todelete}
-          handleDeleteClose={handleDeleteClose}
-          displayusername={deleteusername}
+          handleDeleteClose={() => setToDelete(false)}
+          displayusername={deleteUsername}
           handleDeleteUser={handleDeleteUser}
-          deleteuserid={Value}
-         
+          deleteuserid={value}
         />
-     {isShowModal?.isShow &&   <CreateModal
-        editData={isShowModal?.data}
-          show={isShowModal?.isShow}
-          handleClose={() => setisShowModal({data:null,isShow:false})}
-          apical={handleGetListUseres}
-          usertype={"3"}
-          // dealeruserList={dealeruserList}
-        />}
-        {/* <EditModal
-         editid={editid}
-         toupdate={toupdate}
-         handleUpdateClose={handleUpdateClose}
-        /> */}
-
+        {isShowModal.isShow && (
+          <CreateModal
+            editData={isShowModal.data}
+            show={isShowModal.isShow}
+            handleClose={() => setIsShowModal({ data: null, isShow: false })}
+            apical={handleGetListUsers}
+            usertype={"3"}
+          />
+        )}
       </div>
     </>
   );

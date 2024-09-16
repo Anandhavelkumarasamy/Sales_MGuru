@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap'; 
 import { useSelector } from 'react-redux';
 import { changeleadstatus, competitordropdown, enquirydropdown, leaddropdown } from '../../component/axios/Service';
-import {  DatePicker } from 'antd';
+import {  DatePicker,message} from 'antd';
 
 // const { RangePicker }=DatePicker
 // const { Title } = Typography;
@@ -38,9 +38,15 @@ export default function Leaddropdown({ errorText, leaddropdowns, handledropdownc
           
             changeleadstatus(formdata).then((response) => {
                 console.log(response, "leadstatussss");
-                setSelectedLeadStatusId('');
+                if(response.data.status===1){
+                    message.success(response.data.msg)
+                  setSelectedLeadStatusId('');
                 setNotes('');
-                handledropdownclose();
+                handledropdownclose();   
+                }else{
+                    message.error(response.data.msg)
+                   }
+               
             });
         }
     };

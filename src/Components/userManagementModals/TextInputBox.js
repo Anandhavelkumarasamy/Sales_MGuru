@@ -30,7 +30,12 @@ export default function TextInputBox({title,value,onchange,placeholder,errorText
 </div>}
 </div>
 
-  {errorText &&<p className="text-danger" >{errorText}</p>}
+{errorText && (
+  <p className={`text-danger ${classes.errortext} ${errorText ? classes.showError : ''}`}>
+    {errorText}
+  </p>
+)}
+
       
     </div>
   )

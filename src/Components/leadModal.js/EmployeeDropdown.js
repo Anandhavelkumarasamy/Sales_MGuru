@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { employdropdown, dealerdropdown, leadressign } from '../../component/axios/Service';
+import { message } from 'antd';
 
 export default function EmployeeDropdown({ employeedropdown, leadid, handleemployeedropdownclose }) {
   const selector = useSelector((state) => state.authLogin);
@@ -21,6 +22,12 @@ export default function EmployeeDropdown({ employeedropdown, leadid, handleemplo
     formdata.append("dealerId",selecteddealerid);
     
     leadressign(formdata).then((response) => {
+       if (response.data.status===1){
+        message.success('successfully reassigned')
+       }
+       else{
+        message.error(response.data.msg)
+       }
       console.log("leadreassign", response.data.data);
       setselectedemployeeid('');  
       setselecteddealerid('');  

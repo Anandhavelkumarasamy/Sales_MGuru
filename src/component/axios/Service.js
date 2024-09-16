@@ -1,4 +1,5 @@
 
+import { toHaveValue } from "@testing-library/jest-dom/dist/matchers";
 import instance from "./Axios";
 
 export const signin=(login)=>{
@@ -94,6 +95,21 @@ export const competitordropdown=(token)=>{
     return instance.post('/dropdown/dropdownCompetitor',token)
 }
 //  master
-export const categorylist=(token)=>{
-    return instance.post('/masters/list_category',token)
+export const categorylist=(page,size,token)=>{
+    return instance.post(`/masters/list_category?page=${page}&size=${size}`,token)
+}
+export const addmasteruser=(value,data)=>{
+    return instance.post(`/masters/create_${value}`,data)
+}
+export const updatemasteruser=(value,data)=>{
+     return instance.post(`/masters/update_${value}`,data);
+}
+export const deletemasteruser=(value,data)=>{
+    return instance.post(`/masters/delete_${value}`,data)
+}
+export const enquirylist=(page,size,value)=>{
+    return instance.post(`/masters/list_enquiry_type?page=${page}&size=${size}`,value)
+}
+export const requirementslist=(page,size,value)=>{
+    return instance.post(`masters/list_requirements?page=${page}&size=${size}`,value)
 }

@@ -79,11 +79,11 @@ function Login() {
               />
             </div>
 
-            <div   className={` col  mt-3 bg-primary    rounded-3 p-3 ${classes.container3}`}>
-          <h2 className="text-center">
+            <div   className={` col  mt-3 w-100 h-100 bg-white rounded-3 p-3 ${classes.container3}`}>
+          <h3 className="text-center">
                   Login
                   <hr />
-                </h2>    
+                </h3>    
                 <form onSubmit={handleSubmit}>
                   <TextInputBox
                     title={"User Name"}

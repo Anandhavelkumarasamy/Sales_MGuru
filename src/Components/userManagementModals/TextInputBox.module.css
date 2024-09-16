@@ -27,3 +27,17 @@ width:'13%';
 display: flex;
 justify-content: flex-end;
 }
+
+
+.errortext {
+  height: 16px; /* Reserve space for the error message */
+  visibility: hidden; /* Hide error text but keep the space reserved */
+  margin: 0;
+  color: red; /* Error text color */
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.showError {
+  visibility: visible; /* Show error text when the error occurs */
+}

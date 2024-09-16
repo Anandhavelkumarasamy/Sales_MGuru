@@ -30,10 +30,13 @@ export default function ForgotPassword() {
       let resetkey = response.data.reset_key;
       console.log(response.data.reset_key, "forgotpassword");
    sessionStorage.setItem("reset_key",resetkey);
-   message.success('OTP has been resent successfully!');
+
   if(response.data.status===1){
-  
+    message.success('OTP has been resent successfully!');
       navigate('/verifyotp');
+  }
+  else{
+    message.error('Enter valid Email address!');
   }
     });
   };
@@ -44,14 +47,14 @@ export default function ForgotPassword() {
             <h3 className='text-center'>Forgot Password<hr /></h3>
          
             <div className={`col p-3 ${classes.container2}`}>
-              <img style={{width:'100vh',height:'70vh'}}
+              <img style={{width:'100%',height:'60vh'}}
                 src={loginimage}
                 alt="YourImage"
                 className="img-fluid  "
               />
             </div>
 
-            <div   className={` col bg-light  mt-5  rounded-3 p-4 ${classes.container3}`}>
+            <div   className={` col bg-white w-100 h-100 mt-5  rounded-3 p-4 ${classes.container3}`} >
            
               <h2 className="text-center">Email<hr /></h2>
            
