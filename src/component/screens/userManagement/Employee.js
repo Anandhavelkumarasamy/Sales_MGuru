@@ -86,12 +86,12 @@ export default function Employee() {
       render: (text, record, index) => handleSerialNo(index),
       align: 'center'
     },
-    {
-      title: 'ID',
-      dataIndex: 'userId',
-      key: 'userId',
-      align: 'center'
-    },
+    // {
+    //   title: 'ID',
+    //   dataIndex: 'userId',
+    //   key: 'userId',
+    //   align: 'center'
+    // },
     {
       title: 'Name',
       dataIndex: 'userName',
@@ -151,20 +151,22 @@ export default function Employee() {
   return (
     <>
       <div className="row mb-2">
-        <div className="col-4">
+        <div className="col-3">
           <h3>Employee Page</h3>
         </div>
-        <div className="col-8">
-          <Button
-            type="primary"
+        <div className="col-9">
+
+        <Button
+            style={{background:'#002244'}}
             onClick={() => setIsShowModal({ data: null, isShow: true })}
-            className="float-end me-5 "
+            className="float-end me-5 text-white p-3"
           >
             Add Employee
           </Button>
-          <Button type="primary" onClick={toggleInputs} className="float-end p-3 mx-3">
+          <Button style={{background:'#002244'}} onClick={toggleInputs}  className="float-end me-3 text-white p-3">
             <SearchOutlined />
           </Button>
+       
         </div>
       </div>
       <br />

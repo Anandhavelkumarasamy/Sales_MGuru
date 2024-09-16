@@ -18,7 +18,7 @@ export default function VerifyOtp() {
   const [timeLeft, setTimeLeft] = useState(20); 
    
 
-  const onChange = (text) => {
+  const onChange = (text:string) => {
     console.log('onChange:', text);
     settexts(text);
   };
@@ -28,7 +28,7 @@ export default function VerifyOtp() {
   };
   
   const handleresendotp = () => {
-    let resetKey = sessionStorage.getItem("reset_key");
+    let resetKey:any = sessionStorage.getItem("reset_key");
     let formdata = new FormData();
     formdata.append("resetKey", resetKey);
     resendotp(formdata).then((response) => {
@@ -42,7 +42,7 @@ export default function VerifyOtp() {
   
   const handleValue = () => {
     let formdata = new FormData();
-    let resetKey = sessionStorage.getItem("reset_key"); 
+    let resetKey :any = sessionStorage.getItem("reset_key"); 
     formdata.append("resetKey", resetKey);
     formdata.append("otp", texts);
     verifyotp(formdata).then((response) => {
@@ -66,7 +66,7 @@ export default function VerifyOtp() {
     }
   }, [timeLeft]);
 
-  const formatTime = (seconds) => {
+  const formatTime = (seconds:number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;

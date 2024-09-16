@@ -21,16 +21,16 @@ export default function Dealer() {
   const [value, setValue] = useState("");
   const [isShowModal, setIsShowModal] = useState({ isShow: false, data: null });
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     if (token) {
-      handleGetListUsers(1, 5, {});
+      handleGetListUsers(1, itemsPerPage, {});
     }
   }, [token]);
 
 
-  const handleGetListUsers = (page = 1, size = 5, data = {}) => {
+  const handleGetListUsers = (page = 1, size , data = {}) => {
     let formData = new FormData();
     formData.append("type", "3");
     formData.append("token", token);
@@ -65,13 +65,13 @@ export default function Dealer() {
       render: (text, record, index) => (userList.page - 1) * itemsPerPage + index + 1,
       align: 'center'
     },
-    {
-      title: 'ID',
-      dataIndex: 'userId',
-      key: 'userId',
-      align: 'center'
+    // {
+    //   title: 'ID',
+    //   dataIndex: 'userId',
+    //   key: 'userId',
+    //   align: 'center'
  
-    },
+    // },
     {
       title: 'Name',
       dataIndex: 'userName',
@@ -127,13 +127,13 @@ export default function Dealer() {
         </div>
         <div className="col-10">
           <Button
-            variant="primary"
+           style={{background:'#002244'}}
             onClick={() => setIsShowModal({ data: null, isShow: true })}
             className="float-end me-5"
           >
             Add Dealer
           </Button>
-          <Button variant="primary" onClick={() => setShowInput((prev) => !prev)} className="float-end me-3">
+          <Button style={{background:'#002244'}} onClick={() => setShowInput((prev) => !prev)} className="float-end me-3">
             <SearchOutlined />
           </Button>
         </div>
@@ -154,6 +154,8 @@ export default function Dealer() {
           rowKey="userId"
            bordered
           className={styles.customTable}
+          
+  
         />
 
         <Pagination

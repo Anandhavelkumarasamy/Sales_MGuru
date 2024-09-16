@@ -3,3 +3,12 @@
   margin:0;
   box-sizing:box-border;
 }
+
+
+.ant-table-thead th{
+background-color: #002244 !important;
+color:  white !important;
+}
+
+
+

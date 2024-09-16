@@ -9,12 +9,14 @@ import { signin } from "../../axios/Service";
 import { useDispatch } from "react-redux";
 import { handleStorage } from "../../redux/reducers/Logintoken";
 import TextInputBox from "../../../Components/userManagementModals/TextInputBox";
+import { LoginProps } from "../../../@types/login";
 
 function Login() {
   const navigate = useNavigate();
   const sha1 = require("sha1");
   const dispatch = useDispatch();
-  const handleSubmitlogin = (values) => {
+  
+  const handleSubmitlogin = (values:LoginProps) => {
     const finalData = {
       userName: values.userName,
       password: values.password,

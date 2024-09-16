@@ -29,9 +29,9 @@ export default function CustomerDropdown({
 
   return (
     <Form.Group controlId="dealerIdDropdown">
-      <Form.Label>Select customer_category_id</Form.Label>
+      <Form.Label>Select customer category id</Form.Label>
       <Form.Control as="select" value={value} onChange={onChange}>
-        <option value="">Select a customer_category_id</option>
+        <option value="">Select a customer category id</option>
         {requirementsdata?.map((item, index) => (
           <option key={item.categoryId} value={item.categoryId}>
             {item.categoryName}

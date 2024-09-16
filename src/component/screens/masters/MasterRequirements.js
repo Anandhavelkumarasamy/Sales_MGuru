@@ -126,10 +126,10 @@ export default function MasterRequirements() {
           <h3>Master Requirements</h3>
         </Col>
         <Col className="text-end">
-          <Button variant="primary" onClick={handleShow}>
+          <Button style={{background:'#002244'}} onClick={handleShow}>
             Add New Requirements
           </Button>
-          <Button variant="primary"  onClick={toggleInputs} className="ms-3">
+          <Button style={{background:'#002244'}}  onClick={toggleInputs} className="ms-3">
             <SearchOutlined />
           </Button>
         </Col>

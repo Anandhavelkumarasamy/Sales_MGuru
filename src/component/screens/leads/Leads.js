@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Table, Tooltip, message, Pagination } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteleaduser, leadlistuser } from '../../axios/Service';
 import DeleteModalLead from '../../../Components/leadModal.js/DeleteModalLead';
@@ -10,12 +10,7 @@ import Leaddropdown from '../../../Components/leadModal.js/Leaddropdown';
 import EmployeeDropdown from '../../../Components/leadModal.js/EmployeeDropdown';
 import LeadFilter from '../../../Components/leadModal.js/LeadFilter';
 import IsactiveModal from '../../../Components/leadModal.js/IsactiveModal';
-import bookmarkimage1 from '../../assests/bookmark-white.png';
-import bookmarkimage2 from '../../assests/bookmark.png';
-import trash from '../../assests/trash.png';
-import update from '../../assests/data-processing.png';
-import updatestatus from '../../assests/search.png';
-import reassign from '../../assests/shift.png';
+
 import { useToken } from '../../../utility/hooks';
 import { 
   StarOutlined, 
@@ -83,7 +78,7 @@ export default function Leads() {
     formdata.append("token", token);
     formdata.append("leadId", id);
     deleteleaduser(formdata).then((response) => {
-      if (response.data.status === 1) {
+      if (response?.data?.status === 1) {
         message.success(`User ${deleteusername} deleted successfully`);
         handleDeleteClose();
         handleleadsuserList(currentPage, itemsPerPage);
@@ -197,12 +192,13 @@ export default function Leads() {
             onClick={() => {
               navigate('/dashboard/leadsdata');
             }}
+            style={{background:'#002244'}}
             className="float-end"
           >
             Add Lead
           </Button>
-          <Button type="primary" onClick={toggleInputs} className="float-end me-3">
-            <SearchOutlined />
+          <Button style={{background:'#002244'}} onClick={toggleInputs} className="float-end me-3">
+            <SearchOutlined style={{color:'white'}} />
           </Button>
         </div>
         <br />

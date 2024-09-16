@@ -59,10 +59,10 @@ const UserFilter = ({ handleGetListUseres}) => {
         </Col>
       </Row>
 
-      <Button variant="primary" onClick={handleSubmit} className="float-end mt-2 ">
+      <Button style={{background:'#002244'}} onClick={handleSubmit} className="float-end mt-2 ">
         Search
       </Button>
-      <Button variant="primary" onClick={handlereset} className="float-end me-3 mt-2 mb-3">
+      <Button style={{background:'#002244'}} onClick={handlereset} className="float-end me-3 mt-2 mb-3">
         Reset
         
       </Button>

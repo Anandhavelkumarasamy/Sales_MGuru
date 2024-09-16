@@ -68,7 +68,8 @@ export default function MasterCategory() {
       if(response.data.status===1){
        setcategoryList(response?.data?.data);
       console.log(response?.data?.data, "mastercatergy"); 
-      message.success(response.data.msg)
+      // message.success("updated")
+     
       }
       else{
         message.error(response.data.msg);
@@ -131,10 +132,10 @@ export default function MasterCategory() {
           <h3>Master Category</h3>
         </Col>
         <Col className="text-end">
-          <Button variant="primary" onClick={handleShow}>
+          <Button style={{background:'#002244'}} onClick={handleShow}>
             Add New Category
           </Button>
-          <Button variant="primary"  onClick={toggleInputs} className="ms-3">
+          <Button style={{background:'#002244'}} onClick={toggleInputs} className="ms-3">
             <SearchOutlined />
           </Button>
         </Col>

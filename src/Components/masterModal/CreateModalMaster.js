@@ -81,13 +81,14 @@ export default function CreateModalMaster({ show, handleClose, masterapical, upd
             onchange={handleChange}
             placeholder="Enter  Name"
             errorText={errorText}
+            isRequired={true}
           />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button style={{background:'#002244'}} onClick={handleSubmit}>
             {updateId ? "Update" : "Submit"}
           </Button>
         </Modal.Footer>

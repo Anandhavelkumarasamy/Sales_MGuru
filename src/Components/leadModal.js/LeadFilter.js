@@ -35,7 +35,7 @@ const LeadFilter = ({ handleleadsuserList}) => {
       <Row>
         <Col>
           <TextInputBox
-            title={"leadName"}
+            title={"Lead Name"}
             value={values.leadName}
             onchange={handleChange("leadName")}
             placeholder="Enter leadName"
@@ -52,7 +52,7 @@ const LeadFilter = ({ handleleadsuserList}) => {
         </Col>
         <Col>
           <TextInputBox
-            title={"state"}
+            title={"State"}
             value={values.state}
             onchange={handleChange("state")}
             placeholder="Enter state"
@@ -60,10 +60,10 @@ const LeadFilter = ({ handleleadsuserList}) => {
         </Col>
       </Row>
 
-      <Button variant="primary" onClick={handleSubmit} className="float-end mt-2 ">
+      <Button variant="primary" onClick={handleSubmit} style={{background:'#002244'}} className="float-end mt-2 mb-4 ">
         Search
       </Button>
-      <Button variant="primary" onClick={handlereset} className="float-end me-3 mt-2">
+      <Button variant="primary" onClick={handlereset} style={{background:'#002244'}} className="float-end me-3 mt-2">
         Reset
       </Button>
     </form>

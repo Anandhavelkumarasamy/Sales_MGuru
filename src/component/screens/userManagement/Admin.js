@@ -16,7 +16,7 @@ export default function Admin() {
   const [todelete, settoDelete] = useState(false);
   const [showInput, setshowInput] = useState(false);
   const [deleteuserid, setdeleteuserid] = useState(null);
-  const itemsPerPage = 2;
+  const itemsPerPage = 10;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -68,12 +68,12 @@ export default function Admin() {
       render: (text, item, index) => (userList.page - 1) * itemsPerPage + index + 1,
       align: 'center',
     },
-    {
-      title: 'ID',
-      dataIndex: 'userId',
-      key: 'userId',
-      align: 'center',
-    },
+    // {
+    //   title: 'ID',
+    //   dataIndex: 'userId',
+    //   key: 'userId',
+    //   align: 'center',
+    // },
     {
       title: 'Name',
       dataIndex: 'userName',
@@ -117,10 +117,10 @@ export default function Admin() {
           <h3>Admin Page</h3>
         </Col>
         <Col className="text-end">
-          <Button variant="primary" onClick={handleShow} icon={<PlusOutlined />}>
-            Add New Admin
+          <Button style={{background:'#002244'}} onClick={handleShow} icon={<PlusOutlined />}>
+            Add New Admin  
           </Button>
-          <Button variant="primary" onClick={toggleInputs} className="ms-3">
+          <Button style={{background:'#002244'}} onClick={toggleInputs} className="ms-3">
             <SearchOutlined />
           </Button>
         </Col>

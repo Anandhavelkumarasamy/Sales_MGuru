@@ -3,7 +3,7 @@ import TextInputBox from '../userManagementModals/TextInputBox';
 import {  Row, Col, Button } from "react-bootstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addleaduser,updateleaduser, viewleaduser } from "../../component/axios/Service";
+import { addleaduser,updateleaduser} from "../../component/axios/Service";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import RequirementsDropdown from "./RequirementsDropdown";
@@ -21,7 +21,8 @@ export default function CreateModelLead() {
   const objectToken = useSelector((state) => state.authLogin);
 
   const navigate=useNavigate();
-  const [viewleaddata,setviewleaddata]=useState(null);
+  // const [viewleaddata,setviewleaddata]=useState(null);
+  
   
    const editData=state;
   console.log(editData,"edittts")
@@ -157,18 +158,18 @@ export default function CreateModelLead() {
     useFormik({
          initialValues :{
             name: editData?.data?.leadName ? editData?.data?.leadName :"" ,
-            phone_country_code: "",
-            landline_number: "",
-            whatsapp_country_code: "",
-            alter_country_code: "",
-            company_name:  "",
+            phone_country_code: editData?.data?.phone_country_code ? editData?.data?.phone_country_code :"",
+            landline_number:editData?.data?.landline_number ? editData?.data?.landline_number :"",
+            whatsapp_country_code: editData?.data?.whatsapp_country_code ? editData?.data?.whatsapp_country_code :"",
+            alter_country_code:editData?.data?.alter_country_code ? editData?.data?.alter_country_code :"",
+            company_name:editData?.data?.companyName ? editData?.data?.companyName :"",
             contact_person: "",
             address:editData?.data?.address ? editData?.data?.address :"",
-            area: "",
+            area:editData?.data?.area ? editData?.data?.area :"",
             phone: editData?.data?.mobile ? editData?.data?.mobile :"",
             email: editData?.data?.email ? editData?.data?.email :"",
             alternative_no: "",
-            whatsapp_no: "",
+            whatsapp_no:editData?.data?.whatsapp_no ? editData?.data?.whatsapp_no :"",
             customer_category_id: "",
             enquiry_type_id: "",
             requirements_id:  editData?.data?.requirements_id ? editData?.data?.requirements_id :"",
@@ -180,7 +181,7 @@ export default function CreateModelLead() {
             receivedDate: "",
             referedBy: "",
             referedPhone: "",
-            refer_country_code: "",
+            refer_country_code: editData?.data?.refer_country_code ? editData?.data?.refer_country_code :"",
             notes: "",
             description: "",
          isNew: "",
@@ -190,7 +191,7 @@ export default function CreateModelLead() {
             Pincode: "",
             schedule_date: "",
              upload_file: "",
-            approximate_amount: "",
+            approximate_amount:  editData?.data?.approximate_amount ? editData?.data?.approximate_amount :"",
           },
       validationSchema: validationSchema,
       onSubmit: (values) => {
@@ -208,7 +209,7 @@ export default function CreateModelLead() {
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
                     title={"Name"}
                     value={values.name}
@@ -219,9 +220,9 @@ export default function CreateModelLead() {
                     isRequired={true}
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"remarks"}
+                    title={"Remarks"}
                     value={values.remarks}
                     onchange={handleChange("remarks")}
                     placeholder="remarks"
@@ -233,12 +234,7 @@ export default function CreateModelLead() {
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
                     title={"Phone Number"}
                     value={values.phoneNumber}
@@ -251,23 +247,21 @@ export default function CreateModelLead() {
                     }
                   />
                 </Col>
-                <Col>
+              
+              <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"phone_country_code"}
+                    title={"Phone Country Code"}
                     value={values.phone_country_code}
                     onchange={handleChange("phone_country_code")}
-                    placeholder="Enter phone_country_code"
+                    placeholder="Enter phone country code"
                     errorText={
                       touched.phone_country_code && errors.phone_country_code ? errors.phone_country_code : null
+
                     }
+                    isRequired={true}
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
                     title={"Landline Number"}
                     value={values.landline_number}
@@ -280,35 +274,31 @@ export default function CreateModelLead() {
                     }
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"whatsapp_country_code"}
+                    title={"Whatsapp Country Code"}
                     value={values.whatsapp_country_code}
                     onchange={handleChange("whatsapp_country_code")}
-                    placeholder="Enter whatsapp_country_code"
+                    placeholder="Enter whatsapp country code"
                     errorText={
                       touched.whatsapp_country_code && errors.whatsapp_country_code ? errors.whatsapp_country_code : null
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+            
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"alter_country_code"}
+                    title={"Alter Country Code"}
                     
                     value={values.alter_country_code}
                     onchange={handleChange("alter_country_code")}
-                    placeholder="Enter alter_country_code"
+                    placeholder="Enter alter country code"
                     errorText={touched.alter_country_code && errors.alter_country_code ? errors.alter_country_code : null}
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"company_name"}
+                    title={"Company Name"}
                     value={values.company_name}
                     onchange={handleChange("company_name")}
                     placeholder="Enter company_name"
@@ -317,17 +307,12 @@ export default function CreateModelLead() {
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"contact_person"}
+                    title={"Contact Person"}
                     value={values.contact_person}
                     onchange={handleChange("contact_person")}
-                    placeholder="Enter contact_person"
+                    placeholder="Enter contact person"
                    
                     errorText={
                       touched.contact_person && errors.contact_person
@@ -337,25 +322,22 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+              
+              <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"address"}
+                    title={"Address"}
                     value={values.address}
                     onchange={handleChange("address")}
                     placeholder="Enter address"
                     errorText={
                       touched.address && errors.address ? errors.address : null
                     }
+                    isRequired={true}
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"area"}
+                    title={"Area"}
                     value={values.area}
                     onchange={handleChange("area")}
                     placeholder="Enter area"
@@ -368,25 +350,22 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"phone"}
+                    title={"Phone"}
                     value={values.phone}
                     onchange={handleChange("phone")}
                     placeholder="Enter phone"
                     errorText={
                       touched.phone && errors.phone ? errors.phone : null
                     }
+                    isRequired={true}
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+            
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"email"}
+                    title={"Email"}
                     value={values.email}
                     onchange={handleChange("email")}
                     placeholder="Enter email"
@@ -399,28 +378,23 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"alternative_no"}
+                    title={"Alternative No"}
                     value={values.alternative_no}
                     onchange={handleChange("alternative_no")}
-                    placeholder="Enter alternative_no"
+                    placeholder="Enter alternative no"
                     errorText={
                       touched.alternative_no && errors.alternative_no ? errors.alternative_no : null
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"whatsapp_no"}
+                    title={"Whatsapp No"}
                     value={values.whatsapp_no}
                     onchange={handleChange("whatsapp_no")}
-                    placeholder="Enter whatsapp_no"
+                    placeholder="Enter whatsapp No"
                    
                     errorText={
                       touched.whatsapp_no && errors.whatsapp_no
@@ -430,22 +404,18 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+            
+              <Col lg={4} md={6} sm={12}  className="mt-3">
                 
-                  <CustomerDropdown 
+                <CustomerDropdown 
+              
+                value={values.customer_category_id}
+                onChange={handleChange("customer_category_id")}
+                 errorText={touched.customer_category_id && errors.customer_category_id ? errors.customer_category_id : null}
                 
-                  value={values.customer_category_id}
-                  onChange={handleChange("customer_category_id")}
-                   errorText={touched.customer_category_id && errors.customer_category_id ? errors.customer_category_id : null}
-                  
-                  />
-                </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                />
+              </Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                
                   <EnquiryDropdown
                   value={values.enquiry_type_id}
@@ -453,22 +423,19 @@ export default function CreateModelLead() {
                    errorText={touched.enquiry_type_id && errors.enquiry_type_id ? errors.enquiry_type_id : null}
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                 
                   <RequirementsDropdown
                   value={values.requirements_id}
                   onChange={handleChange("requirements_id")}
                    errorText={touched.requirements_id && errors.requirements_id ? errors.requirements_id : null}
+                   isRequired={true}
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+             
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"state"}
+                    title={"State"}
                     value={values.state}
                     onchange={handleChange("state")}
                     placeholder="state"
@@ -481,9 +448,9 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"country"}
+                    title={"Country"}
                     value={values.country}
                     onchange={handleChange("country")}
                     placeholder="Enter country"
@@ -492,14 +459,9 @@ export default function CreateModelLead() {
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"city"}
+                    title={"City"}
                     value={values.city}
                     onchange={handleChange("city")}
                     placeholder="Enter city"
@@ -511,32 +473,19 @@ export default function CreateModelLead() {
                     }
                    
                   />
-                </Col>
-                <Col>
-                  {/* <TextInputBox
-                    title={"assignedTo"}
-                    value={values.assignedTo}
-                    onchange={handleChange("assignedTo")}
-                    placeholder="Enter assignedTo"
-                    errorText={
-                      touched.assignedTo && errors.assignedTo ? errors.assignedTo : null
-                    }
-                  /> */}
-               <AssignedEmployeedropdown
-                  value={values.assignedTo}
-                  onChange={handleChange("assignedTo")}
-                   errorText={touched.assignedTo && errors.assignedTo ? errors.assignedTo : null}
-                  />
-                </Col>
-             
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                  </Col>
+            
+              <Col lg={4} md={6} sm={12}  className="mt-3">
+                  
+                  <AssignedEmployeedropdown
+                     value={values.assignedTo}
+                     onChange={handleChange("assignedTo")}
+                      errorText={touched.assignedTo && errors.assignedTo ? errors.assignedTo : null}
+                     />
+                   </Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"receivedDate"}
+                    title={"Received Date"}
                     value={values.receivedDate}
                     onchange={handleChange("receivedDate")}
                     placeholder="Enter receivedDate"
@@ -549,9 +498,9 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"referedBy"}
+                    title={"Refered By"}
                     value={values.referedBy}
                     onchange={handleChange("referedBy")}
                     placeholder="Enter referedBy"
@@ -560,14 +509,10 @@ export default function CreateModelLead() {
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+             
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"referedPhone"}
+                    title={"Refered Phone"}
                     value={values.referedPhone}
                     onchange={handleChange("referedPhone")}
                     placeholder="Enter referedPhone"
@@ -580,25 +525,20 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"refer_country_code"}
+                    title={"Refer Country Code"}
                     value={values.refer_country_code}
                     onchange={handleChange("refer_country_code")}
-                    placeholder="Enter refer_country_code"
+                    placeholder="Enter refer country code"
                     errorText={
                       touched.refer_country_code && errors.refer_country_code ? errors.customer_category_id : null
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"notes"}
+                    title={"Notes"}
                     value={values.notes}
                     onchange={handleChange("notes")}
                     placeholder="Enter notes"
@@ -611,9 +551,10 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+             
+              <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"description"}
+                    title={"Description"}
                     value={values.description}
                     onchange={handleChange("description")}
                     placeholder="Enter description"
@@ -622,14 +563,9 @@ export default function CreateModelLead() {
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"isNew"}
+                    title={"IsNew"}
                     value={values.isNew}
                     onchange={handleChange("isNew")}
                     placeholder="Enter isNew"
@@ -642,9 +578,9 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"latitude"}
+                    title={"Latitude"}
                     value={values.latitude}
                     onchange={handleChange("latitude")}
                     placeholder="Enter latitude"
@@ -653,14 +589,10 @@ export default function CreateModelLead() {
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+              
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"longitude"}
+                    title={"Longitude"}
                     value={values.longitude}
                     onchange={handleChange("longitude")}
                     placeholder="Enter longitude"
@@ -673,9 +605,9 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
-                    title={"customerId"}
+                    title={"Customer Id"}
                     value={values.customerId}
                     onchange={handleChange("customerId")}
                     placeholder="Enter customerId"
@@ -684,12 +616,7 @@ export default function CreateModelLead() {
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
                     title={"Pincode"}
                     value={values.Pincode}
@@ -704,28 +631,24 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+             
+              <Col lg={4} md={6} sm={12} className="mt-3">
                   <TextInputBox
-                    title={"schedule_date"}
+                    title={"Schedule Date"}
                     value={values.schedule_date}
                     onchange={handleChange("schedule_date")}
-                    placeholder="Enter schedule_date"
+                    placeholder="Enter schedule Date"
                     errorText={
                       touched.schedule_date && errors.schedule_date ? errors.schedule_date : null
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
                   <TextInputBox
-                    title={"upload_file"}
+                    title={"Upload File"}
                     value={values.upload_file}
                     onchange={handleChange("upload_file")}
-                    placeholder="Enter upload_file"
+                    placeholder="Enter upload File"
                    
                     errorText={
                       touched.upload_file && errors.upload_file
@@ -735,33 +658,19 @@ export default function CreateModelLead() {
                    
                   />
                 </Col>
-                <Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
                   <TextInputBox
-                    title={"approximate_amount"}
+                    title={"Approximate Amount"}
                     value={values.approximate_amount}
                     onchange={handleChange("approximate_amount")}
-                    placeholder="Enter approximate_amount"
+                    placeholder="Enter approximate amount"
                     errorText={
                       touched.approximate_amount && errors.approximate_amount ? errors.schedule_date : null
                     }
                   />
                 </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-         {/* <TextInputBox
-                title={"Dealer ID"}
-                value={values.dealer_id}
-                onchange={handleChange("dealer_id")}
-                placeholder="Enter dealer ID"
-                errorText={
-                  touched.dealer_id && errors.dealer_id
-                    ? errors.dealer_id
-                    : null
-                }
-                    
-              /> */}
+              
+                <Col lg={4} md={6} sm={12}>
                 <AssignedDealerdropdown
                   value={values.dealer_id}
                   onChange={handleChange("dealer_id")}
@@ -769,13 +678,14 @@ export default function CreateModelLead() {
                   />
                 
               
-             
+                </Col>
+                </Row>
             </div>
 
             <Button
             type="submit"
               
-              variant="primary"
+            style={{background:'#002244'}}
             >{editData?.isShow ?  "Update ":"Submit"}
               
             </Button>
@@ -783,7 +693,7 @@ export default function CreateModelLead() {
             <Button
             onClick={()=>{navigate('/dashboard/leads')}}
             className="float-end"
-              variant="primary"
+            style={{background:'#002244'}}
             >Back
               
             </Button>

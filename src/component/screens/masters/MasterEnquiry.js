@@ -101,7 +101,7 @@ export default function MasterEnquiry() {
         <>
           <Tooltip title="Delete" placement="bottom">
             <DeleteOutlined
-
+             
               type="text"
               style={{ color: "red", margin: "0 10px",fontSize: '18px' }}
               onClick={() => handleDeleteShow(item)}
@@ -126,10 +126,10 @@ export default function MasterEnquiry() {
           <h3>Master Enquiry</h3>
         </Col>
         <Col className="text-end">
-          <Button variant="primary" onClick={handleShow}>
+          <Button variant="primary" style={{background:'#002244'}} onClick={handleShow}>
             Add New Enquiry
           </Button>
-          <Button variant="primary"  onClick={toggleInputs} className="ms-3">
+          <Button variant="primary" style={{background:'#002244'}} onClick={toggleInputs} className="ms-3">
             <SearchOutlined />
           </Button>
         </Col>

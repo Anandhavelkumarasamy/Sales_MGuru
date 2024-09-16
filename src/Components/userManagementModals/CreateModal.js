@@ -1,83 +1,87 @@
-import React,{useEffect,useState}from "react";
-import TextInputBox from '../userManagementModals/TextInputBox';
+import React from "react";
+import TextInputBox from "../userManagementModals/TextInputBox";
 import { Modal, Row, Col, Button } from "react-bootstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { adduser } from "../../component/axios/Service";
 import { useSelector } from "react-redux";
-import { admindetails } from "../../component/axios/Service";
 import { updateuser } from "../../component/axios/Service";
-import CountryDropdown from "./CountryDropdown";
 import DealerIdDropdown from "./DealerIdDropdown";
 import { message } from "antd";
+import { useToken } from "../../utility/hooks";
 
-export default function CreateModel({ show, handleClose,apical,usertype,editData ,dealeruserList}) {
-  const objectToken = useSelector((state) => state.authLogin);
-  const [data, setData] = useState([]);
-  const validationSchema = Yup.object({
-    name: Yup.string()
-      .matches(/^[a-zA-Z0-9$]+$/, "Name is invalid")
-      .required("Name is required"),
-    userName: Yup.string()
-      .matches(/^[a-zA-Z0-9$]+$/, "Username is invalid")
-      .required("Username is required"),
-    phoneNumber: Yup.string()
-      .matches(/^[0-9$]+$/, "Phone number is invalid")
-      .required("Phone number is required"),
-    userType: Yup.string()
-      .matches(/^[a-zA-Z0-9$]+$/, "Type is invalid")
-      .optional("Type is required"),
-    email: Yup.string().email("The email is incorrect"),
-    landline_number: Yup.string().matches(
-      /^[0-9$]+$/,
-      "Landline number is invalid"
-    ),
-    state: Yup.string().matches(/^[a-zA-Z$]+$/, "State is invalid"),
-    city: Yup.string().matches(/^[a-zA-Z$]+$/, "City is invalid"),
-    country: Yup.string().matches(/^[a-zA-Z$]+$/, "Country is invalid"),
-    password: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Password is invalid"),
-    pincode: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Pincode is invalid"),
-    dealer_id: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Dealer ID is invalid"),
-  });
- 
-    
-   
-    const handleupdateuser=(values)=>{
-      let formdata = new FormData();
-      formdata.append("name", values.name);
-      formdata.append("userName", values.userName);
-      formdata.append("phoneNumber", values.phoneNumber);
-      formdata.append("userType", values.userType);
-      formdata.append("device_type", "2");
-      formdata.append("token", objectToken.token);
-      formdata.append("email", values.email);
-      formdata.append("landline_number", values.landline_number);
-      formdata.append("state", values.state);
-      formdata.append("city", values.city);
-      formdata.append("country", values.country);
-      formdata.append("password", values.password);
-      formdata.append("pincode", values.pincode);
-      formdata.append("dealer_id", values.dealer_id);
-      formdata.append("userId",editData.userId);
-      console.log(formdata);
-      updateuser(formdata).then((response)=>{
-        if(response.data.status===1){
-          message.success(`User ${values.userName} created successfully`);
-      console.log('UserUpdated Successfully',response.data.data);
-      apical();
-        }
-      handleClose();
-  })
-    }
-    
-   const handleadduser=(values)=>{
+const validationSchema = Yup.object({
+  name: Yup.string()
+    .matches(/^[a-zA-Z0-9$]+$/, "Name is invalid")
+    .required("Name is required"),
+  userName: Yup.string()
+    .matches(/^[a-zA-Z0-9$]+$/, "Username is invalid")
+    .required("Username is required"),
+  phoneNumber: Yup.string()
+    .matches(/^[0-9$]+$/, "Phone number is invalid")
+    .required("Phone number is required"),
+  userType: Yup.string()
+    .matches(/^[a-zA-Z0-9$]+$/, "Type is invalid")
+    .optional("Type is required"),
+  email: Yup.string().email("The email is incorrect"),
+  landline_number: Yup.string().matches(
+    /^[0-9$]+$/,
+    "Landline number is invalid"
+  ),
+  state: Yup.string().matches(/^[a-zA-Z$]+$/, "State is invalid"),
+  city: Yup.string().matches(/^[a-zA-Z$]+$/, "City is invalid"),
+  country: Yup.string().matches(/^[a-zA-Z$]+$/, "Country is invalid"),
+  password: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Password is invalid"),
+  pincode: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Pincode is invalid"),
+  dealer_id: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Dealer ID is invalid"),
+});
+
+export default function CreateModel({
+  show,
+  handleClose,
+  apical,
+  usertype,
+  editData,
+}) {
+  
+  const token=useToken();
+
+  const handleupdateuser = (values) => {
     let formdata = new FormData();
     formdata.append("name", values.name);
     formdata.append("userName", values.userName);
     formdata.append("phoneNumber", values.phoneNumber);
     formdata.append("userType", values.userType);
     formdata.append("device_type", "2");
-    formdata.append("token", objectToken.token);
+    formdata.append("token", token);
+    formdata.append("email", values.email);
+    formdata.append("landline_number", values.landline_number);
+    formdata.append("state", values.state);
+    formdata.append("city", values.city);
+    formdata.append("country", values.country);
+    formdata.append("password", values.password);
+    formdata.append("pincode", values.pincode);
+    formdata.append("dealer_id", values.dealer_id);
+    formdata.append("userId", editData.userId);
+    console.log(formdata);
+    updateuser(formdata).then((response) => {
+      if (response.data.status === 1) {
+        message.success(`User ${values.userName} created successfully`);
+        console.log("UserUpdated Successfully", response.data.data);
+        apical();
+      }
+      handleClose();
+    });
+  };
+
+  const handleadduser = (values) => {
+    let formdata = new FormData();
+    formdata.append("name", values.name);
+    formdata.append("userName", values.userName);
+    formdata.append("phoneNumber", values.phoneNumber);
+    formdata.append("userType", values.userType);
+    formdata.append("device_type", "2");
+    formdata.append("token", token);
     formdata.append("email", values.email);
     formdata.append("landline_number", values.landline_number);
     formdata.append("state", values.state);
@@ -87,13 +91,13 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
     formdata.append("pincode", values.pincode);
     formdata.append("dealer_id", values.dealer_id);
     console.log(formdata);
-     adduser(formdata)
+    adduser(formdata)
       .then((response) => {
         // window.alert(response?.data?.msg);
-        if(response?.data?.status===1){
-        message.success(`User ${values.userName} created successfully`);
-        console.log(response.data.data, "created successfully");
-        apical();
+        if (response?.data?.status === 1) {
+          message.success(`User ${values.userName} created successfully`);
+          console.log(response.data.data, "created successfully");
+          apical();
         }
 
         handleClose();
@@ -101,44 +105,37 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
       .catch((error) => {
         console.log("Error:", error);
       });
-  
-   }
+  };
 
-  
-  console.log(editData,"edidtdtdtdt");
+  console.log(editData, "edidtdtdtdt");
 
-  
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
-        name:editData?.name ||  "",
-        userName:editData?.userName ||  "",
-        phoneNumber:editData?.phoneNumber || "",
+        name: editData?.name || "",
+        userName: editData?.userName || "",
+        phoneNumber: editData?.phoneNumber || "",
         userType: usertype || "",
-        email:editData?.email || "",
+        email: editData?.email || "",
         landline_number: editData?.landline_number || "",
         state: "",
         city: "",
         country: "",
         password: "",
         pincode: "",
-        dealer_id:editData?.dealer_id || "",
+        dealer_id: editData?.dealer_id || "",
       },
       validationSchema: validationSchema,
       onSubmit: (values) => {
-       
-        if(editData){
+        if (editData) {
           handleupdateuser(values);
-       
-        }
-        else{
+        } else {
           handleadduser(values);
         }
       },
     });
   // console.log(values,"values",editData?.userName);
   // console.log(dealeruserlist)
-  
 
   return (
     <div>
@@ -149,13 +146,13 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
         style={{ maxwidth: "100%", height: "100%" }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{editData ?  "Edit ":"Add"}</Modal.Title>
+          <Modal.Title>{editData ? "Edit " : "Add"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <Row>
-                <Col>
+                <Col lg={6} md={6} sm={12}>
                   <TextInputBox
                     title={"Name"}
                     value={values.name}
@@ -166,9 +163,9 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                     isRequired={true}
                   />
                 </Col>
-                <Col>
+                <Col lg={6} md={6} sm={12}>
                   <TextInputBox
-                    title={"user Name"}
+                    title={"User Name"}
                     value={values.userName}
                     onchange={handleChange("userName")}
                     placeholder="Enter username"
@@ -178,14 +175,11 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                         ? errors.userName
                         : null
                     }
+                    isRequired={true}
                   />
                 </Col>
-              </Row>
-            </div>
 
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={6} md={6} sm={12}>
                   <TextInputBox
                     title={"Phone Number"}
                     value={values.phoneNumber}
@@ -196,19 +190,10 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                         ? errors.phoneNumber
                         : null
                     }
+                    isRequired={true}
                   />
                 </Col>
-                <Col>
-                  {/* <TextInputBox
-                  title={"User Type"}
-                  value={values.userType}
-                  onchange={handleChange("userType")}
-                  placeholder="Enter user type"
-                  errorText={
-                    touched.userType && errors.userType ? errors.userType : null
-                  }
-                /> */}
-
+                <Col lg={6} md={6} sm={12}>
                   <TextInputBox
                     title={"Email"}
                     value={values.email}
@@ -217,14 +202,11 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                     errorText={
                       touched.email && errors.email ? errors.email : null
                     }
+                    isRequired={true}
                   />
                 </Col>
-              </Row>
-            </div>
 
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={6} md={6} sm={12}>
                   <TextInputBox
                     title={"Landline Number"}
                     value={values.landline_number}
@@ -237,7 +219,7 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                     }
                   />
                 </Col>
-                <Col>
+                <Col lg={6} md={6} sm={12}>
                   <TextInputBox
                     title={"State"}
                     value={values.state}
@@ -248,12 +230,8 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                     }
                   />
                 </Col>
-              </Row>
-            </div>
 
-            <div className="mb-3">
-              <Row>
-                <Col>
+                <Col lg={6} md={6} sm={12}>
                   <TextInputBox
                     title={"City"}
                     id="city"
@@ -263,7 +241,7 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                     errorText={touched.city && errors.city ? errors.city : null}
                   />
                 </Col>
-                <Col>
+                <Col lg={6} md={6} sm={12}>
                   <TextInputBox
                     title={"Country"}
                     value={values.country}
@@ -273,50 +251,9 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                       touched.country && errors.country ? errors.country : null
                     }
                   />
-                 {/* <CountryDropdown
-                value={values.country}
-                onChange={(value) => handleChange('country', value)}  
-               errorText={touched.country && errors.country ? errors.country : null}
-      /> */}
-                </Col>
-              </Row>
-            </div>
-
-            <div className="mb-3">
-              <Row>
-              <Col>
-              {  editData ? 
-              null:
-        //       ( <div className="mb-3">
-        //       {usertype==="4"?  <DealerIdDropdown
-        //   value={values.dealer_id}
-        //   onChange={handleChange("dealer_id")}
-        //   errorText={
-        //     touched.dealer_id && errors.dealer_id ? errors.dealer_id : null
-        //   }
-         
-        // /> :
-        
-        // null
-              
-        //    }
-        //     </div>) : 
-        <TextInputBox
-                    title={"Password"}
-                    value={values.password}
-                    onchange={handleChange("password")}
-                    placeholder="Enter password"
-                    isPassword={true}
-                    errorText={
-                      touched.password && errors.password
-                        ? errors.password
-                        : null
-                    }
-                   
-                  /> }
                 </Col>
 
-                <Col>
+                <Col lg={6} md={6} sm={12}>
                   <TextInputBox
                     title={"Pincode"}
                     value={values.pincode}
@@ -327,30 +264,42 @@ export default function CreateModel({ show, handleClose,apical,usertype,editData
                     }
                   />
                 </Col>
+
+                <Col lg={6} md={6} sm={12}>
+                  {usertype === "4" && (
+                    <DealerIdDropdown
+                      value={values.dealer_id}
+                      onChange={handleChange("dealer_id")}
+                      errorText={
+                        touched.dealer_id && errors.dealer_id
+                          ? errors.dealer_id
+                          : null
+                      }
+                    />
+                  )}
+                </Col>
+
+                <Col lg={6} md={6} sm={12}>
+                  {!editData && (
+                    <TextInputBox
+                      title={"Password"}
+                      value={values.password}
+                      onchange={handleChange("password")}
+                      placeholder="Enter password"
+                      isPassword={true}
+                      errorText={
+                        touched.password && errors.password
+                          ? errors.password
+                          : null
+                      }
+                    />
+                  )}
+                </Col>
               </Row>
             </div>
 
-            <div className="mb-3">
-              {usertype==="4"?  <DealerIdDropdown
-          value={values.dealer_id}
-          onChange={handleChange("dealer_id")}
-          errorText={
-            touched.dealer_id && errors.dealer_id ? errors.dealer_id : null
-          }
-         
-        /> :
-        
-        null
-              
-           }
-            </div>
-
-            <Button
-             
-              type="submit"
-              variant="primary"
-            >{editData ?  "Update ":"Submit"}
-              
+            <Button type="submit" style={{background:'#002244'}}>
+              {editData ? "Update " : "Submit"}
             </Button>
           </form>
         </Modal.Body>

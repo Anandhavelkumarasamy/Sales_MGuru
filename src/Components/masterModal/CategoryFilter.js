@@ -34,13 +34,14 @@ export default function CategoryFilter({ handleGetMasterCategoryList }) {
             onchange={handleChange}
             placeholder="Enter Name"
             errorText={errorText}
+            isRequired={true}
           />
         </Col>
         <Col lg={2} className="align-content-end">
-          <Button onClick={handleSubmit}>
+          <Button style={{background:'#002244'}} onClick={handleSubmit}>
             Submit
           </Button>
-          <Button className=" float-end " onClick={handleReset}>
+          <Button style={{background:'#002244'}} className=" float-end " onClick={handleReset}>
             Reset
           </Button>
         </Col>
