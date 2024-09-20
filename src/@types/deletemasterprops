@@ -1,0 +1,13 @@
+export type masterdeleteprops = {
+  todelete: boolean;
+  handleDeleteClose: () => void;
+  deleteuserid: deleteitems | null;
+  apivalue: string;
+  apical: () => void;
+};
+export type deleteitems = {
+  customerCategoryId?: string;
+  enquireId?: string;
+  customerCategoryName?: string;
+  enquireTypeName?: string;
+};

@@ -1,4 +1,4 @@
-export type LoginProps={
-    userName:string,
-    password:number,
-}
+export type LoginProps = {
+  userName: string;
+  password: number;
+};

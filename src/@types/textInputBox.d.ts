@@ -3,7 +3,7 @@ export type TextInputBoxProps={
     value: string;
     onchange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
-    errorText?: string | null;
+    errorText?:string | string[] | FormikErrors<any> | FormikErrors<any>[] | null;
     name?: string;
     onBlurs?: (event: React.FocusEvent<HTMLInputElement>) => void;
     isRequired?: boolean;

@@ -1,14 +1,18 @@
-*{
-  padding:0;
-  margin:0;
-  box-sizing:box-border;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: box-border;
 }
 
-
-.ant-table-thead th{
-background-color: #002244 !important;
-color:  white !important;
+.ant-table-thead th {
+  background-color: #002244 !important;
+  color: white !important;
 }
 
+.ant-table-row.active-row {
+  background-color: #d6dde3 !important;
+}
 
-
+.ant-table-row.inactive-row {
+  background-color: #fff !important;
+}

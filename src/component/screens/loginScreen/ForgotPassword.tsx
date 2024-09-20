@@ -12,6 +12,8 @@ import { forgotpasswordprops } from '../../../@types/forgotpassword';
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+  const key = 'updatable';
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required')
@@ -33,28 +35,50 @@ export default function ForgotPassword() {
       sessionStorage.setItem('reset_key', resetkey);
 
       if (response?.data?.status === 1) {
-        message.success('OTP has been resent successfully!');
-        navigate('/verifyotp');
-      } else {
-        message.error('Enter valid Email address!');
+        
+        openSuccessMessage();  
+        setTimeout(() => {
+          navigate('/verifyotp');
+        }, 2000); 
+      
+      }else{
+        
+          message.error(response.data.msg)
+        
       }
+    })
+  };
+  const openSuccessMessage = () => {
+    messageApi.open({
+      key,
+      type: 'loading',
+      content: 'Updating password...',
     });
+    setTimeout(() => {
+      messageApi.open({
+        key,
+        type: 'success',
+        content: 'Password updated successfully!',
+        duration: 2,
+      });
+    }, 1000); 
   };
 
 
   return (
     <div className={classes.loginbg}>
-      <div className={`row d-flex bg-light justify-content-center rounded-5 p-3 ${classes.container}`}>
+      {contextHolder}
+      <div className={`row d-flex bg-light justify-content-center rounded-5 p-3 ${classes.container}`} >
         <h3 className="text-center">Forgot Password<hr /></h3>
-        <div className={`col p-3 ${classes.container2}`}>
+        <div className={`col p-3 ${classes.container2}`} style={{height:'10px'}}>
           <img
-            style={{ width: '100%', height: '60vh' }}
+            style={{ width: '100%', height: '35vh' }}
             src={loginimage}
             alt="YourImage"
             className="img-fluid"
           />
         </div>
-        <div className={`col bg-white w-100 h-100 mt-5 rounded-3 p-4 ${classes.container3}`}>
+        <div className={`col bg-white mt-3 rounded-3 p-4 ${classes.container3}`}>
           <h2 className="text-center">Email<hr /></h2>
           <form onSubmit={handleSubmit}>
             <TextInputBox

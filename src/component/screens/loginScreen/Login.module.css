@@ -3,6 +3,7 @@
   padding:0;
   box-sizing: border-box;
 }
+
   
   
   
@@ -54,14 +55,14 @@
    }
  
   .input-container {
-    margin-bottom: 2rem; /* Space below the input field */
+    margin-bottom: 2rem;
   }
   
   .error-message {
     color: red;
-    font-size: 0.875rem; /* Adjust font size as needed */
-    margin-top: 0.25rem; /* Space above the error message */
-    display: block; /* Ensure it occupies a full line */
+    font-size: 0.875rem; 
+    margin-top: 0.25rem;
+    display: block; 
   }
   .container3{
     height:95%;

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Users } from '../../axios/Service';
-import { useSelector } from 'react-redux';
-import { selectorProps } from '../../../@types/dashboard';
+// import { useSelector } from 'react-redux';
+// import { selectorProps } from '../../../@types/dashboard';
 import { DashboradDataProps } from '../../../@types/dashboardobject';
+import { useToken } from '../../../utility/hooks';
 
 export default function ListDashboard() {
   const [people, setPeople] = useState<DashboradDataProps[]>([]);
-  const datass=useSelector((state:selectorProps)=>state?.authLogin)
+  // const datass=useSelector((state:selectorProps)=>state?.authLogin)
+  const token :string=useToken();
   // const[array,setArray]=useState([]);
   const handle=()=>{
   let formdata=new FormData();
-  formdata.append('token',datass?.token);
+  formdata.append('token',token);
    Users(formdata)
    .then((response)=>{
     console.log("API Response:" , response?.data);
@@ -21,9 +23,9 @@ export default function ListDashboard() {
 
 
 useEffect(()=>{
-  if(datass?.token){
+  if(token){
     handle();  }
-},[datass?.token])
+},[token])
   
   return (
     <div>
