@@ -7,6 +7,7 @@ interface logindataprops {
   authcode: string;
 }
 interface LoginResponse {
+  userType(arg0: string, userType: any): unknown;
   token: string;
 }
 

@@ -1,24 +1,25 @@
 // src/Components/UserFilter.js
 
-import React from 'react';
+import React from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import { useFormik } from "formik";
-import TextInputBox from './TextInputBox';
-import { UserFilterProps } from '../../@types/createmodalprops';
+import TextInputBox from "./TextInputBox";
+import { UserFilterProps } from "../../@types/createmodalprops";
+import classes from "./Crud.module.css";
 
-const UserFilter = ({ handleGetListUseres}:UserFilterProps) => {
-  
-  const { values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
-    initialValues: {
-      userName: "",
-      email: "",
-      phoneNumber: "",
-    },
-    onSubmit: (values) => {
-      handleGetListUseres(1, 5, values);
-      console.log(values,"filtervalues")
-    },
-  });
+const UserFilter = ({ handleGetListUseres }: UserFilterProps) => {
+  const { values, handleChange, handleBlur, handleSubmit, resetForm } =
+    useFormik({
+      initialValues: {
+        userName: "",
+        email: "",
+        phoneNumber: "",
+      },
+      onSubmit: (values) => {
+        handleGetListUseres(1, 5, values);
+        console.log(values, "filtervalues");
+      },
+    });
 
   const handlereset = () => {
     const emptyValues = {
@@ -28,13 +29,12 @@ const UserFilter = ({ handleGetListUseres}:UserFilterProps) => {
     };
     handleGetListUseres(1, 5, emptyValues);
     resetForm();
-    // resetFormHandler(); 
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <Row>
-        <Col>
+        <Col lg={4} md={6} sm={12}>
           <TextInputBox
             title={"User Name"}
             value={values.userName}
@@ -43,7 +43,7 @@ const UserFilter = ({ handleGetListUseres}:UserFilterProps) => {
             onBlurs={handleBlur}
           />
         </Col>
-        <Col>
+        <Col lg={4} md={6} sm={12}>
           <TextInputBox
             title={"Phone Number"}
             value={values.phoneNumber}
@@ -51,7 +51,7 @@ const UserFilter = ({ handleGetListUseres}:UserFilterProps) => {
             placeholder="Enter phone Number"
           />
         </Col>
-        <Col>
+        <Col lg={4} md={6} sm={12}>
           <TextInputBox
             title={"Email"}
             value={values.email}
@@ -61,15 +61,21 @@ const UserFilter = ({ handleGetListUseres}:UserFilterProps) => {
         </Col>
       </Row>
 
-      <Button style={{background:'#002244'}} onClick={()=>{handleSubmit()}} className="float-end mt-2 ">
+      <Button
+        onClick={() => {
+          handleSubmit();
+        }}
+        className={`float-end mt-2 ${classes.buttonbackground}`}
+      >
         Search
       </Button>
-      <Button style={{background:'#002244'}} onClick={()=>handlereset()} className="float-end me-3 mt-2 mb-3">
-        Reset    
+      <Button
+        onClick={() => handlereset()}
+        className={`float-end me-3 mt-2 mb-2 ${classes.buttonbackground}`}
+      >
+        Reset
       </Button>
-      
     </form>
-    
   );
 };
 

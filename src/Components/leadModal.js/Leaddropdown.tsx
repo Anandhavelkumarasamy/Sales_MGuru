@@ -211,7 +211,6 @@ export default function Leaddropdown({
               <DatePicker
                 showTime
                 getPopupContainer={(trigger: HTMLElement) => {
-                  // Ensure the trigger is an HTMLElement and return its parentNode
                   return trigger.parentNode as HTMLElement;
                 }}
                 onChange={handlePocDateChange}

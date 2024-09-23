@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useToken } from "../../../utility/hooks";
-import { Table, Tooltip, Pagination } from "antd";
+import { Table, Tooltip, Pagination, Space } from "antd";
 import { enquirylist } from "../../axios/Service";
 import { Row, Col, Button } from "react-bootstrap";
 
@@ -14,6 +14,7 @@ import CreateModalMaster from "../../../Components/masterModal/CreateModalMaster
 import CategoryFilter from "../../../Components/masterModal/CategoryFilter";
 import { enquirylistprops, Enquriy } from "../../../@types/masterenquiryprops";
 import { ColumnsType } from "antd/es/table";
+import { Helmet } from "react-helmet";
 
 export default function MasterEnquiry() {
   const token = useToken();
@@ -100,7 +101,7 @@ export default function MasterEnquiry() {
       key: "actions",
       align: "center",
       render: (text: string, item: Enquriy) => (
-        <>
+        <Space size="middle">
           <Tooltip title="Delete" placement="bottom">
             <DeleteOutlined
               type="text"
@@ -115,13 +116,20 @@ export default function MasterEnquiry() {
               onClick={() => handleUpdateShow(item)}
             />
           </Tooltip>
-        </>
+        </Space>
       ),
     },
   ];
 
   return (
     <>
+      <div>
+        <Helmet>
+          <title>MasterEnquiry</title>
+          <meta name="keywords" content="dashboard,dash,home" />
+          {/* <h1>Welcome to My React Website</h1> */}
+        </Helmet>
+      </div>
       <Row className="mb-3">
         <Col>
           <h3>Master Enquiry</h3>
@@ -159,6 +167,7 @@ export default function MasterEnquiry() {
         rowKey={(record) => record.customerCategoryId}
         bordered
         size="middle"
+        className="table-responsive mx-auto"
       />
 
       <DeleteModalMaster
@@ -176,7 +185,7 @@ export default function MasterEnquiry() {
         apivalue={apivalue}
       />
       <Pagination
-        className="float-end mt-3 me-4"
+        className="float-end mt-3 pagination-responsive"
         current={enquiryList?.page}
         pageSize={itemsPerPage}
         total={enquiryList?.total_count}

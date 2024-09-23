@@ -29,6 +29,7 @@ import { requirementdropdownprops } from "../../@types/requirementsdropdown";
 import { storedataprops } from "../../@types/store";
 import { useSelector } from "react-redux";
 import { employeedataprops } from "../../@types/assignedemployeedropdown";
+import { Helmet } from "react-helmet";
 
 export default function CreateModelLead() {
   const { state } = useLocation();
@@ -49,7 +50,9 @@ export default function CreateModelLead() {
     contact_person: Yup.string(),
     address: Yup.string().required("Address is required"),
     area: Yup.string(),
-    phone: Yup.string().required("Phone number is required"),
+    phone: Yup.string()
+      .matches(/^[789][0-9]{9}$/, "Phone number must be 10 digits")
+      .required("Phone number is required"),
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
@@ -321,36 +324,44 @@ export default function CreateModelLead() {
   };
 
   return (
-    <div>
-      <div className="container">
-        <h2>{editData?.isShow ? "Edit " : "Add"} Leads</h2>
+    <>
+      <div>
+        <Helmet>
+          <title> {editData?.isShow ? "Edit " : "Add"} Leads</title>
+          <meta name="keywords" content="dashboard,dash,home" />
+          {/* <h1>Welcome to My React Website</h1> */}
+        </Helmet>
+      </div>
+      <div>
+        <div className="container">
+          <h2>{editData?.isShow ? "Edit " : "Add"} Leads</h2>
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <Row>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Name"}
-                  value={values.name}
-                  onchange={handleChange("name")}
-                  placeholder="Enter name"
-                  onBlurs={handleBlur}
-                  errorText={touched.name && errors.name ? errors.name : null}
-                  isRequired={true}
-                />
-              </Col>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <Row>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Name"}
+                    value={values.name}
+                    onchange={handleChange("name")}
+                    placeholder="Enter name"
+                    onBlurs={handleBlur}
+                    errorText={touched.name && errors.name ? errors.name : null}
+                    isRequired={true}
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Remarks"}
-                  value={values.remarks}
-                  onchange={handleChange("remarks")}
-                  placeholder="remarks"
-                  onBlurs={handleBlur}
-                  errorText={errors.name && touched.name ? errors.name : null}
-                />
-              </Col>
-              {/* <Col lg={4} md={6} sm={12}  className="mt-3">
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Remarks"}
+                    value={values.remarks}
+                    onchange={handleChange("remarks")}
+                    placeholder="remarks"
+                    onBlurs={handleBlur}
+                    errorText={errors.name && touched.name ? errors.name : null}
+                  />
+                </Col>
+                {/* <Col lg={4} md={6} sm={12}  className="mt-3">
                   <TextInputBox
                     title={"Phone Number"}
                     value={values.phoneNumber}
@@ -364,162 +375,162 @@ export default function CreateModelLead() {
                   />
                 </Col> */}
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Phone Country Code"}
-                  value={values.phone_country_code}
-                  onchange={handleChange("phone_country_code")}
-                  placeholder="Enter phone country code"
-                  errorText={
-                    touched.phone_country_code && errors.phone_country_code
-                      ? errors.phone_country_code
-                      : null
-                  }
-                  isRequired={true}
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Landline Number"}
-                  value={values.landline_number}
-                  onchange={handleChange("landline_number")}
-                  placeholder="Enter landline number"
-                  errorText={
-                    touched.landline_number && errors.landline_number
-                      ? errors.landline_number
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Whatsapp Country Code"}
-                  value={values.whatsapp_country_code}
-                  onchange={handleChange("whatsapp_country_code")}
-                  placeholder="Enter whatsapp country code"
-                  errorText={
-                    touched.whatsapp_country_code &&
-                    errors.whatsapp_country_code
-                      ? errors.whatsapp_country_code
-                      : null
-                  }
-                />
-              </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Phone Country Code"}
+                    value={values.phone_country_code}
+                    onchange={handleChange("phone_country_code")}
+                    placeholder="Enter phone country code"
+                    errorText={
+                      touched.phone_country_code && errors.phone_country_code
+                        ? errors.phone_country_code
+                        : null
+                    }
+                    isRequired={true}
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Landline Number"}
+                    value={values.landline_number}
+                    onchange={handleChange("landline_number")}
+                    placeholder="Enter landline number"
+                    errorText={
+                      touched.landline_number && errors.landline_number
+                        ? errors.landline_number
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Whatsapp Country Code"}
+                    value={values.whatsapp_country_code}
+                    onchange={handleChange("whatsapp_country_code")}
+                    placeholder="Enter whatsapp country code"
+                    errorText={
+                      touched.whatsapp_country_code &&
+                      errors.whatsapp_country_code
+                        ? errors.whatsapp_country_code
+                        : null
+                    }
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Alter Country Code"}
-                  value={values.alter_country_code}
-                  onchange={handleChange("alter_country_code")}
-                  placeholder="Enter alter country code"
-                  errorText={
-                    touched.alter_country_code && errors.alter_country_code
-                      ? errors.alter_country_code
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Company Name"}
-                  value={values.company_name}
-                  onchange={handleChange("company_name")}
-                  placeholder="Enter company_name"
-                  errorText={
-                    touched.company_name && errors.company_name
-                      ? errors.company_name
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Contact Person"}
-                  value={values.contact_person}
-                  onchange={handleChange("contact_person")}
-                  placeholder="Enter contact person"
-                  errorText={
-                    touched.contact_person && errors.contact_person
-                      ? errors.contact_person
-                      : null
-                  }
-                />
-              </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Alter Country Code"}
+                    value={values.alter_country_code}
+                    onchange={handleChange("alter_country_code")}
+                    placeholder="Enter alter country code"
+                    errorText={
+                      touched.alter_country_code && errors.alter_country_code
+                        ? errors.alter_country_code
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Company Name"}
+                    value={values.company_name}
+                    onchange={handleChange("company_name")}
+                    placeholder="Enter company_name"
+                    errorText={
+                      touched.company_name && errors.company_name
+                        ? errors.company_name
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Contact Person"}
+                    value={values.contact_person}
+                    onchange={handleChange("contact_person")}
+                    placeholder="Enter contact person"
+                    errorText={
+                      touched.contact_person && errors.contact_person
+                        ? errors.contact_person
+                        : null
+                    }
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Address"}
-                  value={values.address}
-                  onchange={handleChange("address")}
-                  placeholder="Enter address"
-                  errorText={
-                    touched.address && errors.address ? errors.address : null
-                  }
-                  isRequired={true}
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Area"}
-                  value={values.area}
-                  onchange={handleChange("area")}
-                  placeholder="Enter area"
-                  errorText={touched.area && errors.area ? errors.area : null}
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Phone"}
-                  value={values.phone}
-                  onchange={handleChange("phone")}
-                  placeholder="Enter phone"
-                  errorText={
-                    touched.phone && errors.phone ? errors.phone : null
-                  }
-                  isRequired={true}
-                />
-              </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Address"}
+                    value={values.address}
+                    onchange={handleChange("address")}
+                    placeholder="Enter address"
+                    errorText={
+                      touched.address && errors.address ? errors.address : null
+                    }
+                    isRequired={true}
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Area"}
+                    value={values.area}
+                    onchange={handleChange("area")}
+                    placeholder="Enter area"
+                    errorText={touched.area && errors.area ? errors.area : null}
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Phone"}
+                    value={values.phone}
+                    onchange={handleChange("phone")}
+                    placeholder="Enter phone"
+                    errorText={
+                      touched.phone && errors.phone ? errors.phone : null
+                    }
+                    isRequired={true}
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Email"}
-                  value={values.email}
-                  onchange={handleChange("email")}
-                  placeholder="Enter email"
-                  errorText={
-                    touched.email && errors.email ? errors.email : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Alternative No"}
-                  value={values.alternative_no}
-                  onchange={handleChange("alternative_no")}
-                  placeholder="Enter alternative no"
-                  errorText={
-                    touched.alternative_no && errors.alternative_no
-                      ? errors.alternative_no
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Whatsapp No"}
-                  value={values.whatsapp_no}
-                  onchange={handleChange("whatsapp_no")}
-                  placeholder="Enter whatsapp No"
-                  errorText={
-                    touched.whatsapp_no && errors.whatsapp_no
-                      ? errors.whatsapp_no
-                      : null
-                  }
-                />
-              </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Email"}
+                    value={values.email}
+                    onchange={handleChange("email")}
+                    placeholder="Enter email"
+                    errorText={
+                      touched.email && errors.email ? errors.email : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Alternative No"}
+                    value={values.alternative_no}
+                    onchange={handleChange("alternative_no")}
+                    placeholder="Enter alternative no"
+                    errorText={
+                      touched.alternative_no && errors.alternative_no
+                        ? errors.alternative_no
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Whatsapp No"}
+                    value={values.whatsapp_no}
+                    onchange={handleChange("whatsapp_no")}
+                    placeholder="Enter whatsapp No"
+                    errorText={
+                      touched.whatsapp_no && errors.whatsapp_no
+                        ? errors.whatsapp_no
+                        : null
+                    }
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                {/* <CustomerDropdown
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  {/* <CustomerDropdown
                   value={values.customer_category_id}
                   onChange={handleChange("customer_category_id")}
                   errorText={
@@ -528,18 +539,20 @@ export default function CreateModelLead() {
                       : null
                   }
                 /> */}
-                <Dropdown
-                  dropdowndata={requirementsdata}
-                  dropdowntitle={"Category"}
-                  dropdownid="categoryId"
-                  dropdownname="categoryName"
-                  value={values.customer_category_id}
-                  onChange={(val) => setFieldValue("customer_category_id", val)}
-                  errorText={errors.customer_category_id}
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                {/* <EnquiryDropdown
+                  <Dropdown
+                    dropdowndata={requirementsdata}
+                    dropdowntitle={"Category"}
+                    dropdownid="categoryId"
+                    dropdownname="categoryName"
+                    value={values.customer_category_id}
+                    onChange={(val) =>
+                      setFieldValue("customer_category_id", val)
+                    }
+                    errorText={errors.customer_category_id}
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  {/* <EnquiryDropdown
                   value={values.enquiry_type_id}
                   onChange={handleChange("enquiry_type_id")}
                   errorText={
@@ -548,18 +561,18 @@ export default function CreateModelLead() {
                       : null
                   }
                 /> */}
-                <Dropdown
-                  dropdowndata={enquirydata}
-                  dropdowntitle={"Enquiry"}
-                  dropdownid={"enquiryId"}
-                  dropdownname={"enquiryName"}
-                  value={values.enquiry_type_id}
-                  onChange={(val) => setFieldValue("enquiry_type_id", val)}
-                  errorText={errors.enquiry_type_id}
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                {/* <RequirementsDropdown
+                  <Dropdown
+                    dropdowndata={enquirydata}
+                    dropdowntitle={"Enquiry"}
+                    dropdownid={"enquiryId"}
+                    dropdownname={"enquiryName"}
+                    value={values.enquiry_type_id}
+                    onChange={(val) => setFieldValue("enquiry_type_id", val)}
+                    errorText={errors.enquiry_type_id}
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  {/* <RequirementsDropdown
                   value={values.requirements_id}
                   onChange={handleChange("requirements_id")}
                   errorText={
@@ -568,55 +581,55 @@ export default function CreateModelLead() {
                       : null
                   }
                 /> */}
-                <Dropdown
-                  dropdowndata={requirementsvalue}
-                  dropdowntitle={"requirement"}
-                  dropdownid={"RequirementsId"}
-                  dropdownname={"RequirementsName"}
-                  value={values.requirements_id}
-                  onChange={(val) => {
-                    console.log(val, "value");
+                  <Dropdown
+                    dropdowndata={requirementsvalue}
+                    dropdowntitle={"requirement"}
+                    dropdownid={"RequirementsId"}
+                    dropdownname={"RequirementsName"}
+                    value={values.requirements_id}
+                    onChange={(val) => {
+                      console.log(val, "value");
 
-                    setFieldValue("requirements_id", val);
-                  }}
-                  errorText={errors.requirements_id}
-                />
-              </Col>
+                      setFieldValue("requirements_id", val);
+                    }}
+                    errorText={errors.requirements_id}
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"State"}
-                  value={values.state}
-                  onchange={handleChange("state")}
-                  placeholder="state"
-                  errorText={
-                    touched.state && errors.state ? errors.state : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Country"}
-                  value={values.country}
-                  onchange={handleChange("country")}
-                  placeholder="Enter country"
-                  errorText={
-                    touched.country && errors.country ? errors.country : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"City"}
-                  value={values.city}
-                  onchange={handleChange("city")}
-                  placeholder="Enter city"
-                  errorText={touched.city && errors.city ? errors.city : null}
-                />
-              </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"State"}
+                    value={values.state}
+                    onchange={handleChange("state")}
+                    placeholder="state"
+                    errorText={
+                      touched.state && errors.state ? errors.state : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Country"}
+                    value={values.country}
+                    onchange={handleChange("country")}
+                    placeholder="Enter country"
+                    errorText={
+                      touched.country && errors.country ? errors.country : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"City"}
+                    value={values.city}
+                    onchange={handleChange("city")}
+                    placeholder="Enter city"
+                    errorText={touched.city && errors.city ? errors.city : null}
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                {/* <AssignedEmployeedropdown
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  {/* <AssignedEmployeedropdown
                   //  value={values.assignedTo}
                   onchangeid={handleChange("assignedTo")}
                   errorText={
@@ -625,226 +638,227 @@ export default function CreateModelLead() {
                       : null
                   }
                 /> */}
-                <Dropdown
-                  dropdowndata={employeedata}
-                  dropdowntitle={"Assigned Employee"}
-                  dropdownid={"userId"}
-                  dropdownname={"userName"}
-                  value={values.assignedTo}
-                  onChange={(val) => setFieldValue("assignedTo", val)}
-                  errorText={errors.assignedTo}
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Received Date"}
-                  value={values.receivedDate}
-                  onchange={handleChange("receivedDate")}
-                  placeholder="Enter receivedDate"
-                  errorText={
-                    touched.receivedDate && errors.receivedDate
-                      ? errors.receivedDate
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Refered By"}
-                  value={values.referedBy}
-                  onchange={handleChange("referedBy")}
-                  placeholder="Enter referedBy"
-                  errorText={
-                    touched.referedBy && errors.referedBy
-                      ? errors.referedBy
-                      : null
-                  }
-                />
-              </Col>
+                  <Dropdown
+                    dropdowndata={employeedata}
+                    dropdowntitle={"Assigned Employee"}
+                    dropdownid={"userId"}
+                    dropdownname={"userName"}
+                    value={values.assignedTo}
+                    onChange={(val) => setFieldValue("assignedTo", val)}
+                    errorText={errors.assignedTo}
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Received Date"}
+                    value={values.receivedDate}
+                    onchange={handleChange("receivedDate")}
+                    placeholder="Enter receivedDate"
+                    errorText={
+                      touched.receivedDate && errors.receivedDate
+                        ? errors.receivedDate
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Refered By"}
+                    value={values.referedBy}
+                    onchange={handleChange("referedBy")}
+                    placeholder="Enter referedBy"
+                    errorText={
+                      touched.referedBy && errors.referedBy
+                        ? errors.referedBy
+                        : null
+                    }
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Refered Phone"}
-                  value={values.referedPhone}
-                  onchange={handleChange("referedPhone")}
-                  placeholder="Enter referedPhone"
-                  errorText={
-                    touched.referedPhone && errors.referedPhone
-                      ? errors.referedPhone
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Refer Country Code"}
-                  value={values.refer_country_code}
-                  onchange={handleChange("refer_country_code")}
-                  placeholder="Enter refer country code"
-                  errorText={
-                    touched.refer_country_code && errors.refer_country_code
-                      ? errors.customer_category_id
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Notes"}
-                  value={values.notes}
-                  onchange={handleChange("notes")}
-                  placeholder="Enter notes"
-                  errorText={
-                    touched.notes && errors.notes ? errors.notes : null
-                  }
-                />
-              </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Refered Phone"}
+                    value={values.referedPhone}
+                    onchange={handleChange("referedPhone")}
+                    placeholder="Enter referedPhone"
+                    errorText={
+                      touched.referedPhone && errors.referedPhone
+                        ? errors.referedPhone
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Refer Country Code"}
+                    value={values.refer_country_code}
+                    onchange={handleChange("refer_country_code")}
+                    placeholder="Enter refer country code"
+                    errorText={
+                      touched.refer_country_code && errors.refer_country_code
+                        ? errors.customer_category_id
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Notes"}
+                    value={values.notes}
+                    onchange={handleChange("notes")}
+                    placeholder="Enter notes"
+                    errorText={
+                      touched.notes && errors.notes ? errors.notes : null
+                    }
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Description"}
-                  value={values.description}
-                  onchange={handleChange("description")}
-                  placeholder="Enter description"
-                  errorText={
-                    touched.description && errors.description
-                      ? errors.customer_category_id
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"IsNew"}
-                  value={values.isNew}
-                  onchange={handleChange("isNew")}
-                  placeholder="Enter isNew"
-                  errorText={
-                    touched.isNew && errors.isNew ? errors.isNew : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Latitude"}
-                  value={values.latitude}
-                  onchange={handleChange("latitude")}
-                  placeholder="Enter latitude"
-                  errorText={
-                    touched.latitude && errors.latitude
-                      ? errors.customer_category_id
-                      : null
-                  }
-                />
-              </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Description"}
+                    value={values.description}
+                    onchange={handleChange("description")}
+                    placeholder="Enter description"
+                    errorText={
+                      touched.description && errors.description
+                        ? errors.customer_category_id
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"IsNew"}
+                    value={values.isNew}
+                    onchange={handleChange("isNew")}
+                    placeholder="Enter isNew"
+                    errorText={
+                      touched.isNew && errors.isNew ? errors.isNew : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Latitude"}
+                    value={values.latitude}
+                    onchange={handleChange("latitude")}
+                    placeholder="Enter latitude"
+                    errorText={
+                      touched.latitude && errors.latitude
+                        ? errors.customer_category_id
+                        : null
+                    }
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Longitude"}
-                  value={values.longitude}
-                  onchange={handleChange("longitude")}
-                  placeholder="Enter longitude"
-                  errorText={
-                    touched.longitude && errors.longitude
-                      ? errors.longitude
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Customer Id"}
-                  value={values.customerId}
-                  onchange={handleChange("customerId")}
-                  placeholder="Enter customerId"
-                  errorText={
-                    touched.customerId && errors.customerId
-                      ? errors.customer_category_id
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Pincode"}
-                  value={values.Pincode}
-                  onchange={handleChange("Pincode")}
-                  placeholder="Enter Pincode"
-                  errorText={
-                    touched.Pincode && errors.Pincode ? errors.Pincode : null
-                  }
-                />
-              </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Longitude"}
+                    value={values.longitude}
+                    onchange={handleChange("longitude")}
+                    placeholder="Enter longitude"
+                    errorText={
+                      touched.longitude && errors.longitude
+                        ? errors.longitude
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Customer Id"}
+                    value={values.customerId}
+                    onchange={handleChange("customerId")}
+                    placeholder="Enter customerId"
+                    errorText={
+                      touched.customerId && errors.customerId
+                        ? errors.customer_category_id
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Pincode"}
+                    value={values.Pincode}
+                    onchange={handleChange("Pincode")}
+                    placeholder="Enter Pincode"
+                    errorText={
+                      touched.Pincode && errors.Pincode ? errors.Pincode : null
+                    }
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Schedule Date"}
-                  value={values.schedule_date}
-                  onchange={handleChange("schedule_date")}
-                  placeholder="Enter schedule Date"
-                  errorText={
-                    touched.schedule_date && errors.schedule_date
-                      ? errors.schedule_date
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Upload File"}
-                  value={values.upload_file}
-                  onchange={handleChange("upload_file")}
-                  placeholder="Enter upload File"
-                  errorText={
-                    touched.upload_file && errors.upload_file
-                      ? errors.upload_file
-                      : null
-                  }
-                />
-              </Col>
-              <Col lg={4} md={6} sm={12} className="mt-3">
-                <TextInputBox
-                  title={"Approximate Amount"}
-                  value={values.approximate_amount}
-                  onchange={handleChange("approximate_amount")}
-                  placeholder="Enter approximate amount"
-                  errorText={
-                    touched.approximate_amount && errors.approximate_amount
-                      ? errors.schedule_date
-                      : null
-                  }
-                />
-              </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Schedule Date"}
+                    value={values.schedule_date}
+                    onchange={handleChange("schedule_date")}
+                    placeholder="Enter schedule Date"
+                    errorText={
+                      touched.schedule_date && errors.schedule_date
+                        ? errors.schedule_date
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Upload File"}
+                    value={values.upload_file}
+                    onchange={handleChange("upload_file")}
+                    placeholder="Enter upload File"
+                    errorText={
+                      touched.upload_file && errors.upload_file
+                        ? errors.upload_file
+                        : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6} sm={12} className="mt-3">
+                  <TextInputBox
+                    title={"Approximate Amount"}
+                    value={values.approximate_amount}
+                    onchange={handleChange("approximate_amount")}
+                    placeholder="Enter approximate amount"
+                    errorText={
+                      touched.approximate_amount && errors.approximate_amount
+                        ? errors.schedule_date
+                        : null
+                    }
+                  />
+                </Col>
 
-              <Col lg={4} md={6} sm={12}>
-                <AssignedDealerdropdown
-                  value={values.dealer_id}
-                  onChange={handleChange("dealer_id")}
-                  errorText={
-                    touched.dealer_id && errors.dealer_id
-                      ? errors.dealer_id
-                      : null
-                  }
-                />
-              </Col>
-            </Row>
-          </div>
+                <Col lg={4} md={6} sm={12}>
+                  <AssignedDealerdropdown
+                    value={values.dealer_id}
+                    onChange={handleChange("dealer_id")}
+                    errorText={
+                      touched.dealer_id && errors.dealer_id
+                        ? errors.dealer_id
+                        : null
+                    }
+                  />
+                </Col>
+              </Row>
+            </div>
 
-          <Button type="submit" style={{ background: "#002244" }}>
-            {editData?.isShow ? "Update " : "Submit"}
-          </Button>
+            <Button type="submit" style={{ background: "#002244" }}>
+              {editData?.isShow ? "Update " : "Submit"}
+            </Button>
 
-          <Button
-            onClick={() => {
-              navigate("/dashboard/leads");
-            }}
-            className="float-end"
-            style={{ background: "#002244" }}
-          >
-            Back
-          </Button>
-        </form>
+            <Button
+              onClick={() => {
+                navigate("/dashboard/leads");
+              }}
+              className="float-end"
+              style={{ background: "#002244" }}
+            >
+              Back
+            </Button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

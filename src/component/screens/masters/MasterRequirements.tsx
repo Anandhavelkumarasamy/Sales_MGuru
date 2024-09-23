@@ -17,6 +17,7 @@ import {
   requirementitem,
 } from "../../../@types/masterrequirementsprops";
 import { ColumnsType } from "antd/es/table";
+import { Helmet } from "react-helmet";
 
 export default function MasterRequirements() {
   const token = useToken();
@@ -127,6 +128,13 @@ export default function MasterRequirements() {
 
   return (
     <>
+      <div>
+        <Helmet>
+          <title>MasterRequirements</title>
+          <meta name="keywords" content="dashboard,dash,home" />
+          {/* <h1>Welcome to My React Website</h1> */}
+        </Helmet>
+      </div>
       <Row className="mb-3">
         <Col>
           <h3>Master Requirements</h3>

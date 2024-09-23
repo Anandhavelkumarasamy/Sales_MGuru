@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { handleStorage } from "../../redux/reducers/Logintoken";
 import TextInputBox from "../../../Components/userManagementModals/TextInputBox";
 import { LoginProps } from "../../../@types/login";
+import { Helmet } from "react-helmet";
 
 function Login() {
   const navigate = useNavigate();
@@ -55,12 +56,9 @@ function Login() {
               "username",
               JSON.stringify(response.data.token)
             );
-            console.log(response.data, "userType");
             sessionStorage.setItem("userId", response.data.userId);
             sessionStorage.setItem("userType", response.data.userType);
             dispatch(handleStorage(response.data.token));
-            console.log(response.data.token);
-            console.log("verified");
             navigate("/dashboard/listdashboard");
           })
           .catch((error) => {
@@ -70,86 +68,83 @@ function Login() {
     });
 
   return (
-    <div className={classes.loginbg}>
-      <div
-        className={`row d-flex  bg-light justify-content-center rounded-5 p-3 ${classes.container}`}
-      >
-        <h2 className="text-center">
-          Welcome!!
-          <hr />
-        </h2>
-        <div className={`col p-3 ${classes.container2}`}>
-          <img
-            style={{ width: "100%", height: "45vh" }}
-            src={loginimage}
-            alt="YourImage"
-            className="img-fluid  "
-          />
-        </div>
+    <>
+      <Helmet>
+        <title>Admin</title>
+        <meta name="keywords" content="dashboard,dash,home" />
+      </Helmet>
 
+      <div className={classes.loginbg}>
         <div
-          className={` col  mt-3 w-100 h-100 bg-white rounded-3 p-3 ${classes.container3}`}
+          className={`row d-flex  bg-light justify-content-center rounded-5 p-3 ${classes.container}`}
         >
-          <h3 className="text-center">
-            Login
+          <h2 className="text-center">
+            Welcome!!
             <hr />
-          </h3>
-          <form onSubmit={handleSubmit}>
-            <TextInputBox
-              title={"User Name"}
-              value={values.userName}
-              onchange={handleChange("userName")}
-              placeholder="Enter username"
-              onBlurs={handleBlur}
-              errorText={
-                touched.userName && errors.userName ? errors.userName : null
-              }
-              isRequired={true}
+          </h2>
+          <div className={`col p-3 ${classes.container2}`}>
+            <img
+              style={{ width: "100%", height: "45vh" }}
+              src={loginimage}
+              alt="Login"
+              className="img-fluid"
             />
-            <TextInputBox
-              title={"Password"}
-              value={values.password}
-              onchange={handleChange("password")}
-              placeholder="Enter Password"
-              onBlurs={handleBlur}
-              errorText={
-                touched.password && errors.password ? errors.password : null
-              }
-              isPassword={true}
-              isRequired={true}
-            />
+          </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                alignSelf: "center",
-                marginTop: "20px",
-              }}
-            >
-              <div>
-                <input
-                  type="submit"
-                  value="Signin"
-                  className="btn btn-success rounded"
-                />
+          <div
+            className={`col mt-3 bg-white rounded-3 p-3 ${classes.container3}`}
+          >
+            <h3 className="text-center">
+              Login
+              <hr />
+            </h3>
+            <form onSubmit={handleSubmit}>
+              <TextInputBox
+                title={"User Name"}
+                value={values.userName}
+                onchange={handleChange("userName")}
+                placeholder="Enter username"
+                onBlurs={handleBlur}
+                errorText={
+                  touched.userName && errors.userName ? errors.userName : null
+                }
+                isRequired={true}
+              />
+              <TextInputBox
+                title={"Password"}
+                value={values.password}
+                onchange={handleChange("password")}
+                placeholder="Enter Password"
+                onBlurs={handleBlur}
+                errorText={
+                  touched.password && errors.password ? errors.password : null
+                }
+                isPassword={true}
+                isRequired={true}
+              />
+
+              <div className={classes.signinbtn}>
+                <div>
+                  <input
+                    type="submit"
+                    value="Signin"
+                    className="btn btn-success rounded"
+                  />
+                </div>
+                <div>
+                  <p
+                    onClick={() => navigate("/forgotpassword")}
+                    className="text-warning"
+                  >
+                    Forgot Password?
+                  </p>
+                </div>
               </div>
-              <div>
-                <p
-                  onClick={() => {
-                    navigate("/forgotpassword");
-                  }}
-                  className="text-warning"
-                >
-                  Forgot Password?
-                </p>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

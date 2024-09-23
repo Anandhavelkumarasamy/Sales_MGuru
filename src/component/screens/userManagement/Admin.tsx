@@ -9,6 +9,8 @@ import UserFilter from "../../../Components/userManagementModals/UserFilter";
 import { useToken } from "../../../utility/hooks";
 import { User, userlistprops } from "../../../@types/admin";
 import { ColumnsType } from "antd/es/table";
+import { Helmet } from "react-helmet";
+import styles from "./Usermanagement.module.css";
 
 export default function Admin() {
   const token = useToken();
@@ -34,6 +36,11 @@ export default function Admin() {
   };
 
   const toggleInputs = () => setshowInput((pre) => !pre);
+  useEffect(() => {
+    if (token) {
+      handleGetListUseres(1, itemsPerPage, {});
+    }
+  }, [token]);
 
   const handleGetListUseres = (
     page: number = 1,
@@ -52,12 +59,6 @@ export default function Admin() {
       .catch((err) => console.error(err));
   };
   console.log(userList, "adminpage");
-
-  useEffect(() => {
-    if (token) {
-      handleGetListUseres(1, itemsPerPage, {});
-    }
-  }, [token]);
 
   const handleDeleteUser = (deleteuserid: number | null) => {
     if (deleteuserid === null) return;
@@ -81,12 +82,7 @@ export default function Admin() {
         (userList.page - 1) * itemsPerPage + index + 1,
       align: "center",
     },
-    // {
-    //   title: 'ID',
-    //   dataIndex: 'userId',
-    //   key: 'userId',
-    //   align: 'center' as AlignType,
-    // },
+
     {
       title: "Name",
       dataIndex: "userName",
@@ -120,7 +116,7 @@ export default function Admin() {
           {
             <DeleteOutlined
               type="text"
-              style={{ color: "red", fontSize: "18px" }}
+              className={styles.admindeleteicon}
               onClick={() => handleDeleteShow(item.userId, item.userName)}
             />
           }
@@ -131,19 +127,21 @@ export default function Admin() {
 
   return (
     <>
+      <div>
+        <Helmet>
+          <title>Admin</title>
+          <meta name="keywords" content="dashboard,dash,home" />
+        </Helmet>
+      </div>
       <Row className="mb-3">
         <Col>
           <h3>Admin Page</h3>
         </Col>
         <Col className="text-end">
-          <Button style={{ background: "#002244" }} onClick={handleShow}>
+          <Button className={styles.btnbg} onClick={handleShow}>
             Add New Admin
           </Button>
-          <Button
-            style={{ background: "#002244" }}
-            onClick={toggleInputs}
-            className="ms-3"
-          >
+          <Button onClick={toggleInputs} className={`ms-3 `}>
             <SearchOutlined />
           </Button>
         </Col>
@@ -158,15 +156,18 @@ export default function Admin() {
         rowKey={(record) => record.userId}
         bordered
         size="middle"
+        className=" table-responsive mx-auto"
       />
 
-      <Pagination
-        className="float-end mt-3 me-4"
-        current={userList.page}
-        pageSize={itemsPerPage}
-        total={userList.total_count}
-        onChange={(page, pageSize) => handleGetListUseres(page, pageSize)}
-      />
+      {userList.total_count > 10 && (
+        <Pagination
+          className="float-end mt-3 "
+          current={userList.page}
+          pageSize={itemsPerPage}
+          total={userList.total_count}
+          onChange={(page, pageSize) => handleGetListUseres(page, pageSize)}
+        />
+      )}
 
       <DeleteModal
         todelete={todelete}

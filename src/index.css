@@ -16,3 +16,12 @@
 .ant-table-row.inactive-row {
   background-color: #fff !important;
 }
+.ant-btn {
+  background-color: #002244 !important;
+}
+.ant-btn-primary {
+  background-color: #002244 !important;
+}
+.btn-primary {
+  background-color: #002244 !important;
+}

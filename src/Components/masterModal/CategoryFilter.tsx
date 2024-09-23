@@ -34,7 +34,7 @@ export default function CategoryFilter({
   return (
     <div>
       <Row className="justify-content-end">
-        <Col lg={4}>
+        <Col lg={4} className="ms-4">
           <TextInputBox
             title="Name"
             value={name}
@@ -44,15 +44,12 @@ export default function CategoryFilter({
             isRequired={true}
           />
         </Col>
+
         <Col lg={2} className="align-content-end">
-          <Button style={{ background: "#002244" }} onClick={handleSubmit}>
+          <Button onClick={handleSubmit} className="ms-4">
             Submit
           </Button>
-          <Button
-            style={{ background: "#002244" }}
-            className=" float-end "
-            onClick={handleReset}
-          >
+          <Button className=" float-end " onClick={handleReset}>
             Reset
           </Button>
         </Col>

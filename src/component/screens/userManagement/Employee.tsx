@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { deleteuser, listuser } from "../../axios/Service";
-import { Button, Table, Pagination, Tooltip, message, Space } from "antd";
+import { Button } from "react-bootstrap";
+import { Table, Pagination, Tooltip, message, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import UserFilter from "../../../Components/userManagementModals/UserFilter";
-import TextInputBox from "../../../Components/userManagementModals/TextInputBox";
 import CreateModal from "../../../Components/userManagementModals/CreateModal";
 import DeleteModal from "../../../Components/userManagementModals/DeleteModal";
-import trash from "../../assests/trash.png";
-import update from "../../assests/data-processing.png";
 import { useToken } from "../../../utility/hooks";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import {
@@ -17,10 +14,11 @@ import {
   showmodalprops,
 } from "../../../@types/employee";
 import { ColumnsType } from "antd/es/table";
+import { Helmet } from "react-helmet";
+import styles from "./Usermanagement.module.css";
 
 export default function Employee() {
   const token = useToken();
-  const [show, setShow] = useState<boolean>(false);
   const [userList, setUserList] = useState<employeeuserlistprops>({
     items: [],
     page: 1,
@@ -34,25 +32,10 @@ export default function Employee() {
     isShow: false,
     data: null,
   });
-  // const [toUpdate, setToUpdate] = useState<boolean>(false);
-  // const [editId, setEditId] = useState<string>('');
 
   const toggleInputs = () => setShowInput((prev) => !prev);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-  //  const handleDeleteClose = () => setToDelete(false);
-  // const handleDeleteShow = (id:number) => {
-  //   setValue(id);
-  //   setDeleteUsername(username);
-  //   setToDelete(true);
-  // };
-  // const handleUpdateClose = () => setToUpdate(false);
-  // const handleUpdateShow = (value :string) => {
-  //   setEditId(value);
-  //   setToUpdate(true);
-  // };
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   const handleGetListUsers = (
     page: number = 1,
@@ -66,8 +49,6 @@ export default function Employee() {
     if (data.userName) {
       formData.append("username", data.userName);
     }
-    // formData.append("email", data.email || "");
-    // formData.append("phoneNumber", data.phoneNumber || "");
 
     listuser(page, size, formData)
       .then((response) => setUserList(response?.data?.data))
@@ -105,12 +86,7 @@ export default function Employee() {
         (userList.page - 1) * itemsPerPage + index + 1,
       align: "center",
     },
-    // {
-    //   title: 'ID',
-    //   dataIndex: 'userId',
-    //   key: 'userId',
-    //   align: 'center'
-    // },
+
     {
       title: "Name",
       dataIndex: "userName",
@@ -144,7 +120,7 @@ export default function Employee() {
           <Tooltip title="Delete" placement="bottom">
             <DeleteOutlined
               type="text"
-              style={{ color: "red", margin: "0 10px", fontSize: "18px" }}
+              className={styles.dealerdeleteicon}
               onClick={() => {
                 setValue(record.userId);
                 setDeleteUsername(record.userName);
@@ -155,7 +131,7 @@ export default function Employee() {
           <Tooltip title="Update" placement="bottom">
             <EditOutlined
               type="text"
-              style={{ color: "blue", fontSize: "18px", margin: "0 10px" }}
+              className={styles.dealerediticon}
               onClick={() => setIsShowModal({ data: record, isShow: true })}
             />
           </Tooltip>
@@ -166,31 +142,34 @@ export default function Employee() {
 
   return (
     <>
-      <div className="row mb-2">
-        <div className="col-3">
+      <div>
+        <Helmet>
+          <title>Employee</title>
+          <meta name="keywords" content="dashboard,dash,home" />
+        </Helmet>
+      </div>
+      <div className="row mb-3">
+        <div className="col-6">
           <h3>Employee Page</h3>
         </div>
-        <div className="col-9">
+        <div className="col-6">
           <Button
-            style={{ background: "#002244" }}
             onClick={() => setIsShowModal({ data: null, isShow: true })}
-            className="float-end me-5 text-white p-3"
+            className={`float-end me-3 text-white `}
           >
             Add Employee
           </Button>
           <Button
-            style={{ background: "#002244" }}
             onClick={toggleInputs}
-            className="float-end me-3 text-white p-3"
+            className={`float-end me-3 text-white  `}
           >
             <SearchOutlined />
           </Button>
         </div>
       </div>
-      <br />
-      <br />
+
       {showInput && (
-        <div className="mb-5">
+        <div className="mb-2">
           <UserFilter handleGetListUseres={handleGetListUsers} />
         </div>
       )}
@@ -202,17 +181,11 @@ export default function Employee() {
           pagination={false}
           rowKey="id"
           bordered
-          style={{
-            width: "90%",
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "4px 8px",
-          }}
           className=" table-responsive mx-auto"
         />
-        {userList && userList.total_count > 0 ? (
+        {userList.total_count > 10 ? (
           <Pagination
-            className="float-end"
+            className="float-end "
             pageSize={itemsPerPage}
             current={userList.page}
             total={userList.total_count}

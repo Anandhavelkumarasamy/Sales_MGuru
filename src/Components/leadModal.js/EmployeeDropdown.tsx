@@ -30,13 +30,20 @@ export default function EmployeeDropdown({
   const [dealerdata, setdealerdata] = useState<dealerpropsvalue[]>([]);
 
   console.log("selectortoken", token);
+  const usertype = sessionStorage.getItem("userType");
+  const userId = sessionStorage.getItem("userId");
 
   const handlereassignstatus = () => {
     let formdata = new FormData();
     formdata.append("token", token);
     formdata.append("leadId", String(leadid));
     formdata.append("employeeId", String(selectedemployeeid));
-    formdata.append("dealerId", selecteddealerid.toString());
+    // formdata.append("dealerId", selecteddealerid.toString());
+    if (usertype !== "3") {
+      formdata.append("dealerId", selecteddealerid.toString());
+    } else {
+      formdata.append("dealerId", String(userId));
+    }
 
     leadressign(formdata)
       .then((response) => {
@@ -99,34 +106,43 @@ export default function EmployeeDropdown({
         animation={false}
       >
         <Modal.Body>
-          <Form.Group controlId="dealeriddropdown" className="mt-3">
-            <Form.Label>Select Dealer</Form.Label>
-            <Form.Control
-              as="select"
-              value={selecteddealerid}
-              onChange={(e) => setselecteddealerid(e.target.value)}
-            >
-              <option value="">Select a dealer</option>
-              {dealerdata?.map((item) => (
-                <option key={item.userId} value={item.userId}>
-                  {item.userName.split("(")[0]}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
+          {usertype !== "3" && (
+            <Form.Group controlId="dealeriddropdown" className="mt-3">
+              <Form.Label>Select Dealer</Form.Label>
+
+              <Form.Control
+                as="select"
+                value={selecteddealerid}
+                onChange={(e) => setselecteddealerid(e.target.value)}
+                disabled={usertype === "3"}
+              >
+                <option value="">Select a dealer</option>
+                {dealerdata?.map((item) => (
+                  <option key={item.userId} value={item.userId}>
+                    {item.userName.split("(")[0]}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          )}
 
           <Form.Group controlId="employeeiddropdown">
             <Form.Label>Select Employee</Form.Label>
+
             <Form.Control
               as="select"
               value={selectedemployeeid ?? ""}
               onChange={(e) =>
                 setselectedemployeeid(Number(e.target.value) || null)
               }
-              disabled={selecteddealerid === ""}
+              // disabled={
+              //   usertype === "3"
+              //     ? selecteddealerid === String(userId)
+              //     : selecteddealerid === ""
+              // }
             >
               <option value="">Select an employee</option>
-              {selecteddealerid
+              {(selecteddealerid ? selecteddealerid : userId)
                 ? employeedata?.map((item) => (
                     <option key={item.userId} value={item.userId}>
                       {item.userName.split("(")[0]}

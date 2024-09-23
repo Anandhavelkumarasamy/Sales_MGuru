@@ -4,11 +4,11 @@ import { Modal, Row, Col, Button } from "react-bootstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { adduser } from "../../component/axios/Service";
-import { useSelector } from "react-redux";
 import { updateuser } from "../../component/axios/Service";
 import DealerIdDropdown from "./DealerIdDropdown";
 import { message } from "antd";
 import { useToken } from "../../utility/hooks";
+import classes from "./Crud.module.css";
 import {
   createmodalprops,
   handleadduserprops,
@@ -22,22 +22,19 @@ const validationSchema = Yup.object({
     .matches(/^[a-zA-Z0-9$]+$/, "Username is invalid")
     .required("Username is required"),
   phoneNumber: Yup.string()
-    .matches(/^[0-9$]+$/, "Phone number is invalid")
+    .matches(/^[6789][0-9]{9}$/, "Phone number must be 10 digits")
     .required("Phone number is required"),
-  // userType: Yup.string()
-  //   .matches(/^[a-zA-Z0-9$]+$/, "Type is invalid")
-  //   .optional("Type is required"),
   email: Yup.string().email("The email is incorrect"),
   landline_number: Yup.string().matches(
-    /^[0-9$]+$/,
-    "Landline number is invalid"
+    /^[6789][0-9]{9}$/,
+    "Phone number must be 10 digits"
   ),
   state: Yup.string().matches(/^[a-zA-Z$]+$/, "State is invalid"),
   city: Yup.string().matches(/^[a-zA-Z$]+$/, "City is invalid"),
   country: Yup.string().matches(/^[a-zA-Z$]+$/, "Country is invalid"),
-  password: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Password is invalid"),
-  pincode: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Pincode is invalid"),
-  dealer_id: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Dealer ID is invalid"),
+  password: Yup.string().matches(/^[a-zA-Z0-9]{6}$/, "Password is invalid"),
+  pincode: Yup.string().matches(/^[0-9]{6}$/, "Pincode is invalid"),
+  // dealer_id: Yup.string().matches(/^[a-zA-Z0-9$]+$/, "Dealer ID is invalid"),
 });
 
 export default function CreateModel({
@@ -70,7 +67,6 @@ export default function CreateModel({
     updateuser(formdata).then((response) => {
       if (response.data.status === 1) {
         message.success(`User ${values.userName} created successfully`);
-        // console.log("UserUpdated Successfully", response.data.data);
         handleGetListUseres(1, 10, {});
       }
       handleClose();
@@ -96,10 +92,8 @@ export default function CreateModel({
     console.log(formdata);
     adduser(formdata)
       .then((response) => {
-        // window.alert(response?.data?.msg);
         if (response?.data?.status === 1) {
           message.success(`User ${values.userName} created successfully`);
-          // console.log(response.data.data, "created successfully");
           handleGetListUseres(1, 10, {});
         }
 
@@ -109,8 +103,6 @@ export default function CreateModel({
         console.log("Error:", error);
       });
   };
-
-  console.log(editData, "edidtdtdtdt");
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
@@ -137,8 +129,6 @@ export default function CreateModel({
         }
       },
     });
-  // console.log(values,"values",editData?.userName);
-  // console.log(dealeruserlist)
 
   return (
     <div>
@@ -146,7 +136,7 @@ export default function CreateModel({
         show={show}
         onHide={handleClose}
         size="lg"
-        style={{ maxWidth: "100%", height: "100%" }}
+        className={classes.modalcontainer}
       >
         <Modal.Header closeButton>
           <Modal.Title>{editData ? "Edit " : "Add"}</Modal.Title>

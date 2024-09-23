@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import loginimage from "../../assests/4957136.jpg";
 import classes from "./Login.module.css";
 import { message } from "antd";
+import { Helmet } from "react-helmet";
 
 const { Title } = Typography;
 
@@ -70,75 +71,84 @@ export default function VerifyOtp() {
   };
 
   return (
-    <div className={classes.loginbg}>
-      <div
-        className={`row d-flex bg-light  justify-content-center rounded-5 p-3 ${classes.container}`}
-      >
-        <h3 className="text-center">
-          Verify OTP
-          <hr />
-        </h3>
-
-        <div className={`col p-3 ${classes.container2}`}>
-          <img
-            style={{ width: "100%", height: "45vh" }}
-            src={loginimage}
-            alt="YourImage"
-            className="img-fluid  "
-          />
-        </div>
-
+    <>
+      <div>
+        <Helmet>
+          <title>VerifyOtp</title>
+          <meta name="keywords" content="dashboard,dash,home" />
+          {/* <h1>Welcome to My React Website</h1> */}
+        </Helmet>
+      </div>
+      <div className={classes.loginbg}>
         <div
-          className={` col bg-white mt-3    rounded-3 p-4 ${classes.container3}`}
+          className={`row d-flex bg-light  justify-content-center rounded-5 p-3 ${classes.container}`}
         >
-          <h2 className="text-center">
-            Enter OTP
+          <h3 className="text-center">
+            Verify OTP
             <hr />
-          </h2>
+          </h3>
 
-          <Flex gap="middle" align="flex-start" vertical>
-            <Title level={5}>(Numbers only)</Title>
-            <Input.OTP
-              formatter={(str) => str.replace(/\D/g, "")}
-              {...sharedProps}
+          <div className={`col p-3 ${classes.container2}`}>
+            <img
+              style={{ width: "100%", height: "38vh" }}
+              src={loginimage}
+              alt="YourImage"
+              className="img-fluid  "
             />
+          </div>
 
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                alignSelf: "center",
-                marginTop: "10px",
-              }}
-            >
-              <div className="text-start">
-                {" "}
-                <Button
-                  variant="primary"
-                  onClick={handleValue}
-                  className="float-start"
-                >
-                  Submit
-                </Button>{" "}
-              </div>
-              <div>
-                {" "}
-                <Button
-                  disabled={timeLeft > 0}
-                  onClick={handleresendotp}
-                  className="float-end"
-                >
-                  Resend OTP
-                </Button>
-              </div>
-            </div>
+          <div
+            className={` col bg-white mt-3    rounded-3 p-4 ${classes.container3}`}
+          >
+            <h2 className="text-center">
+              Enter OTP
+              <hr />
+            </h2>
 
-            <p>Time remaining: {formatTime(timeLeft)}</p>
-          </Flex>
+            <Flex gap="middle" align="flex-start" vertical>
+              <Title level={5}>(Numbers only)</Title>
+              <Input.OTP
+                formatter={(str) => str.replace(/\D/g, "")}
+                {...sharedProps}
+              />
+
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  alignSelf: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <div className="text-start">
+                  {" "}
+                  <Button
+                    variant="primary"
+                    onClick={handleValue}
+                    className="float-start"
+                  >
+                    Submit
+                  </Button>{" "}
+                </div>
+                <div>
+                  {" "}
+                  <Button
+                    disabled={timeLeft > 0}
+                    onClick={handleresendotp}
+                    className="float-end"
+                  >
+                    Resend OTP
+                  </Button>
+                </div>
+              </div>
+
+              <p>Time remaining: {formatTime(timeLeft)}</p>
+            </Flex>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

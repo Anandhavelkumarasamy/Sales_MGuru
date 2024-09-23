@@ -80,14 +80,10 @@ export const leaddropdown = (token: FormData) => {
 export const changeleadstatus = (data: FormData) => {
   return instance.post("/lead/changeLeadStatus", data);
 };
-export const employdropdown = (
-  token: FormData
-): Promise<AxiosResponse<any>> => {
+export const employdropdown = (token: FormData) => {
   return instance.post("/dropdown/employeeDropDown", token);
 };
-export const dealerdropdown = (
-  token: FormData
-): Promise<AxiosResponse<any>> => {
+export const dealerdropdown = (token: FormData) => {
   return instance.post("/dropdown/userDropdown", token);
 };
 export const leadressign = (data: FormData) => {
@@ -125,6 +121,17 @@ export const requirementslist = (
 ) => {
   return instance.post(
     `masters/list_requirements?page=${page}&size=${size}`,
+    value
+  );
+};
+
+export const dealerwisereport = (
+  page: number,
+  size: number,
+  value: FormData
+) => {
+  return instance.post(
+    `/dashboard/dealer_wise_report?page=${page}&size=${size}`,
     value
   );
 };

@@ -25,9 +25,56 @@ import MasterEnquiry from "./component/screens/masters/MasterEnquiry";
 import MasterRequirements from "./component/screens/masters/MasterRequirements";
 
 function App() {
+  const token = localStorage.getItem("username");
+  const dispatch = useDispatch();
+  const usertype = sessionStorage.getItem("userType");
+
+  const userRoutes = [
+    {
+      path: "listdashboard",
+      element: <ListDashboard />,
+    },
+
+    {
+      path: "employee",
+      element: <Employee />,
+    },
+    {
+      path: "leads",
+      element: <Leads />,
+    },
+    {
+      path: "leadsdata",
+      element: <CreateModelLead />,
+    },
+  ];
+  if (usertype === "2" || usertype === "1") {
+    userRoutes.push(
+      {
+        path: "admin",
+        element: <Admin />,
+      },
+      {
+        path: "dealer",
+        element: <Dealer />,
+      },
+      {
+        path: "mastercategory",
+        element: <MasterCategory />,
+      },
+      {
+        path: "masterenquiry",
+        element: <MasterEnquiry />,
+      },
+      {
+        path: "masterrequirements",
+        element: <MasterRequirements />,
+      }
+    );
+  }
   const router = createBrowserRouter([
     {
-      path: "/",
+      // path: "/",
       element: <AuthPrivate />,
       children: [
         {
@@ -55,50 +102,11 @@ function App() {
         {
           path: "dashboard",
           element: <Dashboard />,
-          children: [
-            {
-              path: "listdashboard",
-              element: <ListDashboard />,
-            },
-            {
-              path: "admin",
-              element: <Admin />,
-            },
-            {
-              path: "employee",
-              element: <Employee />,
-            },
-            {
-              path: "dealer",
-              element: <Dealer />,
-            },
-            {
-              path: "leads",
-              element: <Leads />,
-            },
-            {
-              path: "leadsdata",
-              element: <CreateModelLead />,
-            },
-            {
-              path: "mastercategory",
-              element: <MasterCategory />,
-            },
-            {
-              path: "masterenquiry",
-              element: <MasterEnquiry />,
-            },
-            {
-              path: "masterrequirements",
-              element: <MasterRequirements />,
-            },
-          ],
+          children: [...userRoutes],
         },
       ],
     },
   ]);
-  const token = localStorage.getItem("username");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (token) {

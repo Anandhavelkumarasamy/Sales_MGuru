@@ -9,15 +9,12 @@ export default function TextInputBox({
   onchange,
   placeholder,
   errorText,
-  name,
   onBlurs,
   isRequired = false,
   isPassword = false,
 }: TextInputBoxProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-
   const togglePasswordVisibility = () => {
-    console.log("fgh");
     setIsPasswordVisible((prev: boolean) => !prev);
   };
 
@@ -46,7 +43,11 @@ export default function TextInputBox({
         {isPassword && (
           <div className={classes.inputboxcontainer4}>
             <div onClick={togglePasswordVisibility} role="button">
-              {isPasswordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+              {isPasswordVisible ? (
+                <EyeInvisibleOutlined className={classes.eyecolor} />
+              ) : (
+                <EyeOutlined className={classes.eyecolor} />
+              )}
             </div>
           </div>
         )}
@@ -54,7 +55,7 @@ export default function TextInputBox({
 
       {errorText && (
         <p
-          className={`text-danger ${classes.errortext} ${
+          className={`text-danger mt-2 ${classes.errortext} ${
             errorText ? classes.showError : ""
           }`}
         >

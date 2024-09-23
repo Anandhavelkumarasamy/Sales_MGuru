@@ -17,6 +17,7 @@ import {
   categorylistprops,
 } from "../../../@types/mastercategory";
 import { ColumnsType } from "antd/es/table";
+import { Helmet } from "react-helmet";
 
 export default function MasterCategory() {
   const token = useToken();
@@ -73,7 +74,6 @@ export default function MasterCategory() {
       if (response.data.status === 1) {
         setcategoryList(response?.data?.data);
         console.log(response?.data?.data, "mastercatergy");
-        // message.success("updated")
       } else {
         message.error(response.data.msg);
       }
@@ -89,12 +89,6 @@ export default function MasterCategory() {
         (categoryList.page - 1) * itemsPerPage + index + 1,
       align: "center",
     },
-    // {
-    //   title: "ID",
-    //   dataIndex: "customerCategoryId",
-    //   key: "customerCategoryId",
-    //   align: "center",
-    // },
     {
       title: "Name",
       dataIndex: "customerCategoryName",
@@ -128,6 +122,12 @@ export default function MasterCategory() {
   console.log(updateId, "toddelete");
   return (
     <>
+      <div>
+        <Helmet>
+          <title>MasterCategory</title>
+          <meta name="keywords" content="dashboard,dash,home" />
+        </Helmet>
+      </div>
       <Row className="mb-3">
         <Col>
           <h3>Master Category</h3>
@@ -136,11 +136,7 @@ export default function MasterCategory() {
           <Button style={{ background: "#002244" }} onClick={handleShow}>
             Add New Category
           </Button>
-          <Button
-            style={{ background: "#002244" }}
-            onClick={toggleInputs}
-            className="ms-3"
-          >
+          <Button onClick={toggleInputs} className="ms-3">
             <SearchOutlined />
           </Button>
         </Col>
@@ -177,7 +173,7 @@ export default function MasterCategory() {
         apivalue={apivalue}
       />
       <Pagination
-        className="float-end mt-3 me-4"
+        className="float-end mt-3 pagination-responsive"
         current={categoryList?.page}
         pageSize={itemsPerPage}
         total={categoryList?.total_count}

@@ -43,7 +43,7 @@ const LeadFilter = ({ handleleadsuserList }: LeadFilterProps) => {
   return (
     <form onSubmit={handleSubmit}>
       <Row>
-        <Col>
+        <Col lg={4} md={6} sm={12}>
           <TextInputBox
             title={"Lead Name"}
             value={values.leadName}
@@ -51,7 +51,7 @@ const LeadFilter = ({ handleleadsuserList }: LeadFilterProps) => {
             placeholder="Enter leadName"
           />
         </Col>
-        <Col>
+        <Col lg={4} md={6} sm={12}>
           <TextInputBox
             title={"Mobile Number"}
             value={values.mobile}
@@ -59,7 +59,7 @@ const LeadFilter = ({ handleleadsuserList }: LeadFilterProps) => {
             placeholder="Enter Mobile Number"
           />
         </Col>
-        <Col>
+        <Col lg={4} md={6} sm={12}>
           <TextInputBox
             title={"State"}
             value={values.state}
@@ -71,7 +71,8 @@ const LeadFilter = ({ handleleadsuserList }: LeadFilterProps) => {
 
       <Button
         variant="primary"
-        onClick={() => handleSubmit()}
+        type="submit"
+        // onClick={() => handleSubmit()}
         style={{ background: "#002244" }}
         className="float-end mt-2 mb-4 "
       >

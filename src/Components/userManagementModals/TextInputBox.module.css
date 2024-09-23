@@ -1,43 +1,41 @@
-.inputboxcontainer1{
-border: 1px solid rgba(0,0,0,0.1);
-display:flex;
-justify-content: space-between;
-align-items: center;
-padding: 8px;
-border-radius: 3px;
-background-color: white;
-  
-
+.inputboxcontainer1 {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-radius: 3px;
+  background-color: white;
 }
 
-
-
-.inputboxcontainer3{
-  border-width:0;
-  border:1px solid transparent;
-  outline:none;
-  background-color: rgba(0,0,0,0);
-  width:100%;
-  height:15px;
-  padding:10px;
+.inputboxcontainer3 {
+  border-width: 0;
+  border: 1px solid transparent;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 15px;
+  padding: 10px;
 }
 
-.inputboxcontainer4{
-width:'13%';
-display: flex;
-justify-content: flex-end;
+.inputboxcontainer4 {
+  width: "13%";
+  display: flex;
+  justify-content: flex-end;
 }
-
 
 .errortext {
-  height: 16px; /* Reserve space for the error message */
-  visibility: hidden; /* Hide error text but keep the space reserved */
+  height: 16px;
+  visibility: hidden;
   margin: 0;
-  color: red; /* Error text color */
+  color: red;
   font-size: 12px;
   line-height: 1.2;
 }
 
 .showError {
-  visibility: visible; /* Show error text when the error occurs */
+  visibility: visible;
+}
+.eyecolor {
+  color: 002244;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { Table, Tooltip, Pagination, message } from "antd";
+import { Table, Tooltip, Pagination, message, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
@@ -9,10 +9,11 @@ import CreateModal from "../../../Components/userManagementModals/CreateModal";
 import DeleteModal from "../../../Components/userManagementModals/DeleteModal";
 import { listuser, deleteuser } from "../../axios/Service";
 import { useToken } from "../../../utility/hooks";
-import styles from "./Dealer.module.css";
 import { User, userlistprops } from "../../../@types/admin";
 import { DealerItems } from "../../../@types/dealer";
 import { ColumnsType } from "antd/es/table";
+import { Helmet } from "react-helmet";
+import styles from "./Usermanagement.module.css";
 
 export default function Dealer() {
   const token = useToken();
@@ -79,13 +80,7 @@ export default function Dealer() {
         (userList?.page - 1) * itemsPerPage + index + 1,
       align: "center",
     },
-    // {
-    //   title: 'ID',
-    //   dataIndex: 'userId',
-    //   key: 'userId',
-    //   align: 'center'
 
-    // },
     {
       title: "Name",
       dataIndex: "userName",
@@ -115,10 +110,10 @@ export default function Dealer() {
       key: "actions",
       align: "center",
       render: (text: any, record: DealerItems) => (
-        <>
+        <Space size="middle">
           <Tooltip title="Delete" placement="bottom">
             <DeleteOutlined
-              style={{ color: "red", margin: "0 10px", fontSize: "18px" }}
+              className={styles.dealerdeleteicon}
               onClick={() => {
                 setValue(record.userId);
                 setDeleteUsername(record.userName);
@@ -128,40 +123,43 @@ export default function Dealer() {
           </Tooltip>
           <Tooltip title="Update" placement="bottom">
             <EditOutlined
-              style={{ color: "blue", fontSize: "18px", margin: "0 10px" }}
+              className={styles.dealerediticon}
               onClick={() => setIsShowModal({ data: record, isShow: true })}
             />
           </Tooltip>
-        </>
+        </Space>
       ),
     },
   ];
 
   return (
     <>
+      <div>
+        <Helmet>
+          <title>Dealer</title>
+          <meta name="keywords" content="dashboard,dash,home" />
+        </Helmet>
+      </div>
       <div className="row mb-2">
-        <div className="col-2">
+        <div className="col-6">
           <h3>Dealer Page</h3>
         </div>
-        <div className="col-10">
+        <div className="col-6">
           <Button
-            style={{ background: "#002244" }}
             onClick={() => setIsShowModal({ data: null, isShow: true })}
-            className="float-end me-5"
+            className={`float-end`}
           >
             Add Dealer
           </Button>
           <Button
-            style={{ background: "#002244" }}
             onClick={() => setShowInput((prev) => !prev)}
-            className="float-end me-3"
+            className={`float-end me-3 `}
           >
             <SearchOutlined />
           </Button>
         </div>
       </div>
-      <br />
-      <br />
+
       {showInput && (
         <div className="mb-5">
           <UserFilter handleGetListUseres={handleGetListUsers} />
@@ -175,16 +173,18 @@ export default function Dealer() {
           pagination={false}
           rowKey="userId"
           bordered
-          className={styles.customTable}
+          className={` table-responsive mx-auto${styles.customTable}`}
         />
 
-        <Pagination
-          className="mt-4"
-          pageSize={itemsPerPage}
-          align="end"
-          onChange={(val, size) => handleGetListUsers(val, size)}
-          total={userList.total_count}
-        />
+        {userList.total_count > 10 && (
+          <Pagination
+            className="mt-4"
+            pageSize={itemsPerPage}
+            align="end"
+            onChange={(val, size) => handleGetListUsers(val, size)}
+            total={userList.total_count}
+          />
+        )}
 
         <DeleteModal
           todelete={todelete}

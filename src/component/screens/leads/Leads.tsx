@@ -12,6 +12,7 @@ import LeadFilter from "../../../Components/leadModal.js/LeadFilter";
 import IsactiveModal from "../../../Components/leadModal.js/IsactiveModal";
 import { ColumnsType } from "antd/es/table";
 import { useToken } from "../../../utility/hooks";
+import styles from "./Leads.module.css";
 import {
   StarOutlined,
   StarFilled,
@@ -25,6 +26,7 @@ import {
   leaduserlistprops,
   RecordType,
 } from "../../../@types/leads";
+import { Helmet } from "react-helmet";
 
 export default function Leads() {
   const token = useToken();
@@ -132,6 +134,13 @@ export default function Leads() {
       align: "center",
     },
     {
+      title: "LeadStatusName",
+      dataIndex: "leadStatusName",
+      key: "leadStatusName",
+      align: "center",
+    },
+
+    {
       title: "IsActive",
       key: "isActive",
 
@@ -141,7 +150,7 @@ export default function Leads() {
         >
           {record.isActive === 0 ? (
             <StarOutlined
-              style={{ fontSize: "18px", color: "#050a30" }}
+              className={styles.staricon}
               onClick={() => {
                 setshowisactive(true);
                 setisactiveitem(record);
@@ -149,7 +158,7 @@ export default function Leads() {
             />
           ) : (
             <StarFilled
-              style={{ fontSize: "18px", color: "#050a30" }}
+              className={styles.starfilledicon}
               onClick={() => {
                 setshowisactive(true);
                 setisactiveitem(record);
@@ -168,19 +177,13 @@ export default function Leads() {
         <Space size="middle">
           <Tooltip placement="bottom" title="Delete">
             <DeleteOutlined
-              style={{
-                fontSize: "20px",
-                color: "#ff4d4f",
-              }}
+              className={styles.deleteleadicon}
               onClick={() => handleDeleteShow(record.leadId, record.leadName)}
             />
           </Tooltip>
           <Tooltip placement="bottom" title="Update">
             <EditOutlined
-              style={{
-                fontSize: "20px",
-                color: "#52c41a",
-              }}
+              className={styles.editleadicon}
               onClick={() => {
                 navigate("/dashboard/leadsdata", {
                   state: { isShow: true, data: record },
@@ -190,20 +193,13 @@ export default function Leads() {
           </Tooltip>
           <Tooltip placement="bottom" title="Update Status">
             <SyncOutlined
-              style={{
-                fontSize: "20px",
-                color: "#1890ff",
-              }}
+              className={styles.syncoutlineicon}
               onClick={() => handleemployeedropdownshow(record.leadId)}
             />
           </Tooltip>
           <Tooltip placement="bottom" title="Reassign">
             <UserSwitchOutlined
-              style={{
-                fontSize: "20px",
-
-                color: "#faad14",
-              }}
+              className={styles.userswitchicon}
               onClick={() => setemployyedropdown(true)}
             />
           </Tooltip>
@@ -215,27 +211,27 @@ export default function Leads() {
 
   return (
     <>
+      <div>
+        <Helmet>
+          <title>Lead</title>
+          <meta name="keywords" content="dashboard,dash,home" />
+        </Helmet>
+      </div>
       <div className="row">
-        <div className="col-2">
+        <div className="col-6">
           <h3>Leads Page</h3>
         </div>
-        <div className="col-10">
+        <div className="col-6">
           <Button
-            type="primary"
             onClick={() => {
               navigate("/dashboard/leadsdata");
             }}
-            style={{ background: "#002244" }}
-            className="float-end"
+            className="float-end text-white"
           >
             Add Lead
           </Button>
-          <Button
-            style={{ background: "#002244" }}
-            onClick={toggleInputs}
-            className="float-end me-3"
-          >
-            <SearchOutlined style={{ color: "white" }} />
+          <Button onClick={toggleInputs} className="float-end me-3">
+            <SearchOutlined className="text-white" />
           </Button>
         </div>
         <br />
@@ -253,21 +249,14 @@ export default function Leads() {
           rowClassName={(record) =>
             record.isActive === 1 ? "active-row" : "inactive-row"
           }
-          style={{
-            width: "90%",
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "8px 16px",
-          }}
-          className=" table-responsive mx-auto"
+          className="  table-responsive mx-auto"
         />
         <Pagination
           current={currentPage}
           pageSize={itemsPerPage}
           onChange={handlePageChange}
           total={leaduserlist?.total_count || 0}
-          style={{ margin: "16px 0" }}
-          className="float-end"
+          className=" float-end mt-4"
         />
         <Leaddropdown
           leaddropdowns={leaddropdowns}

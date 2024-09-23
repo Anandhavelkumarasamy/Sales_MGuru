@@ -113,10 +113,8 @@ export default function CreateModalMaster({
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button style={{ background: "#002244" }} onClick={handleSubmit}>
+          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleSubmit}>
             {updateId ? "Update" : "Submit"}
           </Button>
         </Modal.Footer>
