@@ -23,6 +23,7 @@ import CreateModelLead from "./Components/leadModal.js/CreateModalLead";
 import MasterCategory from "./component/screens/masters/MasterCategory";
 import MasterEnquiry from "./component/screens/masters/MasterEnquiry";
 import MasterRequirements from "./component/screens/masters/MasterRequirements";
+import TextDashboard from "./component/screens/HomeScreen/TextDashboard";
 
 function App() {
   const token = localStorage.getItem("username");
@@ -32,7 +33,8 @@ function App() {
   const userRoutes = [
     {
       path: "listdashboard",
-      element: <ListDashboard />,
+      // element: <ListDashboard />,
+      element: <TextDashboard />,
     },
 
     {

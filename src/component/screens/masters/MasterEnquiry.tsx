@@ -120,14 +120,12 @@ export default function MasterEnquiry() {
       ),
     },
   ];
-
   return (
     <>
       <div>
         <Helmet>
           <title>MasterEnquiry</title>
           <meta name="keywords" content="dashboard,dash,home" />
-          {/* <h1>Welcome to My React Website</h1> */}
         </Helmet>
       </div>
       <Row className="mb-3">
@@ -135,19 +133,10 @@ export default function MasterEnquiry() {
           <h3>Master Enquiry</h3>
         </Col>
         <Col className="text-end">
-          <Button
-            variant="primary"
-            style={{ background: "#002244" }}
-            onClick={handleShow}
-          >
+          <Button variant="primary" onClick={handleShow}>
             Add New Enquiry
           </Button>
-          <Button
-            variant="primary"
-            style={{ background: "#002244" }}
-            onClick={toggleInputs}
-            className="ms-3"
-          >
+          <Button variant="primary" onClick={toggleInputs} className="ms-3">
             <SearchOutlined />
           </Button>
         </Col>
